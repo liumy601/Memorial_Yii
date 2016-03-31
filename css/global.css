@@ -1,0 +1,95 @@
+#content h1{
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.list-view span.empty{
+  margin: 20px 0;
+  display: block;
+  font-weight: bold;
+}
+
+.flash-success{
+  padding: 1.3em 1em 1.3em 45px;
+  border-width: 2px;
+  border: 2px solid #DDD;
+  background: #EEE;
+  font-size: 12px;
+  background-image: url(/images/dialog-information.png);
+  background-repeat: no-repeat;
+  background-position: .5em 50%;
+}
+
+h2{
+  font-size: 12px;
+  font-weight:bold;
+  margin:20px 0 5px 0;
+  border:0;
+}
+.formField{
+  padding-top:4px;
+}
+.errorMSG{
+  margin: 5px auto 5px 0;
+  padding: 0.3em 1em 0.3em 10px;
+  border: 1px solid #ff6666;
+  background: #EEE;
+  font-size: 12px;
+}
+#content{
+  font-size: 12px;
+}
+.normalForm td{
+  font-size: 12px;
+  padding: 5px 5px 5px 5px;
+}
+#breadcrumb{
+  padding:2px 0 20px 0;
+}
+
+.gray{
+  color:gray !important;
+}
+
+
+
+table.light_table{
+  border-top: 1px solid #C1DAD7; 
+  border-left: 1px solid #C1DAD7; 
+  border-collapse: collapse;
+}
+table.light_table th { 
+  font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif; 
+  color: #000; 
+  border-right: 1px solid #C1DAD7; 
+  border-bottom: 1px solid #C1DAD7; 
+  letter-spacing: 2px; 
+  text-transform: uppercase; 
+  text-align: left; 
+  padding: 6px 6px 6px 12px; 
+  background: #CAE8EA no-repeat; 
+}
+
+table.light_table td { 
+  border-right: 1px solid #C1DAD7; 
+  border-bottom: 1px solid #C1DAD7; 
+  background: #fff; 
+  font-size:12px; 
+  padding: 6px 6px 6px 12px; 
+  color: #000; 
+} 
+#room_spots li{
+  background-image:none;
+}
+
+.form_headline{
+  padding-bottom:3px;
+  border-bottom: 1px solid #F1F0F5;
+  font-size:14px;
+  font-weight:bold;
+}
+
+#account_billing{
+  font-weight: bold;
+  text-align: right;
+}
