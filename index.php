@@ -13,6 +13,6 @@ defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 ini_set('display_errors', 1);
 
 require_once($yii);
-$GLOBALS['query_string'] = '?BE';
+$GLOBALS['query_string'] = '?BZ';
 
 Yii::createWebApplication($config)->run();

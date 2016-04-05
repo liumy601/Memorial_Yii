@@ -245,8 +245,4 @@ foreach ($fields as $field => $width) {
   $('#pageSize').val(<?php echo $pageSize; ?>);
   $('#currentOption').val(<?php echo $pageSize; ?>);
   
-  function customers_export(){
-    document.location.href = '/customer/customersexport';
-  }
-  
 </script>

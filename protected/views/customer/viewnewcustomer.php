@@ -1030,10 +1030,6 @@ $(document).ready(function(){
     return;
   }
   
-  function customers_export(customer_id){
-    document.location.href = '/customer/customersexport/customer_id/'+customer_id;
-  }
-  
  function dialogReceipt(customer_id, payment_id, type){
     $.ajax({
       async:false,

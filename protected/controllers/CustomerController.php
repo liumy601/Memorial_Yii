@@ -2640,153 +2640,153 @@ class CustomerController extends Controller
     
     
     
-    //GROUP1
-    $fieldTypeLen['A'] = 'Text / 255';
-    $fieldTypeLen['B'] = 'Text / 255';
-    $fieldTypeLen['C'] = 'Date/Time / 8';
-    $fieldTypeLen['D'] = 'Date/Time / 8';
-    $fieldTypeLen['E'] = 'Text / 255';
-    $fieldTypeLen['F'] = 'Date/Time / 8';
-    $fieldTypeLen['G'] = 'Text / 255';
-    $fieldTypeLen['H'] = 'Text / 255';
-    $fieldTypeLen['I'] = 'Text / 255';
-    $fieldTypeLen['J'] = 'Text / 255';
-    
-    $fieldTypeLen['K'] = 'Text / 255';
-    $fieldTypeLen['L'] = 'Text / 255';
-    $fieldTypeLen['M'] = '';
-    $fieldTypeLen['N'] = '';
-    $fieldTypeLen['O'] = '';
-    $fieldTypeLen['P'] = 'Text / 255';
-    $fieldTypeLen['Q'] = '';
-    $fieldTypeLen['R'] = '';
-    $fieldTypeLen['S'] = '';
-    $fieldTypeLen['T'] = '';
-    
-    $fieldTypeLen['U'] = '';
-    $fieldTypeLen['V'] = 'Text / 255';
-    $fieldTypeLen['W'] = 'Text / 255';
-    $fieldTypeLen['X'] = 'Text / 255';
-    $fieldTypeLen['Y'] = '';
-    $fieldTypeLen['Z'] = '';
-    
-    
-    //GROUP2
-    $fieldTypeLen['AA'] = '';
-    $fieldTypeLen['AB'] = '';
-    $fieldTypeLen['AC'] = '';
-    $fieldTypeLen['AD'] = '';
-    $fieldTypeLen['AE'] = 'Text / 255';
-    $fieldTypeLen['AF'] = 'Text / 255';
-    $fieldTypeLen['AG'] = 'Text / 255';
-    $fieldTypeLen['AH'] = 'Text / 255';
-    $fieldTypeLen['AI'] = 'Text / 255';
-    $fieldTypeLen['AJ'] = '';
-    
-    $fieldTypeLen['AK'] = '';
-    $fieldTypeLen['AL'] = '';
-    $fieldTypeLen['AM'] = '';
-    $fieldTypeLen['AN'] = '';
-    $fieldTypeLen['AO'] = '';
-    $fieldTypeLen['AP'] = 'Text / 255';
-    $fieldTypeLen['AQ'] = 'Text / 255';
-    $fieldTypeLen['AR'] = 'Text / 255';
-    $fieldTypeLen['AS'] = 'Text / 255';
-    $fieldTypeLen['AT'] = 'Text / 255';
-    
-    $fieldTypeLen['AU'] = 'Text / 255';
-    $fieldTypeLen['AV'] = 'Text / 255';
-    $fieldTypeLen['AW'] = 'Text / 255';
-    $fieldTypeLen['AX'] = '';
-    $fieldTypeLen['AY'] = '';
-    $fieldTypeLen['AZ'] = '';
-    
-    //GROUP3
-    $fieldTypeLen['BA'] = '';
-    $fieldTypeLen['BB'] = '';
-    $fieldTypeLen['BC'] = '';
-    $fieldTypeLen['BD'] = '';
-    $fieldTypeLen['BE'] = '';
-    $fieldTypeLen['BF'] = 'Text / 255';
-    $fieldTypeLen['BG'] = 'Text / 255';
-    $fieldTypeLen['BH'] = 'Text / 255';
-    $fieldTypeLen['BI'] = 'Text / 255';
-    $fieldTypeLen['BJ'] = 'Text / 255';
-    
-    $fieldTypeLen['BK'] = '';
-    $fieldTypeLen['BL'] = '';
-    $fieldTypeLen['BM'] = '';
-    $fieldTypeLen['BN'] = '';
-    $fieldTypeLen['BO'] = '';
-    $fieldTypeLen['BP'] = '';
-    $fieldTypeLen['BQ'] = '';
-    $fieldTypeLen['BR'] = '';
-    $fieldTypeLen['BS'] = '';
-    $fieldTypeLen['BT'] = '';
-    
-    $fieldTypeLen['BU'] = '';
-    $fieldTypeLen['BV'] = '';
-    $fieldTypeLen['BW'] = '';
-    $fieldTypeLen['BX'] = '';
-    $fieldTypeLen['BY'] = '';
-    $fieldTypeLen['BZ'] = '';
-    
-    //GROUP4
-    $fieldTypeLen['CA'] = '';
-    $fieldTypeLen['CB'] = '';
-    $fieldTypeLen['CC'] = '';
-    $fieldTypeLen['CD'] = '';
-    $fieldTypeLen['CE'] = '';
-    $fieldTypeLen['CF'] = '';
-    $fieldTypeLen['CG'] = '';
-    $fieldTypeLen['CH'] = '';
-    $fieldTypeLen['CI'] = '';
-    $fieldTypeLen['CJ'] = '';
-    
-    $fieldTypeLen['CK'] = '';
-    $fieldTypeLen['CL'] = '';
-    $fieldTypeLen['CM'] = '';
-    $fieldTypeLen['CN'] = '';
-    $fieldTypeLen['CO'] = '';
-    $fieldTypeLen['CP'] = '';
-    $fieldTypeLen['CQ'] = '';
-    $fieldTypeLen['CR'] = '';
-    $fieldTypeLen['CS'] = '';
-    $fieldTypeLen['CT'] = '';
-    
-    $fieldTypeLen['CU'] = '';
-    $fieldTypeLen['CV'] = '';
-    $fieldTypeLen['CW'] = '';
-    $fieldTypeLen['CX'] = '';
-    $fieldTypeLen['CY'] = '';
-    $fieldTypeLen['CZ'] = '';
-    
-    //GROUP5
-    $fieldTypeLen['DA'] = '';
-    $fieldTypeLen['DB'] = '';
-    $fieldTypeLen['DC'] = '';
-    $fieldTypeLen['DD'] = '';
-    $fieldTypeLen['DE'] = '';
-    $fieldTypeLen['DF'] = '';
-    $fieldTypeLen['DG'] = '';
-    $fieldTypeLen['DH'] = '';
-    $fieldTypeLen['DI'] = '';
-    $fieldTypeLen['DJ'] = '';
-    
-    $fieldTypeLen['DK'] = '';
-    $fieldTypeLen['DL'] = 'Memo / No Limit';
-    $fieldTypeLen['DM'] = '';
-    $fieldTypeLen['DN'] = '';
-    $fieldTypeLen['DO'] = '';
-    $fieldTypeLen['DP'] = '';
-    $fieldTypeLen['DQ'] = '';
-    $fieldTypeLen['DR'] = '';
-    $fieldTypeLen['DS'] = '';
-    $fieldTypeLen['DT'] = '';
-    
-    $fieldTypeLen['DU'] = '';
-    $fieldTypeLen['DV'] = '';
-    $excelData[0][] = $fieldTypeLen;
+//    //GROUP1
+//    $fieldTypeLen['A'] = 'Text / 255';
+//    $fieldTypeLen['B'] = 'Text / 255';
+//    $fieldTypeLen['C'] = 'Date/Time / 8';
+//    $fieldTypeLen['D'] = 'Date/Time / 8';
+//    $fieldTypeLen['E'] = 'Text / 255';
+//    $fieldTypeLen['F'] = 'Date/Time / 8';
+//    $fieldTypeLen['G'] = 'Text / 255';
+//    $fieldTypeLen['H'] = 'Text / 255';
+//    $fieldTypeLen['I'] = 'Text / 255';
+//    $fieldTypeLen['J'] = 'Text / 255';
+//    
+//    $fieldTypeLen['K'] = 'Text / 255';
+//    $fieldTypeLen['L'] = 'Text / 255';
+//    $fieldTypeLen['M'] = '';
+//    $fieldTypeLen['N'] = '';
+//    $fieldTypeLen['O'] = '';
+//    $fieldTypeLen['P'] = 'Text / 255';
+//    $fieldTypeLen['Q'] = '';
+//    $fieldTypeLen['R'] = '';
+//    $fieldTypeLen['S'] = '';
+//    $fieldTypeLen['T'] = '';
+//    
+//    $fieldTypeLen['U'] = '';
+//    $fieldTypeLen['V'] = 'Text / 255';
+//    $fieldTypeLen['W'] = 'Text / 255';
+//    $fieldTypeLen['X'] = 'Text / 255';
+//    $fieldTypeLen['Y'] = '';
+//    $fieldTypeLen['Z'] = '';
+//    
+//    
+//    //GROUP2
+//    $fieldTypeLen['AA'] = '';
+//    $fieldTypeLen['AB'] = '';
+//    $fieldTypeLen['AC'] = '';
+//    $fieldTypeLen['AD'] = '';
+//    $fieldTypeLen['AE'] = 'Text / 255';
+//    $fieldTypeLen['AF'] = 'Text / 255';
+//    $fieldTypeLen['AG'] = 'Text / 255';
+//    $fieldTypeLen['AH'] = 'Text / 255';
+//    $fieldTypeLen['AI'] = 'Text / 255';
+//    $fieldTypeLen['AJ'] = '';
+//    
+//    $fieldTypeLen['AK'] = '';
+//    $fieldTypeLen['AL'] = '';
+//    $fieldTypeLen['AM'] = '';
+//    $fieldTypeLen['AN'] = '';
+//    $fieldTypeLen['AO'] = '';
+//    $fieldTypeLen['AP'] = 'Text / 255';
+//    $fieldTypeLen['AQ'] = 'Text / 255';
+//    $fieldTypeLen['AR'] = 'Text / 255';
+//    $fieldTypeLen['AS'] = 'Text / 255';
+//    $fieldTypeLen['AT'] = 'Text / 255';
+//    
+//    $fieldTypeLen['AU'] = 'Text / 255';
+//    $fieldTypeLen['AV'] = 'Text / 255';
+//    $fieldTypeLen['AW'] = 'Text / 255';
+//    $fieldTypeLen['AX'] = '';
+//    $fieldTypeLen['AY'] = '';
+//    $fieldTypeLen['AZ'] = '';
+//    
+//    //GROUP3
+//    $fieldTypeLen['BA'] = '';
+//    $fieldTypeLen['BB'] = '';
+//    $fieldTypeLen['BC'] = '';
+//    $fieldTypeLen['BD'] = '';
+//    $fieldTypeLen['BE'] = '';
+//    $fieldTypeLen['BF'] = 'Text / 255';
+//    $fieldTypeLen['BG'] = 'Text / 255';
+//    $fieldTypeLen['BH'] = 'Text / 255';
+//    $fieldTypeLen['BI'] = 'Text / 255';
+//    $fieldTypeLen['BJ'] = 'Text / 255';
+//    
+//    $fieldTypeLen['BK'] = '';
+//    $fieldTypeLen['BL'] = '';
+//    $fieldTypeLen['BM'] = '';
+//    $fieldTypeLen['BN'] = '';
+//    $fieldTypeLen['BO'] = '';
+//    $fieldTypeLen['BP'] = '';
+//    $fieldTypeLen['BQ'] = '';
+//    $fieldTypeLen['BR'] = '';
+//    $fieldTypeLen['BS'] = '';
+//    $fieldTypeLen['BT'] = '';
+//    
+//    $fieldTypeLen['BU'] = '';
+//    $fieldTypeLen['BV'] = '';
+//    $fieldTypeLen['BW'] = '';
+//    $fieldTypeLen['BX'] = '';
+//    $fieldTypeLen['BY'] = '';
+//    $fieldTypeLen['BZ'] = '';
+//    
+//    //GROUP4
+//    $fieldTypeLen['CA'] = '';
+//    $fieldTypeLen['CB'] = '';
+//    $fieldTypeLen['CC'] = '';
+//    $fieldTypeLen['CD'] = '';
+//    $fieldTypeLen['CE'] = '';
+//    $fieldTypeLen['CF'] = '';
+//    $fieldTypeLen['CG'] = '';
+//    $fieldTypeLen['CH'] = '';
+//    $fieldTypeLen['CI'] = '';
+//    $fieldTypeLen['CJ'] = '';
+//    
+//    $fieldTypeLen['CK'] = '';
+//    $fieldTypeLen['CL'] = '';
+//    $fieldTypeLen['CM'] = '';
+//    $fieldTypeLen['CN'] = '';
+//    $fieldTypeLen['CO'] = '';
+//    $fieldTypeLen['CP'] = '';
+//    $fieldTypeLen['CQ'] = '';
+//    $fieldTypeLen['CR'] = '';
+//    $fieldTypeLen['CS'] = '';
+//    $fieldTypeLen['CT'] = '';
+//    
+//    $fieldTypeLen['CU'] = '';
+//    $fieldTypeLen['CV'] = '';
+//    $fieldTypeLen['CW'] = '';
+//    $fieldTypeLen['CX'] = '';
+//    $fieldTypeLen['CY'] = '';
+//    $fieldTypeLen['CZ'] = '';
+//    
+//    //GROUP5
+//    $fieldTypeLen['DA'] = '';
+//    $fieldTypeLen['DB'] = '';
+//    $fieldTypeLen['DC'] = '';
+//    $fieldTypeLen['DD'] = '';
+//    $fieldTypeLen['DE'] = '';
+//    $fieldTypeLen['DF'] = '';
+//    $fieldTypeLen['DG'] = '';
+//    $fieldTypeLen['DH'] = '';
+//    $fieldTypeLen['DI'] = '';
+//    $fieldTypeLen['DJ'] = '';
+//    
+//    $fieldTypeLen['DK'] = '';
+//    $fieldTypeLen['DL'] = 'Memo / No Limit';
+//    $fieldTypeLen['DM'] = '';
+//    $fieldTypeLen['DN'] = '';
+//    $fieldTypeLen['DO'] = '';
+//    $fieldTypeLen['DP'] = '';
+//    $fieldTypeLen['DQ'] = '';
+//    $fieldTypeLen['DR'] = '';
+//    $fieldTypeLen['DS'] = '';
+//    $fieldTypeLen['DT'] = '';
+//    
+//    $fieldTypeLen['DU'] = '';
+//    $fieldTypeLen['DV'] = '';
+//    $excelData[0][] = $fieldTypeLen;
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select * from customer where id = :id");

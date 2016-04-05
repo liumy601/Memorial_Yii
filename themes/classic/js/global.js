@@ -1803,7 +1803,6 @@ function confirmSubmitForm(status){
   return true;
 }
 
-
 function customers_export(customer_id){
   document.location.href = '/customer/customersexport/customer_id/'+customer_id;
 }
