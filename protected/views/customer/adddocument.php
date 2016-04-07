@@ -34,10 +34,6 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   
 <?php
 if ($documents) {
-//  echo '<pre>';
-//  print_r($documents);
-//  echo '</pre>';
-//  exit;
 ?>
 <form method="post" action="/customer/adddocument/<?php echo $customer->id; ?>" class="noajax">
    
@@ -46,7 +42,7 @@ if ($documents) {
 
   <table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center">
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button" onclick="backToCustomer();" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
 
   <div id="Information">
@@ -63,16 +59,23 @@ if ($documents) {
 
 	<table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center"></div>
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button" onclick="backToCustomer();" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
   
   
 </form>
   <?php } else { ?>
-  No new documents to select.
+  No new documents to select.  <input title="Cancel" class="button" onclick="backToCustomer();" pageTitle="Package" type="button" name="button" value="&laquo; Back"/>
   <?php } ?>
   
 
 <?php endif; ?>
 
 </div>
+
+
+<script type="text/javascript">
+  function backToCustomer(){
+    document.location.href='/customer/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
+  }
+</script>
