@@ -442,7 +442,15 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('doctors_name')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctors_name); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('ssn')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->ssn); ?></td>
+        <td width="30%" class="dvValueTxt">
+			<?php 
+			if (preg_match ("/(\d{3})-\d{2}-\d{4}/i", $model->ssn, $match)) {
+				echo CHtml::link($match[1].'-xx-xxxx', '#',array('onclick'=>'$(this).text("'.$model->ssn.'")'));
+			} else {
+				echo CHtml::encode($model->ssn);
+			}
+			?>
+		</td>
         </tr>
         
         <tr>
