@@ -146,17 +146,20 @@ color: #FFFFFF  !important;
             }
           } else {
             //get plan
+			/*
             $current_plan = $connection->createCommand("select plan_title from user_subscription where uid=" . Yii::app()->user->uid ." order by id desc limit 1")->queryScalar();
             echo '<span style="margin-right:30px;">Current plan: <b>' . $current_plan .'</b></span>';
+			*/
           }
 //          echo '<a href="/site/appappplans">Try other plans</a> ';
           echo '<a href="/admin/user" class="topLink"><img src="/images/control_panel2.png" alt="Control panel" title="Control panel"/></a>'; 
         }
      ?>
-        
-        <?php if (Yii::app()->user->name != 'Guest' && (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff')){  ?>
-          <div style="text-align: right;margin-top:5px;"><a class="noajax" href="/site/updateprofile">Account and Billing</a></div>
-        <?php } ?>
+        <?php if(0) : ?>
+			<?php if (Yii::app()->user->name != 'Guest' && (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff')){  ?>
+			  <div style="text-align: right;margin-top:5px;"><a class="noajax" href="/site/updateprofile">Account and Billing</a></div>
+			<?php } ?>
+		<?php endif; ?>
       </td>
       
       <td valign="top" nowrap class="welcome" id="welcome">
