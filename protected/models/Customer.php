@@ -98,6 +98,7 @@
 class Customer extends CActiveRecord
 {
   public $name;
+  public $case_number_seq;
   
 	/**
 	 * Returns the static model of the specified AR class.
@@ -147,7 +148,7 @@ class Customer extends CActiveRecord
           date_of_burial, time_of_burial_h, time_of_burial_m, time_of_burial_z,
           survived_by, preceded_in_death_by, newspaper_radio1, newspaper_radio2, newspaper_radio3, newspaper_radio4, newspaper_radio5, newspaper_radio6, newspaper_radio1_other, newspaper_radio2_other, newspaper_radio3_other, newspaper_radio4_other, newspaper_radio5_other, newspaper_radio6_other, full_legal_name, 
           music_selection1, music_selection2, music_selection3, music_selection4, music_selection5, pallbearers, pallbearer2, pallbearer3, pallbearer4, pallbearer5, pallbearer6, pallbearer7, pallbearer8, special_music, company_id, 
-          interment_city, interment_country, interment_state',  'safe'),
+          interment_city, interment_country, interment_state, case_number_seq',  'safe'),
 		);
 	}
   

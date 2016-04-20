@@ -172,6 +172,20 @@ class CustomerController extends Controller
     $this->_checkAllowCreateNew();
     
     $model = new Customer();
+	//autopopulate case_number
+	$command = Yii::app()->db->createCommand("select max(case_number_seq) from customer");
+    $case_number_seq = $command->queryScalar();
+
+	if(!empty($case_number_seq)) {
+		//start with next incremental value
+		$model->case_number = $case_number_seq+1;
+		$model->case_number_seq = $case_number_seq+1;
+	} else {
+		//start with 1000
+		$model->case_number = '1000';
+		$model->case_number_seq = 1000;
+	}
+
     if (isset($_POST['Customer'])) {
       $model->attributes = $_POST['Customer'];
       $model->form_type = 'old';
@@ -203,6 +217,10 @@ class CustomerController extends Controller
     $this->_buildShortcuts();
     
     $model=$this->loadModel($id);
+
+	//start with 1000
+	$model->case_number = '1000';
+	$model->case_number_seq = 1000;
 
     if(isset($_POST['Customer']))
     {
