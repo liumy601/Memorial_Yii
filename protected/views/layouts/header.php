@@ -4,8 +4,8 @@ if(Yii::app()->user->name != 'Guest' ){
 <script>
   window.intercomSettings = {
     app_id: "k1tws933",
-    name: "Jane Doe", // Full name
-    email: "customer@example.com", // Email address
+    name: "<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>", // Full name
+    email: "<?php echo Yii::app()->user->email; ?>", // Email address
     created_at: 1312182000 // Signup date as a Unix timestamp
   };
 </script>
@@ -16,8 +16,8 @@ if(Yii::app()->user->name != 'Guest' ){
 <script src="//fast.appcues.com/17271.js"></script>
 <script>
     Appcues.identify('1', {
-        email: 'support@preferati.com',
-        name: 'Support',
+        email: '<?php echo Yii::app()->user->email; ?>',
+        name: '<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>',
         // Additional user properties
     });
 </script>
