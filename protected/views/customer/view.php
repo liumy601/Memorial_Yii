@@ -444,8 +444,9 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('ssn')); ?></td>
 		<td width="30%" class="dvValueTxt">
 			<?php 
-			if (preg_match ("/(\d{3})-\d{2}-\d{4}/i", $model->ssn, $match)) {
-				echo CHtml::link($match[1].'-xx-xxxx', '#',array('onclick'=>'$(this).text("'.$model->ssn.'");return false;'));
+			if(strlen($model->ssn) > 3) {
+				$hidedSSN = preg_replace('/\w/i', 'x', substr($model->ssn,3));
+				echo CHtml::link(substr($model->ssn,0,3). $hidedSSN, '#',array('onclick'=>'$(this).text("'.$model->ssn.'");return false;'));
 			} else {
 				echo CHtml::encode($model->ssn);
 			}
