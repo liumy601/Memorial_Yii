@@ -170,7 +170,9 @@ class CustomerController extends Controller
 	{
     $this->_buildShortcuts();
     $this->_checkAllowCreateNew();
-    
+    $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
+
     $model = new Customer();
 	//autopopulate case_number
 	$command = Yii::app()->db->createCommand("select max(case_number_seq) from customer");
@@ -209,7 +211,7 @@ class CustomerController extends Controller
       }
     }
     
-    $this->render('_form', array('model'=>$model));
+    $this->render('_form', array('model'=>$model, 'optionFields'=>$optionFields));
 	}
   
   public function actionUpdate($id)
