@@ -9,7 +9,7 @@ class AdminController extends Controller {
   public function accessRules() {
     return array(
         array('allow',
-            'actions' => array('index', 'homepage', 'file', 'user', 'emailconfig', 'dropdown', 'logo', 'getdropdownfirstval', 'savedropdownlist'),
+            'actions' => array('index', 'homepage', 'file', 'user', 'emailconfig', 'dropdown', 'logo', 'getdropdownfirstval', 'savedropdownlist','optionalfields'),
             'roles' => array('admin'),
         ),
         array('allow',
@@ -34,6 +34,7 @@ class AdminController extends Controller {
           array('text' => 'Logo', 'url' => '/admin/logo'),
           array('text' => 'Files', 'url' => '/admin/file'),
           array('text' => 'Email Configuration', 'url' => '/admin/emailconfig'),
+		  array('text' => 'Optional Fields', 'url' => '/admin/optionalFields'),
       );
     }
   }
@@ -811,6 +812,23 @@ class AdminController extends Controller {
     }
 
     $this->render('email_config', array('model' => $emailConfig));
+  }
+
+  public function actionOptionalFields() {
+    $this->_buildShortcuts();
+
+    $company_id = Yii::app()->user->company_id;
+    $model = OptionalFields::model()->find('company_id='. $company_id);
+	$model = empty($model) ? new OptionalFields() : $model;
+
+    if ($_POST) {
+      $model->attributes = $_POST['OptionalFields'];
+      $model->company_id = $company_id;
+      $model->save();
+      Yii::app()->user->setFlash('', 'Saved.');
+    }
+
+    $this->render('optional_fields', array('model' => $model));
   }
 
   public function actionTaxConfig() {
