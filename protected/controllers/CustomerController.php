@@ -174,19 +174,22 @@ class CustomerController extends Controller
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
 
     $model = new Customer();
-	//autopopulate case_number
-	$command = Yii::app()->db->createCommand("select max(case_number_seq) from customer");
-    $case_number_seq = $command->queryScalar();
 
-	if(!empty($case_number_seq)) {
-		//start with next incremental value
-		$model->case_number = $case_number_seq+1;
-		$model->case_number_seq = $case_number_seq+1;
-	} else {
-		//start with 1000
-		$model->case_number = '1000';
-		$model->case_number_seq = 1000;
+	//autopopulate case_number
+	$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer order by case_number_seq");
+    $records = $command->queryAll();
+	//search next available case_number starting from 1000
+	$case_number_seq_list = array();
+	foreach($records as $record) {
+		$case_number_seq_list[] = $record['case_number_seq'];
 	}
+	$case_number_seq_list = array_unique($case_number_seq_list);
+	$next_case_num = 1000;
+	while(in_array($next_case_num, $case_number_seq_list)) {
+		$next_case_num++;
+	}
+	$model->case_number = $next_case_num;
+	$model->case_number_seq = $next_case_num;
 
     if (isset($_POST['Customer'])) {
       $model->attributes = $_POST['Customer'];
@@ -220,10 +223,6 @@ class CustomerController extends Controller
     
     $model=$this->loadModel($id);
 
-	//start with 1000
-	$model->case_number = '1000';
-	$model->case_number_seq = 1000;
-
     if(isset($_POST['Customer']))
     {
       if ($_POST['Customer']['button'] == 'Cancel') {
@@ -241,6 +240,12 @@ class CustomerController extends Controller
           }
         }  
         
+		//update case_number_seq to be used for create
+		if(preg_match('/\d{4,}/i', $model->case_number))
+			$model->case_number_seq = $model->case_number;
+		else
+			$model->case_number_seq = NULL;
+
         if($model->save()){
           $this->redirect(array('view','id'=>$model->id));
         }
