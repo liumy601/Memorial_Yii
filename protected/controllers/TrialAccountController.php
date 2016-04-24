@@ -125,7 +125,7 @@ class TrialAccountController extends Controller
 		//$mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
 		$mail->AddAddress($yourEmail);
 		$mail->Subject = 'Your login details';
-		$mail->Body = "login url is ". Yii::app()->params['siteURL']. '<br/>username: '. $admin->username. '<br/>password: '. $admin->password; 
+		$mail->Body = "login url is ". Yii::app()->params['siteURL']. '<br/>username: '. $admin->username. '<br/>password'. $admin->password; 
 		$mail->IsHTML(true);
 		$ret = $mail->Send();
 	}
