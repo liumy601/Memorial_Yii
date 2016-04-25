@@ -15,12 +15,6 @@ class TrialAccountController extends Controller
 		//create new company
 		$newCompany = new Company();
 		$newCompany->name = !empty($yourCompany) ? $yourCompany : $yourName;
-		$newCompany->logo = $currentCompany->logo;
-		$newCompany->homepage = $currentCompany->homepage;
-		$newCompany->address = $currentCompany->address;
-		$newCompany->state = $currentCompany->state;
-		$newCompany->city = $currentCompany->city;
-		$newCompany->zip = $currentCompany->zip;
 		$newCompany->save(false);
 		$company_id = $newCompany->id;
 
@@ -106,7 +100,7 @@ class TrialAccountController extends Controller
 		//create company admin
 		$admin = new Users();
 		$admin->username = !empty($userName) ? $userName : $yourName;
-		$admin->password = 'changeme';
+		$admin->password = md5('changeme');
 		$admin->type = 'admin';
 		$admin->email = $yourEmail;
 		$admin->company_id = $company_id;
