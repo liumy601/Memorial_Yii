@@ -122,6 +122,10 @@ class TrialAccountController extends Controller
 					$admin->lastname = $names[1];
 				}
 				$admin->save(false);
+				//assign admin role
+				$command = Yii::app()->db->createCommand("insert into pre_auth_assignment set itemname='admin', userid=:userid");
+				$command->bindParam(':userid', $admin->username);
+				$command->execute();
 
 				//send email
 				$mail = new PHPMailer();
@@ -131,18 +135,20 @@ class TrialAccountController extends Controller
 				//$mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
 				$mail->AddAddress($yourEmail);
 				$mail->Subject = 'Your login details';
-				$mail->Body = 'Hi '. $admin->firstname . '<br/>';
-				$mail->Body .= 'Thanks for singing up!<br/>';
-				$mail->Body .= "We¡¯re thrilled that you¡¯ve decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing ". Yii::app()->params['adminEmail'] ." or when logged in by clicking the blue button in the bottom right.<br/>";
+				$mail->Body = '<html><body>';
+				$mail->Body .= 'Hi '. $admin->firstname . '<br/><br/>';
+				$mail->Body .= 'Thanks for singing up!<br/><br/>';
+				$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing ". Yii::app()->params['adminEmail'] ." or when logged in by clicking the blue button in the bottom right.<br/><br/>";
 				$mail->Body .= 'Please login at http://funeral.preferati.com/ with the following credentials: <br/>';
 				$mail->Body .= 'Username: '. $admin->email .'<br/>';
-				$mail->Body .= 'Password: changeme<br/>';
-				$mail->Body .= 'The best way to get started is by viewing our guide here: http://memorialdirector.com/introduction-to-memorial-director/<br/>';
+				$mail->Body .= 'Password: changeme<br/><br/>';
+				$mail->Body .= 'The best way to get started is by viewing our guide here: http://memorialdirector.com/introduction-to-memorial-director/<br/><br/>';
 				$mail->Body .= 'Have a great day, <br/>';
 				$mail->Body .= 'The Memorial Director App Team<br/>';
-				$mail->Body .= 'http://memorialdirector.com/<br/>';
+				$mail->Body .= '<a href="http://memorialdirector.com/">http://memorialdirector.com/</a><br/>';
+				$mail->Body .= '</body></html>';
 				$mail->IsHTML(true);
-				$ret = $mail->Send();
+				$mail->Send();
 			}
 
 			//$model=new TrialAccount;
