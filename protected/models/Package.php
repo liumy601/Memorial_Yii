@@ -121,8 +121,7 @@ class Package extends CActiveRecord
 
   public function save()
   {
-	if(Yii::app()->user->hasState('company_id'))
-		$this->company_id = Yii::app()->user->company_id;
+    $this->company_id = Yii::app()->user->company_id;
     
     return parent::save();
   }
