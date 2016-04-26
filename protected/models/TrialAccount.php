@@ -10,15 +10,13 @@
  * @property string $email
  * @property string $phone
  */
-class TrialAccount extends CActiveRecord
+class TrialAccount extends CFormModel
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'trial_account';
-	}
+	public $username;
+	public $yourname;
+	public $company_name;
+	public $email;
+	public $phone;
 
 	/**
 	 * @return array validation rules for model attributes.

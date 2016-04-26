@@ -14,7 +14,7 @@ class TrialAccountController extends Controller
 		if(isset($_POST['TrialAccount']))
 		{
 			$model->attributes=$_POST['TrialAccount'];
-			
+
 			if($model->validate()) {
 				$userName = $model->username;
 				$yourName = $model->yourname;
@@ -145,7 +145,7 @@ class TrialAccountController extends Controller
 				$ret = $mail->Send();
 			}
 
-			$model=new TrialAccount;
+			//$model=new TrialAccount;
 		}
 
 		$this->renderPartial('create',array(
