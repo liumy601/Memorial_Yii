@@ -14,7 +14,6 @@ input {
 </style>
 
 <div class="form">
-
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'trial-account-form',
 	'enableAjaxValidation'=>false,

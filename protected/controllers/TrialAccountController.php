@@ -133,7 +133,7 @@ class TrialAccountController extends Controller
 				$mail->Subject = 'Your login details';
 				$mail->Body = 'Hi '. $admin->firstname . '<br/>';
 				$mail->Body .= 'Thanks for singing up!<br/>';
-				$mail->Body .= "We¡¯re thrilled that you¡¯ve decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing <email> or when logged in by clicking the blue button in the bottom right.<br/>";
+				$mail->Body .= "We¡¯re thrilled that you¡¯ve decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing ". Yii::app()->params['adminEmail'] ." or when logged in by clicking the blue button in the bottom right.<br/>";
 				$mail->Body .= 'Please login at http://funeral.preferati.com/ with the following credentials: <br/>';
 				$mail->Body .= 'Username: '. $admin->email .'<br/>';
 				$mail->Body .= 'Password: changeme<br/>';
