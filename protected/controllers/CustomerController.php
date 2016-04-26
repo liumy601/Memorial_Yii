@@ -172,7 +172,6 @@ class CustomerController extends Controller
     $this->_checkAllowCreateNew();
     $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
-
     $model = new Customer();
 
 	//autopopulate case_number
@@ -220,7 +219,6 @@ class CustomerController extends Controller
   public function actionUpdate($id)
   {
     $this->_buildShortcuts();
-    
     $model=$this->loadModel($id);
 
     if(isset($_POST['Customer']))
