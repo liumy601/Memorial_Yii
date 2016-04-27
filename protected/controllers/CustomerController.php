@@ -219,6 +219,8 @@ class CustomerController extends Controller
   public function actionUpdate($id)
   {
     $this->_buildShortcuts();
+	$optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model=$this->loadModel($id);
 
     if(isset($_POST['Customer']))
@@ -252,6 +254,7 @@ class CustomerController extends Controller
     
     $this->render('_form',array(
         'model'=>$model,
+		'optionFields'=>$optionFields,
     ));
   }
   
