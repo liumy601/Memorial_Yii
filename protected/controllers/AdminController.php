@@ -9,7 +9,7 @@ class AdminController extends Controller {
   public function accessRules() {
     return array(
         array('allow',
-            'actions' => array('index', 'homepage', 'file', 'user', 'emailconfig', 'dropdown', 'logo', 'getdropdownfirstval', 'savedropdownlist','optionalfields'),
+            'actions' => array('index', 'homepage', 'file', 'user', 'emailconfig', 'dropdown', 'logo', 'getdropdownfirstval', 'savedropdownlist','optionalfields', 'taxByCompany'),
             'roles' => array('admin'),
         ),
         array('allow',
@@ -35,6 +35,7 @@ class AdminController extends Controller {
           array('text' => 'Files', 'url' => '/admin/file'),
           array('text' => 'Email Configuration', 'url' => '/admin/emailconfig'),
 		  array('text' => 'Optional Fields', 'url' => '/admin/optionalFields'),
+		   array('text' => 'Tax', 'url' => '/admin/taxByCompany'),
       );
     }
   }
@@ -829,6 +830,26 @@ class AdminController extends Controller {
     }
 
     $this->render('optional_fields', array('model' => $model));
+  }
+
+  public function actionTaxByCompany() {
+    $this->_buildShortcuts();
+
+    $company_id = Yii::app()->user->company_id;
+    $model = Config::model()->find('name="tax_by_company" and company_id='. $company_id);
+	$model = empty($model) ? new Config() : $model;
+	$model->name = 'tax_by_company';
+	$model->value  = unserialize($model->value);
+
+    if ($_POST) {
+      $model->attributes = $_POST['Config'];
+      $model->company_id = $company_id;
+      $model->save();
+	  $model->value = unserialize($model->value);
+      Yii::app()->user->setFlash('', 'Saved.');
+    }
+
+    $this->render('tax_by_company', array('model' => $model));
   }
 
   public function actionTaxConfig() {

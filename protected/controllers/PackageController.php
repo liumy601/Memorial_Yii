@@ -86,10 +86,14 @@ class PackageController extends Controller {
     $command->bindParam(':package_id', $id);
     $command->bindParam(':company_id', Yii::app()->user->company_id);
     $productDataProvider = $command->query();
+	
+	$config = Config::model()->find('name="tax_by_company" and company_id='. Yii::app()->user->company_id);
+	$tax = unserialize($config->value);
 
     $this->render('view', array(
         'model' => $this->loadModel($id),
         'productDataProvider' => $productDataProvider,
+		'tax'=>$tax,
     ));
   }
 

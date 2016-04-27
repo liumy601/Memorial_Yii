@@ -67,12 +67,16 @@ Products</a>
 <td nowrap>Vendor</td>
 <td nowrap>SKU</td>
 <td nowrap>Retail</td>
-<td nowrap>Cost</td>
+<td nowrap>Category</td>
+<td nowrap>Taxable</td>
 </tr>
 <?php
 $totalPrice = 0;
 while ($row = $productDataProvider->read()) {
-  $totalPrice += (float)$row['retail'];
+	if($row['taxable'])
+		$totalPrice += (float)$row['retail']*(1+$tax);
+	else
+		$totalPrice += (float)$row['retail']
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
@@ -83,7 +87,8 @@ while ($row = $productDataProvider->read()) {
 <td class="tableData"> <?php echo $row['vendor'] ?> </td>
 <td class="tableData"> <?php echo $row['sku'] ?> </td>
 <td class="tableData"> $<?php echo $row['retail'] ?> </td>
-<td class="tableData"> $<?php echo $row['cost'] ?> </td>
+<td class="tableData">  <?php echo $row['category'] ?></td>
+<td class="tableData"> <?php echo CHtml::checkBox('taxable', $row['taxable'], array('disabled'=>'disabled')) ?> </td>
 </tr>
 <?php
 }
