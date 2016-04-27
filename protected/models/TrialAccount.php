@@ -13,7 +13,8 @@
 class TrialAccount extends CFormModel
 {
 	public $username;
-	public $yourname;
+	public $firstname;
+	public $lastname;
 	public $company_name;
 	public $email;
 	public $phone;
@@ -26,11 +27,10 @@ class TrialAccount extends CFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('yourname, email', 'required'),
-			array('username, yourname, company_name, email', 'length', 'max'=>50),
+			array('firstname, lastname, email', 'required'),
+			array('username, company_name, email', 'length', 'max'=>50),
 			array('phone', 'length', 'max'=>20),
 			array('username, yourname, company_name, email, phone', 'safe', 'on'=>'search'),
-			array('yourname', 'validateYourname'),
 		);
 	}
 
@@ -52,7 +52,8 @@ class TrialAccount extends CFormModel
 	{
 		return array(
 			'username' => 'User Name',
-			'yourname' => 'Your Name (in this format: jack jones)',
+			'firstname' => 'First Name',
+			'lastname' => 'Last Name',
 			'company_name' => 'Company Name',
 			'email' => 'Your Email',
 			'phone' => 'Phone Number',
@@ -97,14 +98,5 @@ class TrialAccount extends CFormModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function validateYourname()
-	{
-		$names = explode(' ', $this->yourname);
-
-		if(count($names) < 2) {
-			$this->addError('yourname', 'Should be in this format: jack jones');
-		}
 	}
 }

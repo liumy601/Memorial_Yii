@@ -17,7 +17,7 @@ class TrialAccountController extends Controller
 
 			if($model->validate()) {
 				$userName = $model->username;
-				$yourName = $model->yourname;
+				$yourName = $model->firstname. ' ' . $model->lastname;
 				$yourCompany = $model->company_name;
 				$yourEmail = $model->email;
 				$yourPhone = $model->phone;
@@ -116,11 +116,8 @@ class TrialAccountController extends Controller
 				$admin->type = 'admin';
 				$admin->email = $yourEmail;
 				$admin->company_id = $company_id;
-				$names = explode(' ', $yourName);
-				if(count($names) == 2) {
-					$admin->firstname = $names[0];
-					$admin->lastname = $names[1];
-				}
+				$admin->firstname = $model->firstname;
+				$admin->lastname = $model->lastname;
 				$admin->save(false);
 				//assign admin role
 				$command = Yii::app()->db->createCommand("insert into pre_auth_assignment set itemname='admin', userid=:userid");

@@ -28,9 +28,15 @@ input {
 	</p>
 
 	<p style="text-align:center">
-		<?php echo $form->labelEx($model,'yourname'); ?><br/>
-		<?php echo $form->textField($model,'yourname',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'yourname'); ?>
+		<?php echo $form->labelEx($model,'firstname'); ?><br/>
+		<?php echo $form->textField($model,'firstname',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->error($model,'firstname'); ?>
+	</p>
+
+	<p style="text-align:center">
+		<?php echo $form->labelEx($model,'lastname'); ?><br/>
+		<?php echo $form->textField($model,'lastname',array('size'=>50,'maxlength'=>50)); ?>
+		<?php echo $form->error($model,'lastname'); ?>
 	</p>
 
 	<p style="text-align:center">
