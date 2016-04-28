@@ -22,6 +22,7 @@ if(Yii::app()->user->name != 'Guest' ){
     });
 </script>
 <!-- App Cues -->
+
 <?php
 }
 ?>
