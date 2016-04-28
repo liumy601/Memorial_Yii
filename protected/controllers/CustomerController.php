@@ -270,7 +270,9 @@ class CustomerController extends Controller
       Yii::app()->params['print'] = true;
     }
     $this->_buildShortcuts();
-    
+    $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
+
     $connection = Yii::app()->db;
     
     //contacts
@@ -362,6 +364,7 @@ class CustomerController extends Controller
 //        'productRetail'=>$productRetail,
         'paymentDataProvider'=>$paymentDataProvider,
         'documents'=>$documents,
+		'optionFields'=>$optionFields,
     ));
   }
   
