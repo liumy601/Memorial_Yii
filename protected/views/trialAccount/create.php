@@ -10,6 +10,7 @@ input {
 }
 .errorMessage {
 	text-align: center;
+	color: #FF0000;
 }
 </style>
 
@@ -18,7 +19,10 @@ input {
 	'id'=>'trial-account-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-
+	
+	<?php if($created) : ?>
+		<p class="note" style="text-align:center">Your account has been created!</p>
+	<?php endif; ?>
 	<p class="note" style="text-align:center">Fields with <span class="required">*</span> are required.</p>
 
 	<p style="text-align:center">
@@ -58,7 +62,7 @@ input {
 	</p>
 
 	<div class="row buttons" style="text-align:center">
-		<?php echo CHtml::submitButton('SEND'); ?>
+		<?php echo CHtml::submitButton('Start My Trial'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

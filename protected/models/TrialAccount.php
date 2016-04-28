@@ -30,6 +30,8 @@ class TrialAccount extends CFormModel
 			array('firstname, lastname, email', 'required'),
 			array('username, company_name, email', 'length', 'max'=>50),
 			array('phone', 'length', 'max'=>20),
+			array('username', 'checkDuplicateUsername'),
+			array('email', 'checkDuplicateEmail'),
 			array('username, yourname, company_name, email, phone', 'safe', 'on'=>'search'),
 		);
 	}
@@ -98,5 +100,27 @@ class TrialAccount extends CFormModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function checkDuplicateUsername() {
+		$users = Users::model()->findAll();
+		$usernames = array();
+		foreach($users as $user) {
+			$usernames[] = $user->username;
+		}
+
+		if(in_array($this->username, $usernames))
+			$this->addError('username', 'Username "'. $this->username .'" has already been taken');
+	}
+
+	public function checkDuplicateEmail() {
+		$users = Users::model()->findAll();
+		$emails = array();
+		foreach($users as $user) {
+			$emails[] = $user->email;
+		}
+
+		if(in_array($this->email, $emails))
+			$this->addError('email', 'Email "'. $this->email .'" has already been taken');
 	}
 }

@@ -10,12 +10,14 @@ class TrialAccountController extends Controller
 	public function actionCreate()
 	{
 		$model=new TrialAccount;
+		$created = false;
 
 		if(isset($_POST['TrialAccount']))
 		{
 			$model->attributes=$_POST['TrialAccount'];
+			$valid = $model->validate();
 
-			if($model->validate()) {
+			if($valid) {
 				$userName = $model->username;
 				$yourName = $model->firstname. ' ' . $model->lastname;
 				$yourCompany = $model->company_name;
@@ -148,11 +150,16 @@ class TrialAccountController extends Controller
 				$mail->Send();
 			}
 
-			//$model=new TrialAccount;
+			if($valid) {
+				//empty fields and display new form
+				$model=new TrialAccount;
+				$created = true;
+			}
 		}
 
 		$this->renderPartial('create',array(
 			'model'=>$model,
+			'created'=>$created,
 		));
 	}
 }
