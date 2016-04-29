@@ -94,7 +94,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'funeral@preferati.com',
       
-		'siteURL'=>'http://funeral.preferati.com',
+		'siteURL'=>'http://app.memorialdirector.com',
 		'appappSiteURL'=>'http://appappbeta.preferati.com',
 
 		'appappToken'=>'$S$D2mi2s35CImbRQ9uQk/3l9KOjatUE0Jjt3I79keYPI1QGlTCXBmY',
