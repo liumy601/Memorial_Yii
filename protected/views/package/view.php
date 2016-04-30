@@ -29,7 +29,6 @@
 <div style="float:right">
   <a href="javascript:void window.open('/package/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink"><img src="/themes/Sugar/images/print.gif" width="13" height="13" alt="Print" border="0" align="absmiddle"></a>
   <a href="javascript:void window.open('/package/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink">Print</a>
-  <span appapptagid="1"></span>
 </div>
 <?php
  }
@@ -38,7 +37,7 @@
 <table width="100%" style="display:block"><!--detail-->
   <tbody>
     <tr>
-      <td width="15%" class="dvgrayTxt"><span appapptagid="2"></span><?php echo CHtml::encode($model->getAttributeLabel('name')); ?></td><td width="5" class="dvgrayTxt">:</td> 
+      <td width="15%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('name')); ?></td><td width="5" class="dvgrayTxt">:</td> 
       <td width="35%" class="dvValueTxt"><?php echo CHtml::encode($model->name); ?></td>
       <td width="50%" class="dvgrayTxt" colspan="2"> </td> 
     </tr>
@@ -67,16 +66,12 @@ Products</a>
 <td nowrap>Vendor</td>
 <td nowrap>SKU</td>
 <td nowrap>Retail</td>
-<td nowrap>Category</td>
-<td nowrap>Taxable</td>
+<td nowrap>Cost</td>
 </tr>
 <?php
 $totalPrice = 0;
 while ($row = $productDataProvider->read()) {
-	if($row['taxable'])
-		$totalPrice += (float)$row['retail']*(1+$tax);
-	else
-		$totalPrice += (float)$row['retail']
+  $totalPrice += (float)$row['retail'];
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
@@ -87,8 +82,7 @@ while ($row = $productDataProvider->read()) {
 <td class="tableData"> <?php echo $row['vendor'] ?> </td>
 <td class="tableData"> <?php echo $row['sku'] ?> </td>
 <td class="tableData"> $<?php echo $row['retail'] ?> </td>
-<td class="tableData">  <?php echo $row['category'] ?></td>
-<td class="tableData"> <?php echo CHtml::checkBox('taxable', $row['taxable'], array('disabled'=>'disabled')) ?> </td>
+<td class="tableData"> $<?php echo $row['cost'] ?> </td>
 </tr>
 <?php
 }
@@ -108,4 +102,3 @@ while ($row = $productDataProvider->read()) {
 
 </div>
 </div>
-

@@ -353,6 +353,9 @@ class CustomerController extends Controller
     $command8 = $connection->createCommand($sql);
     $command8->bindParam(':customer_id', $id);
     $discount = $command8->queryScalar();
+
+	$config = Config::model()->find('name="tax_by_company" and company_id='. Yii::app()->user->company_id);
+	$taxRate = unserialize($config->value);
     
     $this->render('view',array(
         'model'=>$this->loadModel($id),
@@ -365,6 +368,7 @@ class CustomerController extends Controller
         'paymentDataProvider'=>$paymentDataProvider,
         'documents'=>$documents,
 		'optionFields'=>$optionFields,
+		'taxRate'=>$taxRate,
     ));
   }
   
