@@ -23,12 +23,15 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 <?php else: ?>
 
 
-<?php $form=$this->beginWidget('CActiveForm', array('htmlOptions' => 
-    array('name'=>'EditView', 'id'=>'EditView', 
-        'class'=>'noajax', 
-        'enctype'=>'multipart/form-data',
-        'onsubmit'=>'return check_form_customer();'
-    ))); ?>
+<?php $form=$this->beginWidget('CActiveForm', 
+	array('action'=>CHtml::normalizeUrl(array('customer/update', 'id'=>$model->id))), 
+	array('htmlOptions' => 
+		array('name'=>'EditView', 'id'=>'EditView', 
+			'class'=>'noajax', 
+			'enctype'=>'multipart/form-data',
+			'onsubmit'=>'return check_form_customer();'
+		)
+	)); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 

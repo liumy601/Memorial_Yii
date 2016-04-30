@@ -354,8 +354,7 @@ class CustomerController extends Controller
     $command8->bindParam(':customer_id', $id);
     $discount = $command8->queryScalar();
 
-	$config = Config::model()->find('name="tax_by_company" and company_id='. Yii::app()->user->company_id);
-	$taxRate = unserialize($config->value);
+	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
     
     $this->render('view',array(
         'model'=>$this->loadModel($id),
