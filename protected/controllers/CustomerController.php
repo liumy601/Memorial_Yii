@@ -1294,8 +1294,8 @@ class CustomerController extends Controller
     
     //$sales_tax
 //     if (strpos($template->templates, '%Sales Tax%') !== false) {
-        $taxConfig = Config::load('tax');
-        $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxConfig->value .") from product p, inventory i
+        $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+        $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
                  where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
         $command = $connection->createCommand($sql);
         $command->bindParam(':customer_id', $customer_id);
@@ -1625,7 +1625,7 @@ class CustomerController extends Controller
       $totalPrice += $row['retail'];
       if($row['taxable'] == 1){
         $totalTax += $row['retail'];
-        $taxRate = Config::load('tax')->value;
+        $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
         $tax = $totalTax * $taxRate;
       }
     }
@@ -3082,8 +3082,8 @@ class CustomerController extends Controller
     $total_cash_advances = $command4->queryScalar();
         
     //get sales_tax
-    $taxConfig = Config::load('tax');
-    $sql5 = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxConfig->value .") from product p, inventory i
+    $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+    $sql5 = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
              where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
     $command5 = $connection->createCommand($sql5);
     $command5->bindParam(':customer_id', $customer_id);
