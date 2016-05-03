@@ -40,7 +40,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
   <table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center">
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer" pageTitle="Customer" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent" pageTitle="Customer" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
 
   <div id="Information">
@@ -706,7 +706,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 	<table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center"></div>
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer" pageTitle="Customer" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent" pageTitle="Customer" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
   
   
