@@ -197,7 +197,7 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
   } else if (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff'){ 
     $headMenus = array(
       'Home' => '/',
-      'Decedents' => '/customer',
+      'Decedents' => '/decedent',
       'Tasks' => '/task',
       'Inventory' => '/inventory',
       'Templates' => '/template',
