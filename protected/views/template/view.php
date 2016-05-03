@@ -42,12 +42,6 @@
         <td width="15%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('email_text')); ?></td>
         <td width="35%" class="dvValueTxt"><?php echo nl2br($model->email_text); ?></td>
     </tr>
-
-    
-    <tr>
-      <td width="15%" class="dvgrayTxt">Default for all customer</td>
-      <td width="35%" class="element"><?php echo $model->default_check ? 'Yes' : 'No'; ?></td>
-    </tr>
        
     <tr>
         <td width="15%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('templates')); ?></td>
