@@ -212,7 +212,7 @@ class CustomerController extends Controller
         $this->redirect(array('view','id'=>$model->id));
       }
     }
-    
+
     $this->render('_form', array('model'=>$model, 'optionFields'=>$optionFields));
 	}
   
