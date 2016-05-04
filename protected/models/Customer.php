@@ -276,13 +276,6 @@ class Customer extends CActiveRecord
 			'enteredby' => 'Created By',
 			'enteredtm' => 'Created Time',
 			'company_id' => 'Company',
-        
-			'pod_facility_name' => 'PoD Facility Name',
-			'pod_facility_street' => 'PoD Facility Street Address',
-			'pod_facility_city' => 'PoD Facility City',
-			'pod_facility_state' => 'PoD Facility State',
-			'pod_facility_zip' => 'PoD Facility Zip',
-			'veteran_serial_number' => 'Veteran\'s Serial Number',
 		);
 	}
 

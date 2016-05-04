@@ -103,10 +103,6 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="10%" class="label"> </td>
         <td width="40%" class="element" colspan="3">
           <table border="0">
-			<tr>
-             <td width="220"><b>Logo</b></td>
-             <td>%Logo%</td>
-            </tr>
             <tr>
              <td width="220"><b>Case Number</b></td>
              <td>%Case Number%</td>
