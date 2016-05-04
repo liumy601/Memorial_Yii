@@ -89,7 +89,7 @@
 <table border="0">
     <tr>
       <td class="label"> </td>
-      <td class="element"><?php echo CHtml::submitButton('Save'); ?></td>
+      <td class="element"><?php echo CHtml::submitButton('Save', array('class'=>'btn')); ?></td>
     </tr>
  </table>
 
