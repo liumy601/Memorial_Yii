@@ -52,8 +52,12 @@ class TemplateController extends Controller
     $this->_buildShortcuts();
 
 //    $command = $connection->createCommand("select * from template order by name");
-    $command = $connection->createCommand("select * from template where company_id=:company_id and deleted=0 order by name");
-    $command->bindParam(':company_id', Yii::app()->user->company_id);
+	if (Yii::app()->user->type == 'super admin') {
+		$command = $connection->createCommand("select * from template where is_super_admin=1 and deleted=0 order by name");
+	} else {
+		$command = $connection->createCommand("select * from template where company_id=:company_id and deleted=0 order by name");
+		$command->bindParam(':company_id', Yii::app()->user->company_id);
+	}
     $dr = $command->query();
     
 		$this->render('index', array('dr'=>$dr));
@@ -62,7 +66,7 @@ class TemplateController extends Controller
   public function actionCreate()
 	{
     $this->_buildShortcuts();
-    
+
     if (isset($_POST['Template'])) {
       $model = new Template();
       $model->attributes = $_POST['Template'];
@@ -71,6 +75,9 @@ class TemplateController extends Controller
       $model->company_id = Yii::app()->user->company_id;
       $model->deleted = 0;
       
+	   if (Yii::app()->user->type == 'super admin')
+			$model->is_super_admin = 1;
+
       $model->save();
      
       Yii::app()->user->setFlash('', 'Template is saved.');
@@ -78,7 +85,7 @@ class TemplateController extends Controller
     }
     
     $model = new Template();
-    $this->render('_form', array('model'=>$model));
+    $this->render('_form', array('model'=>$model, 'sample_templates'=>Template::loadSampleTemplates()));
 	}
   
   public function actionUpdate($id)
@@ -97,6 +104,7 @@ class TemplateController extends Controller
     
     $this->render('_form',array(
         'model'=>$model,
+		'sample_templates'=>Template::loadSampleTemplates(),
     ));
   }
   

@@ -191,12 +191,13 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
       'Company' => '/admin/company',
       'Company Admin' => '/admin/user',
       'Company Staff' => '/admin/companystaff',
+	  'Templates' => '/template',
       'Config' => '/admin/taxconfig',
     );
   } else if (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff'){ 
     $headMenus = array(
       'Home' => '/',
-      'Decedents' => '/customer',
+      'Decedents' => '/decedent',
       'Tasks' => '/task',
       'Inventory' => '/inventory',
       'Templates' => '/template',

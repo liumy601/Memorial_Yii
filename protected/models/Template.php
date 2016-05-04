@@ -50,7 +50,7 @@ class Template extends CActiveRecord
 			array('enteredby', 'length', 'max'=>15),
 			array('deleted', 'length', 'max'=>1),
 			array('email_address', 'length', 'max'=>100),
-			array('email_text, templates', 'safe'),
+			array('email_text, templates, is_super_admin, active', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name, case_number, email_address, email_text, templates, default_check, company_id, deleted', 'safe', 'on'=>'search'),
@@ -166,5 +166,11 @@ class Template extends CActiveRecord
       $this->company_id = Yii::app()->user->company_id;
     }
     return parent::save();
+  }
+
+  public static function loadSampleTemplates() {
+	$sample_templates = Template::model()->findAll('is_super_admin=1 and active=1 and deleted=0 order by name');
+	$sample_templates = array_merge(array(''=>'---select---'), CHtml::listData($sample_templates, 'templates', 'name'));
+	return $sample_templates;
   }
 }

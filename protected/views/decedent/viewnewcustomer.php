@@ -3,17 +3,25 @@
 <div id="leftPanel">
   
 <!--buttons-->
-<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; "><table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer"><tbody><tr><td align="center" nowrap="" class="pL15"><span appapptagid="16"></span> <a href="javascript:void(0);" onclick="history.back();return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td><td nowrap="" class="pL10 dvmo"> 
-<input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/customer/update/<?php echo $model->id; ?>" pagetitle="Edit contact" id="editview_student_<?php echo $model->id; ?>"/>
-<input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/customer/delete/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
-&nbsp;
-</td>
+<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; ">
+  <table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer">
+  <tbody>
+  <tr>
+    <td align="center" nowrap="" class="pL15"><span appapptagid="16"></span> <a href="javascript:void(0);" onclick="history.back();return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td>
+    <td nowrap="" class="pL10 dvmo">
+      <input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/customer/updatenewcustomer/<?php echo $model->id; ?>" pagetitle="Edit contact" id="editview_student_<?php echo $model->id; ?>"/>
+      <input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/customer/deletenewcustomer/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
+     </td>
 <td width="100" class="dvmo"> </td>
 <td> </td>
 <td width="90%"> 
   <input style="float:right;" name="download_customer" class="button" type="button" value="Guest Book Export"  onclick="customers_export(<?php echo $model->id ?>);">
 </td>
-</tr></tbody></table></div>
+</tr>
+</tbody>
+  </table>
+  
+</div>
   
   
 <!--view object-->
@@ -34,6 +42,7 @@
 <div style="float:right">
   <a href="javascript:void window.open('/customer/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink"><img src="/themes/Sugar/images/print.gif" width="13" height="13" alt="Print" border="0" align="absmiddle"></a>
   <a href="javascript:void window.open('/customer/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink">Print</a>
+  <span appapptagid="1"></span>
 </div>
 <?php
  }
@@ -47,123 +56,52 @@
 </table>
 <table width="100%" style="display:block"><!--detail-->
   <tbody>
+<!--    <tr>
+        <td width="20%" class="dvgrayTxt"><?php // echo CHtml::encode($model->getAttributeLabel('deceased_photo')); ?></td>
+        <td width="30%" class="dvValueTxt"><img src="/<?php // echo CHtml::encode($model->deceased_photo); ?>" width="40" height="20"></td>
+     </tr>-->
+    
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('deceased_photo')); ?></td>
-        <td width="30%" class="dvValueTxt">
-          <?php if(!empty($model->deceased_photo)){ ?>
-          <a href="/<?php echo CHtml::encode($model->deceased_photo); ?>" target="_blank"><img src="/<?php echo CHtml::encode($model->deceased_photo); ?>" width="40" height="20"></a>
-          <?php } ?>
-        </td>
-        </tr>
-        
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('case_number')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->case_number); ?></td>
+        <td width="20%" class="dvgrayTxt"><?php // echo CHtml::encode($model->getAttributeLabel('case_number')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->case_number); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('status')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo $model->status; ?></td>
         </tr>
-        
+    
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('skfh_funeral_home')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->skfh_funeral_home); ?></td>
         <td width="20%" class="dvgrayTxt">Full Legal Name</td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_legal_name); ?></td>
         </tr>
-		
-		<?php if($optionFields->full_legal_name_f) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('full_legal_name_f'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_legal_name_f); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->full_legal_name_m) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('full_legal_name_m'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_legal_name_m); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->full_legal_name_l) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('full_legal_name_l'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_legal_name_l); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->full_legal_prefix) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('full_legal_prefix'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_legal_prefix); ?></td>
-			</tr>
-		<?php endif; ?>
         
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('name_for_obituary')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->name_for_obituary); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('age')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo $model->calAge(); ?></td>
         </tr>
         
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('address')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->address); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('sex')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->sex); ?></td>
+        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('age')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->age); ?></td>
         </tr>
         
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('state')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->state); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('zip')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->zip); ?></td>
-        </tr>
-        
-        <tr>
+        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('clergy_full_name2')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->clergy_full_name2); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('formerly_of')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formerly_of); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('city')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->city); ?></td>
         </tr>
-        
-<!--        <tr>
-        <td width="20%" class="dvgrayTxt"><?php // echo CHtml::encode($model->getAttributeLabel('country')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->country); ?></td>
-        </tr>-->
-        
+
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('date_of_birth')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->date_of_birth); ?></td>
         <!--<td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->formatDateTimeWithWeekday('date_of_birth', 'time_of_birth', 'zone_of_birth')); ?></td>-->
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeWithWeekday1('date_of_birth')); ?></td>
+        <!--<td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->formatDateTimeWithWeekday('date_of_birth', 'time_of_birth')); ?></td>-->
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('place_of_birth')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->place_of_birth); ?></td>
         </tr>
-		
-		<?php if($optionFields->city_of_birth) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('city_of_birth'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->city_of_birth); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->state_of_birth) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('state_of_birth'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->state_of_birth); ?></td>
-			</tr>
-		<?php endif; ?>
 
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('date_of_death')); ?></td>
@@ -172,51 +110,6 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('place_of_death')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->place_of_death); ?></td>
         </tr>
-
-		<?php if($optionFields->pod_facility_name) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('pod_facility_name'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->pod_facility_name); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->pod_facility_street) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('pod_facility_street'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->pod_facility_street); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->pod_facility_city) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('pod_facility_city'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->pod_facility_city); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->pod_facility_state) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('pod_facility_state'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->pod_facility_state); ?></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->pod_facility_zip) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('pod_facility_zip'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->pod_facility_zip); ?></td>
-			</tr>
-		<?php endif; ?>
 
         <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         <tr>
@@ -229,14 +122,6 @@
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('officiant')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->officiant); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('clergy_full_name2')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->clergy_full_name2); ?></td>
-        </tr>
-        
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('funeral_service_date')); ?></td>
-        <!--<td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->formatDateTime('funeral_service_date', 'funeral_service_time')); ?></td>-->
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeFuneral('funeral_service_date', 'funeral_service_time')); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('location_of_funeral_service')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
@@ -250,32 +135,26 @@
         </tr>
 
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('date_of_visitation_start')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeStart('date_of_visitation_start', 'visitation_time')); ?></td>
+        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('funeral_service_date')); ?></td>
+        <!--<td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->formatDateTime('funeral_service_date', 'funeral_service_time')); ?></td>-->
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeFuneral('funeral_service_date', 'funeral_service_time')); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('location_of_visitation')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-           if($model->location_of_visitation != 'Other'){
-             echo CHtml::encode($model->location_of_visitation);
-           }else{
-             echo CHtml::encode($model->location_of_visitation_other);
-           }
-         ?>
+            if($model->location_of_visitation != 'Other'){
+              echo CHtml::encode($model->location_of_visitation);
+            }else{
+              echo CHtml::encode($model->location_of_visitation_other);
+            }
+          ?>
         </td>
         </tr>
 
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('disposition_type')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->disposition_type); ?></td>
+        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('date_of_visitation_start')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeStart('date_of_visitation_start', 'visitation_time')); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('date_of_visitation_end')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->formatDateTimeEnd('date_of_visitation_end', 'visitation_time')); ?></td>
-        </tr>
-        
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('disposition_date')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->disposition_date); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('disposition_place')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->disposition_place); ?></td>
         </tr>
         
         <tr>
@@ -291,48 +170,12 @@
         </tr>
         
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('burial')); ?></td>
+        <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('burial')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->burial); ?></td>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('memorials')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->memorials); ?></td>
+        <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('memorials')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo nl2br($model->memorials); ?></td>
         </tr>
         
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('interment_city')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->interment_city); ?></td>
-        <td width="20%" class="dvgrayTxt"> </td>
-        <td width="30%" class="dvValueTxt"> </td>
-        </tr>
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('interment_country')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php $countries = CommonFunc::countries(); $countries[''] = ''; echo CHtml::encode($countries[$model->interment_country]); ?></td>
-        <td width="20%" class="dvgrayTxt"> </td>
-        <td width="30%" class="dvValueTxt"> </td>
-        </tr>
-        <tr>
-        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('interment_state')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->interment_state); ?></td>
-        <td width="20%" class="dvgrayTxt"> </td>
-        <td width="30%" class="dvValueTxt"> </td>
-        </tr>
-        
-		<?php if($optionFields->interment_street) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('interment_street'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->interment_street); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->interment_zip) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('interment_zip'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->interment_zip); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
         
         <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         
@@ -367,31 +210,11 @@
 
         <tr>
         <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('occupation')); ?></td>
+        <!--<td width="30%" class="dvValueTxt"><?php // echo nl2br($model->occupation); ?></td>-->
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->occupation); ?></td>
         <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('biography')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->biography); ?></td>
         </tr>
-        
-        <tr>
-        <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('veteran_status')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->veteran_status); ?></td>
-        <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('branch')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->branch); ?></td>
-        </tr>
-        
-        <tr>
-        <td width="20%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('full_military_rites')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->full_military_rites); ?></td>
-        </tr>
-
-		<?php if($optionFields->veteran_serial_number) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('veteran_serial_number'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->veteran_serial_number); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
 
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('spouse_f')); ?></td>
@@ -448,12 +271,12 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('newspaper_radio2')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-            if($model->newspaper_radio2 != 'Other'){
-              echo nl2br($model->newspaper_radio2);
-            }else{
-              echo nl2br($model->newspaper_radio2_other);
-            }
-          ?>
+              if($model->newspaper_radio2 != 'Other'){
+                echo nl2br($model->newspaper_radio2);
+              }else{
+                echo nl2br($model->newspaper_radio2_other);
+              }
+           ?>
         </td> 
         </tr>
         
@@ -461,22 +284,22 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('newspaper_radio3')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-            if($model->newspaper_radio3 != 'Other'){
-              echo nl2br($model->newspaper_radio3);
-            }else{
-              echo nl2br($model->newspaper_radio3_other);
-            }
-          ?>
+              if($model->newspaper_radio3 != 'Other'){
+                echo nl2br($model->newspaper_radio3);
+              }else{
+                echo nl2br($model->newspaper_radio3_other);
+              }
+           ?>
         </td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('newspaper_radio4')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-            if($model->newspaper_radio4 != 'Other'){
-              echo nl2br($model->newspaper_radio4);
-            }else{
-              echo nl2br($model->newspaper_radio4_other);
-            }
-          ?>
+              if($model->newspaper_radio4 != 'Other'){
+                echo nl2br($model->newspaper_radio4);
+              }else{
+                echo nl2br($model->newspaper_radio4_other);
+              }
+           ?>
         </td> 
         </tr>
         
@@ -484,22 +307,22 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('newspaper_radio5')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-            if($model->newspaper_radio5 != 'Other'){
-              echo nl2br($model->newspaper_radio5);
-            }else{
-              echo nl2br($model->newspaper_radio5_other);
-            }
-          ?>
+              if($model->newspaper_radio5 != 'Other'){
+                echo nl2br($model->newspaper_radio5);
+              }else{
+                echo nl2br($model->newspaper_radio5_other);
+              }
+           ?>
         </td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('newspaper_radio6')); ?></td>
         <td width="30%" class="dvValueTxt">
           <?php 
-            if($model->newspaper_radio6 != 'Other'){
-              echo nl2br($model->newspaper_radio6);
-            }else{
-              echo nl2br($model->newspaper_radio6_other);
-            }
-          ?>
+              if($model->newspaper_radio6 != 'Other'){
+                echo nl2br($model->newspaper_radio6);
+              }else{
+                echo nl2br($model->newspaper_radio6_other);
+              }
+           ?>
         </td> 
         </tr>
         
@@ -567,53 +390,8 @@
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('doctors_name')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctors_name); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('ssn')); ?></td>
-		<td width="30%" class="dvValueTxt">
-			<?php 
-			if(strlen($model->ssn) > 3) {
-				$hidedSSN = preg_replace('/\w/i', 'x', substr($model->ssn,3));
-				echo CHtml::link(substr($model->ssn,0,3). $hidedSSN, '#',array('onclick'=>'$(this).text("'.$model->ssn.'");return false;'));
-			} else {
-				echo CHtml::encode($model->ssn);
-			}
-			?>
-		</td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->ssn); ?></td>
         </tr>
-
-		<?php if($optionFields->doctor_street) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('doctor_street'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctor_street); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->doctor_city) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('doctor_city'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctor_city); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->doctor_state) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('doctor_state'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctor_state); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
-
-		<?php if($optionFields->doctor_zip) : ?>
-			<tr>
-			<td width="20%" class="dvgrayTxt"><?php echo $model->getAttributeLabel('doctor_zip'); ?></td>
-			<td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->doctor_zip); ?></td>
-			<td width="20%" class="dvgrayTxt"></td>
-			<td width="30%" class="dvValueTxt"></td>
-			</tr>
-		<?php endif; ?>
         
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('informant_name_f')); ?></td>
@@ -644,7 +422,6 @@
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->informant_name_country); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('informant_name_zip')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->informant_name_zip); ?></td>
-        </tr>
         
         <tr>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('military_veteran')); ?></td>
@@ -659,15 +436,14 @@
           <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('enteredtm')); ?></td>
           <td width="30%" class="dvValueTxt"><?php echo date("m/d/Y H:i:s", $model->enteredtm); ?></td>
         </tr>
+        
   </tbody>
 </table>
 
 
-
 <br/><br/>
 <!--Products-->
-<div id="productlist-wrapper">
-<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg" id="productlist"><tbody><tr height="25">
+<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg"><tbody><tr height="25">
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_product_<?php echo $model->id; ?>');" 
    name="relationship_product_<?php echo $model->id; ?>" id="relationship_product_<?php echo $model->id; ?>" class="relListHead">
@@ -696,6 +472,7 @@ while ($row = $productDataProvider->read()) {
   $totalPrice += $row['retail'];
   if($row['taxable'] == 1){
     $totalTax += $row['retail'];
+    $taxRate = Config::load('tax')->value;
     $tax = $totalTax * $taxRate;
   }
 ?>
@@ -703,15 +480,14 @@ while ($row = $productDataProvider->read()) {
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
   <a class="sl" href="/customer/editproduct/<?php echo $row['product_id']; ?>?from=customer">Edit</a>
   <span class="sep">|</span> 
-  <a href="#" class="listViewTdToolsS1 noajax" onclick="if(confirm('Are you sure delete this product?')){ deleteProduct(this, <?php echo $row['product_id'] ?>); } return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/customer/deleteproduct/<?php echo $row['product_id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
 </div>
 </td>
 <td class="tableData"> <?php echo $row['name'] ?> </td>
 <td class="tableData"> <?php echo $row['vendor'] ?> </td>
 <td class="tableData"> <?php echo $row['sku'] ?> </td>
-<td class="tableData" id="retail_<?php echo $row['product_id'];?>">$<span id="product_retail1_<?php echo $row['product_id']; ?>" style="color:red;" onclick="alterInput(<?php echo $row['product_id'];?>,<?php echo $model->id;?>);"> <?php 
-     echo number_format($row['retail'], 2);
-  ?></span>
+<td class="tableData" id="retail_<?php echo $row['product_id'];?>">$<span id="product_retail1_<?php echo $row['product_id']; ?>" style="color:red;" onclick="alterInput(<?php echo $row['product_id'];?>,<?php echo $model->id;?>);" >
+  <?php echo number_format($row['retail'], 2);?></span>
 </td>
 <!--<td class="tableData"> <?php // echo $row['cost'] ? '$'.$row['cost'] : '' ?> </td>-->
 <td class="tableData"> <?php echo $row['category'] ?> </td>
@@ -723,8 +499,8 @@ while ($row = $productDataProvider->read()) {
 
 </tbody></table>
 </td></tr>
-
- <tr class="rellistbL">
+  
+<tr class="rellistbL">
    <td colspan="5"></td>
    <td style="text-align: right;" width="10%">Total:</td>  
    <td width="7%">$<span id="span_total_price"><?php echo number_format($totalPrice + $tax - $discount, 2); ?></span></td>
@@ -743,17 +519,15 @@ while ($row = $productDataProvider->read()) {
  <tr class="rellistbL">
    <td colspan="5"></td><td><span style="text-align: right;">Balance Due:</span></td>  <td>  $<span id="span_total_price"><?php echo number_format($totalPrice + $tax - $total_payments - $tatal_balances, 2); ?></span></td>
  </tr>
- 
 
 <!-- Field Data goes here --></tbody></table>
-</div>
 </div>
 <!--Products --------end-->
 
 
 <br/><br/>
 <!--Payments-->
-<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg" id="paymentlist"><tbody><tr height="25">
+<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg"><tbody><tr height="25">
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_payment_<?php echo $model->id; ?>');" 
    name="relationship_payment_<?php echo $model->id; ?>" id="relationship_payment_<?php echo $model->id; ?>" class="relListHead">
@@ -781,17 +555,18 @@ while ($row = $paymentDataProvider->read()) {
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
-  <a class="sl noajax" href="/customer/editpayment/<?php echo $row['id']; ?>?from=customer">Edit</a>
+  <a class="sl" href="/customer/editpayment/<?php echo $row['id']; ?>?from=customer">Edit</a>
   <span class="sep">|</span> 
-  <a href="#" class="listViewTdToolsS1 noajax" onclick="if(confirm('Are you sure delete this record?')){ deletePayment(this, <?php echo $row['id'] ?>); } return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/customer/deletepayment/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
 </div>
 </td>
-<td class="tableData"> <?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?> </td>
-<td class="tableData"> <?php echo $row['payer']; ?> </td>
-<td class="tableData"> $<?php echo $row['amount']; ?> </td>
-<td class="tableData"> <?php echo $row['payment_method']; ?> </td>
-<td class="tableData"> <?php echo $row['date']; ?> </td>
-<td class="tableData"> <?php echo nl2br($row['reason']); ?> </td>
+<td class="tableData"> <?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?></td>
+<td class="tableData"> <?php echo $row['payer'] ?> </td>
+<td class="tableData"> $<?php echo $row['amount'] ?> </td>
+<td class="tableData"> <?php echo $row['payment_method'] ?> </td>
+<td class="tableData"> <?php echo $row['date'] ?> </td>
+<td class="tableData"> <?php echo nl2br($row['reason']) ?> </td>
+<!--<td class="tableData"><a href="#" id="printReceipt" onclick="dialogReceipt(<?php echo $model->id; ?>, <?php echo $row['id'];?>, '<?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?>');return false;">receipt</a></td>-->
 <td class="tableData"><a href="#" onclick="dialogReceipt(<?php echo $model->id; ?>, <?php echo $row['id'];?>, '<?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?>');return false;">receipt</a></td>
 <td class="tableData"><a href="#" onclick="print_receipt(<?php echo $model->id; ?>, <?php echo $row['id'];?>, '<?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?>');return false;">Print</a></td>
 </tr>
@@ -804,8 +579,8 @@ while ($row = $paymentDataProvider->read()) {
 <tr class="rellistbL">
  <td align="left">
   <div id="ra">
-   <a href="/customer/addpayment/<?php echo $model->id; ?>" class="rellistNew noajax">Add payment</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="/customer/addcredit/<?php echo $model->id; ?>" class="rellistNew noajax">Add discount</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="/customer/addpayment/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add payment</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="/customer/addcredit/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add discount</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
  </td> 
 </tr>
@@ -817,7 +592,7 @@ while ($row = $paymentDataProvider->read()) {
 
 <br/><br/>
 <!--Document-------->
-<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg" id="documentslist"><tbody><tr height="25">
+<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg"><tbody><tr height="25">
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_document_<?php echo $model->id; ?>');" 
    name="relationship_document_<?php echo $model->id; ?>" id="relationship_document_<?php echo $model->id; ?>" class="relListHead">
@@ -839,11 +614,18 @@ Documents</a> <span appapptagid="19"></span>
 <?php
 if($documents){
   foreach ($documents as $template_id => $row) {
+//    echo '<pre>';
+//    print_r($row);
+//    echo '</pre>';
+//    exit;
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
-<?php if(!$row['product_id']){ ?>
-  <a href="#" class="listViewTdToolsS1 noajax" onclick="if(confirm('Are you sure delete this document?')){ deleteDocument(this, <?php echo $row['id'] ?>); } return false;">Remove</a>
+<?php if(!$row['product_id']){ 
+//  echo $row['product_id'].'111<br/>'; echo $row['id'];exit;
+  ?>
+  <!--<a href="#" class="listViewTdToolsS1" url="/customer/deletedocument/<?php // echo $row['id'] ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this);} return false;">Remove</a>-->
+  <a href="#" class="listViewTdToolsS1" url="/customer/deletedocument/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this);} return false;">Remove</a>
 <?php } else { ?>
   <span class="gray">Relate to product</span> <?php // echo $row['product_name'] ?>
 <?php } ?>
@@ -874,7 +656,7 @@ if($documents){
 
 <br/><br/>
 <!--Contacts-->
-<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg" id="contactlist"><tbody><tr height="25">
+<table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg"><tbody><tr height="25">
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_contact_<?php echo $model->id; ?>');" 
    name="relationship_contact_<?php echo $model->id; ?>" id="relationship_contact_<?php echo $model->id; ?>" class="relListHead">
@@ -903,7 +685,7 @@ while ($row = $contactDataProvider->read()) {
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
   <a class="sl" href="/contact/update/<?php echo $row['id']; ?>?from=customer">Edit</a>
   <span class="sep">|</span> 
-  <a href="#" class="listViewTdToolsS1 noajax" onclick="if(confirm('Are you sure delete this contact?')){ deleteContact(this, <?php echo $row['id'] ?>); } return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/contact/delete/<?php echo $row['id']; ?>?from=customer" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
 </div>
 </td>
 <td class="tableData"> <a class="f12" href="/contact/view/<?php echo $row['id']; ?>"><?php echo $row['full_name'] ?></a> </td>
@@ -1083,6 +865,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
   function alterInput(product_id, customer_id){
     var data = $('#product_retail1_'+product_id).html().replace(/ /g, '');
     $('#product_retail1_'+product_id).remove();
+//    $('#retail_'+product_id).html('$<input type="text" name="product_retail" id="product_retail2_'+product_id+'" style="width:60px;" value="'+data+'" onblur="saveInputValue('+product_id+');" onkeyup="value=value.replace(/[^\\d\\.]/g,\'\')" onbeforepaste="clipboardData.setData(\'text\',clipboardData.getData(\'text\').replace(/[^\\d\\.]/g,\'\'))">');
     $('#retail_'+product_id).html('$<input type="text" name="product_retail" id="product_retail2_'+product_id+'" style="width:60px;" value="'+data+'" onblur="saveInputValue('+product_id+','+customer_id+');" onkeyup="value=value.replace(/[^\\d\\.]/g,\'\')" onbeforepaste="clipboardData.setData(\'text\',clipboardData.getData(\'text\').replace(/[^\\d\\.]/g,\'\'))">');
     $('#product_retail2_'+product_id).focus();   
   }
@@ -1096,7 +879,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
      }
      
       $.ajax({
-        async:true,
+        async:false,
         cache:false,
         url: '/customer/editretail/product_id/'+product_id+'/customer_id/'+customer_id,
         type: 'POST',
@@ -1114,27 +897,11 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
            tax = 0;
          }
           var value = $('#product_retail2_'+product_id).val();
+//          $('#retail_'+product_id).html('$<span id="product_retail1_'+product_id+'" style="color:red;width:70px;" onclick="alterInput('+product_id+');">'+value+'</span>');
           $('#retail_'+product_id).html('$<span id="product_retail1_'+product_id+'" style="color:red;width:70px;" onclick="alterInput('+product_id+','+customer_id+');">'+value+'</span>');
           $('#span_tax').html(tax);
           $('#span_total_price').html(totalPrices);
           
-        }
-      });
-   }
-   
-   function refreshProductList(){
-     $.ajax({
-        async:true,
-        cache:false,
-        url: '/customer/refreshProductList/<?php echo $model->id; ?>',
-        type: 'GET',
-        data: {},
-        dataType: 'html',
-        timeout: 15000,
-        beforeSend:function(){
-        },
-        success: function(data){
-          $('#productlist-wrapper').html(data);
         }
       });
    }
@@ -1244,7 +1011,7 @@ $(document).ready(function(){
 
 <!--Begin: add package-->
 <div id="add_package" style="display: none;"><br/>
-  <form method="post" action="/customer/addpackage/<?php echo $model->id;?>" id="addpackage-form" class="noajax">
+  <form method="post" action="/customer/addpackage/<?php echo $model->id;?>" id="addpackage-form">
     <b>Select package: </b><br/>
   <?php 
    echo CHtml::checkBoxList('package[]', array(), Package::getAll());
@@ -1255,6 +1022,126 @@ $(document).ready(function(){
 </div>
 <!--End: add package-->
 
+
+<script type="text/javascript">
+  function changeTotalPrice(){
+    var totalPrice = $('#total_price').val();
+    alert(totalPrice);
+    return;
+  }
+  
+  function customers_export(customer_id){
+    document.location.href = '/customer/customersexport/customer_id/'+customer_id;
+  }
+  
+ function dialogReceipt(customer_id, payment_id, type){
+    $.ajax({
+      async:false,
+      cache:false,
+      url: '/customer/getpayment/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type,
+      type: 'POST',
+      data: {},
+      dataType: 'json',
+      timeout: 15000,
+      beforeSend:function(){
+      },
+      success: function(paymentData){
+        for(i in paymentData){
+          if(paymentData['company_logo'] !== ''){
+            $('#img_logo').attr('src', '');
+            $('#img_logo').attr('src', '/'+paymentData['company_logo']);
+          }else{
+            $('#img_logo').attr('src', '');
+            $('#img_logo').attr('style', 'display: none;');
+          }
+          
+          $('#company_name').html('');
+          $('#company_name').html(paymentData['company_name']);
+          
+          $('#company_address').html('');
+          $('#company_address').html(paymentData['company_address']);
+          
+          if(paymentData['company_city'] !== ''){
+            $('#company_city').html('');
+            $('#company_city').html(paymentData['company_city']+',');
+          }else{
+            $('#company_city').html('');
+            $('#company_city').html(paymentData['company_city']);
+          }
+          
+          $('#company_state').html('');
+          $('#company_state').html(paymentData['company_state']);
+          
+          $('#company_zip').html('');
+          $('#company_zip').html(paymentData['company_zip']);
+          
+          $('#customer_name').html('');
+          $('#customer_name').html(paymentData['customer_name']);
+          
+          $('#payment_name').html('');
+          $('#payment_name').html(paymentData['payer']);
+          
+          $('#payment_address').html('');
+          $('#payment_address').html(paymentData['address']);
+          
+          $('#payment_city').html('');
+          $('#payment_city').html(paymentData['city']);
+          
+          $('#payment_state').html('');
+          $('#payment_state').html(paymentData['state']);
+          
+          $('#payment_zip').html('');
+          $('#payment_zip').html(paymentData['zip']);
+          
+          $('#payment_date').html('');
+          $('#payment_date').html(paymentData['date']);
+          
+          $('#balance_before_payment').html('');
+          $('#balance_before_payment').html('$'+paymentData['balance_before_payment']);
+          
+          $('#method').html('');
+          $('#method').html(paymentData['payment_method']);
+          
+          if(type === 'discount'){
+            $('#amount_discount').html('');
+            $('#amount_discount').html(paymentData['discount']);
+          }else{
+            $('#amount_discount').html('');
+            $('#amount_discount').html(paymentData['amount']);
+          }
+          
+          $('#check_number').html('');
+          $('#check_number').html(paymentData['check_number']);
+          
+          $('#balance_due_account').html('');
+          $('#balance_due_account').html(paymentData['balance_due_account']);
+        }
+        
+        if(type === 'discount'){
+          $('#payment_discount').html('');
+          $('#payment_discount').html('Discount:');
+        }else{
+          $('#payment_discount').html('');
+          $('#payment_discount').html('Payment:');
+        }
+        
+        $('#payment_receipt').dialog('close');
+        $('#payment_receipt').dialog({'title':'Receipt', 'width':'670', 'height':'420'});
+        
+        $('#printReceiptButton').live('click', function(){
+          var type = paymentData['type']==='credit' ? 'discount' : paymentData['type']; 
+          print_receipt(paymentData['customer_id'], paymentData['id'], type);
+        });
+      }
+    });
+    
+  }
+  
+   function print_receipt(customer_id, payment_id, type){
+    document.location.href='/customer/printreceipt/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type;
+  }
+  
+</script>
 
 <div id="payment_receipt" style="display: none;">
   <table border="0">
@@ -1268,7 +1155,8 @@ $(document).ready(function(){
         <td rowspan="2" style="text-align: left;">
           <img id="img_logo" width="80px" height="60px"/>
         </td>
-        <td rowspan="2"> <span style="text-align: right;"><button type="button" class="type" id="printReceiptButton" name="printReceiptButton" value="">Print</button></span></td>
+        <!--<td rowspan="2"> <span style="text-align: right;"><button type="button" class="type"  id="printReceiptButton" name="printReceiptButton" value="">Print</button></span></td>-->
+        <td rowspan="2"> <span style="text-align: right;"><button type="button" class="type"  id="printReceiptButton" name="printReceiptButton" value="">Print</button></span></td>
       </tr>
       
       <tr>
@@ -1329,14 +1217,3 @@ $(document).ready(function(){
     </tbody>
   </table>
 </div>
-
-<style type="text/css">
-/*.tab{
-    border-top:1px solid #000000;
-    border-left:1px solid #000000;
-  }
-.tab td{
-    border-right:1px solid #000000;
-    border-bottom:1px solid #000000;
-  }*/
-  </style>

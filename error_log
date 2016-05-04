@@ -1,0 +1,1 @@
+[30-Apr-2016 04:59:47] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/CustomerController.php on line 378
