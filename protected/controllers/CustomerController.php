@@ -15,7 +15,7 @@ class CustomerController extends Controller
 				'actions'=>array('index', 'create', 'update', 'view', 'delete', 'lookup', 'createnewcustomer', 'updatenewcustomer', 'viewnewcustomer', 'deletenewcustomer',
     			'addproduct', 'deleteproduct', 'addpayment', 'addcredit', 'deletepayment', 'editpayment', 'addpackage','viewpackage', 'adddocument','editproduct', 'deletedocument', 
          'documentdownload', 'documentdownloadword', 'documentchangeemailaddr', 'documentsendemail', 'documentsendemailconfirm', 'editretail', 'redirectToBaidu','customersexport',
-         'getpayment', 'printreceipt', 'refreshProductList', 'addfile', 'docdownload'),
+         'getpayment', 'printreceipt', 'refreshProductList'),
        'roles'=>array('admin', 'staff'),
 			),
 			array('deny',
@@ -347,18 +347,6 @@ class CustomerController extends Controller
         $documents[$row['template_id']] = $row;
       }
     }
-	//find file attach type documents
-	$file_documents = Document::model()->findAll('customer_id='. $id .' and file is not null');
-	foreach($file_documents as $doc) {
-		$documents[] = array(
-			'id'=>$doc->id,
-			'template_id'=>'',
-			'product_name'=>'',
-			'name'=>$doc->document_name,
-			'email_address'=>'',
-			'file'=>$doc->file,
-		);
-	}
 
     //discounts
     $sql = "select sum(amount) from payment where customer_id= :customer_id and type='credit'";
@@ -1383,7 +1371,11 @@ class CustomerController extends Controller
       } 
       $notes .='</table>';
     }
-    
+   //get logo
+	if (strpos($template->templates, '%Logo%') !== false) {
+		$company = Company::model()->findByPk($customer->company_id);
+		$logo = !empty($company) ? '<img border="0" src="'. $company->logo .'" />' : '';
+	} 
     //get Summary of Payments
 //    if (strpos($template->templates, '%Summary_of_payments%') !== false) {
 //      $sql1 = "select date, payer, amount from payment where customer_id = :customer_id order by date";
@@ -1529,6 +1521,7 @@ class CustomerController extends Controller
         '%Statement Date%' => date('m/d/Y', time()),
         '%Notes%' => $notes,
 //        '%Summary_of_payments%' => $payments,
+        '%Logo%'=>$logo,
     );
     
     $document = str_replace(array_keys($placeHolds), array_values($placeHolds), $template->templates);
@@ -1568,12 +1561,8 @@ class CustomerController extends Controller
 //    $toEmailAddress = $document->email_address_alt ? $document->email_address_alt : $template->email_address;
     $toEmailAddress =  $_POST['email_addr'];
     
-	if(!empty($document)) {
-		$fileName = $document->file;
-	} else {
-		$fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
-    }
-
+    $fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
+    
     $company_id = Yii::app()->user->company_id;
     $emailConfig = EmailConfig::load($company_id);
     
@@ -3597,41 +3586,6 @@ private function _compareMinValue($value, $dataArray){
         'tatal_balances'=>$tatal_balances,
     ));
   }
-
-  public function actionAddFile($id)
-  {
-    $customer = $this->loadModel($id);
-    $document = new Document();
-
-	if (isset($_FILES['Document'])) {
-		  $document->attributes = $_POST['Document'];
-		  $file = CUploadedFile::getInstance($document, 'file');
-		  if ($file) {
-			$filename = $file->getName();
-			$filepath = CommonFunc::getUploadFileSavePath($filename);
-			$file->saveAs($filepath);
-			$document->file = $filepath;
-			$document->customer_id = $id;
-		  }
-
-      if($document->save()) {
-		$this->redirect('/customer/view/'.$id.'#documentslist');
-	  }
-    }
-
-    $this->render('addfile', array(
-        'customer'=>$customer,
-		'model'=>$document,
-    ));
-  }
-
-  public function actionDocDownload($id) {
-	  $document = Document::model()->findByPk($id);
-	  $content = file_get_contents($document['file']);
-	  if(!empty($content))
-		  Yii::app()->request()->sendFile(basename($document['file']), $content);
-  }
-
 }
 
 ?>
