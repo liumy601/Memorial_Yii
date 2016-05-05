@@ -3610,7 +3610,7 @@ private function _compareMinValue($value, $dataArray){
 		  if ($file) {
 			$filename = $file->getName();
 			$filepath = CommonFunc::getUploadFileSavePath($filename);
-			//$file->saveAs($filepath);
+			$file->saveAs($filepath);
 			$document->file = $filepath;
 			$document->customer_id = $id;
 		  }
