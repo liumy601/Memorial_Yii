@@ -57,10 +57,12 @@ class TrialAccountController extends Controller
 									$newCust->{$colName} = $cust->{$colName};
 						}
 						$newCust->company_id = $company_id;
-						var_dump($newCust->getErrors());
-						$newCust->save(false);
+						$ret = $newCust->save(false);
+						var_dump($ret);
 					}
-exit();
+					var_dump($customers);
+					exit();
+
 					//copy all inventory
 					$inventories = Inventory::model()->findAll('company_id='. $currentCompany->id);
 					foreach($inventories as $invt) {
