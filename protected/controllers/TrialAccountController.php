@@ -57,7 +57,7 @@ class TrialAccountController extends Controller
 									$newCust->{$colName} = $cust->{$colName};
 						}
 						$newCust->company_id = $company_id;
-						var_dump($newCust->getErrors);
+						var_dump($newCust->getErrors());
 						$newCust->save(false);
 					}
 exit();
