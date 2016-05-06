@@ -42,6 +42,7 @@ text-decoration:none;
 <script type="text/javascript" src="/assets/jquery/signature/build/json2.min.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <link rel="stylesheet" href="/assets/jquery/signature/build/jquery.signaturepad.css<?php echo $GLOBALS['query_string']; ?>">
 
+<?php if(Yii::app()->user->name != 'Guest' ): ?>
 <script>
   window.intercomSettings = {
     app_id: "k1tws933",
@@ -63,6 +64,7 @@ text-decoration:none;
     });
 </script>
 <!-- App Cues -->
+<?php endif; ?>
 
 <script type="text/javascript" src="<?php echo Yii::app()->params['appappSiteURL']; ?>/misc/appapp.js?v=1.5"></script>
 <?php
