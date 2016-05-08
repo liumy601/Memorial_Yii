@@ -1297,7 +1297,6 @@ class CustomerController extends Controller
         $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
         $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
                  where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
-        echo $sql;
 		$command = $connection->createCommand($sql);
         $command->bindParam(':customer_id', $customer_id);
         $command->bindParam(':company_id', Yii::app()->user->company_id);

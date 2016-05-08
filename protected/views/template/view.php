@@ -42,7 +42,14 @@
         <td width="15%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('email_text')); ?></td>
         <td width="35%" class="dvValueTxt"><?php echo nl2br($model->email_text); ?></td>
     </tr>
-       
+
+	<?php if (Yii::app()->user->type == 'super admin'): ?>
+	<tr>
+        <td width="15%" class="dvgrayTxt">Active</td>
+        <td width="35%" class="dvValueTxt" colspan="3"><?php echo !empty($model->active) ? 'Yes ' :  'No'; ?></td>
+    </tr>
+    <?php endif; ?>
+
     <tr>
         <td width="15%" class="dvgrayTxt" valign="top"><?php echo CHtml::encode($model->getAttributeLabel('templates')); ?></td>
         <td width="35%" class="dvValueTxt" colspan="3"><?php echo $model->templates; ?></td>
