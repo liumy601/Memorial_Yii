@@ -57,10 +57,25 @@ class TrialAccountController extends Controller
 									$newCust->{$colName} = $cust->{$colName};
 						}
 						$newCust->company_id = $company_id;
+
+						//autopopulate case_number
+						$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer order by case_number_seq");
+						$records = $command->queryAll();
+						//search next available case_number starting from 1000
+						$case_number_seq_list = array();
+						foreach($records as $record) {
+							$case_number_seq_list[] = $record['case_number_seq'];
+						}
+						$case_number_seq_list = array_unique($case_number_seq_list);
+						$next_case_num = 1000;
+						while(in_array($next_case_num, $case_number_seq_list)) {
+							$next_case_num++;
+						}
+						$newCust->case_number = $next_case_num;
+						$newCust->case_number_seq = $next_case_num;
+
 						$newCust->save(false);
-						var_dump($newCust->getErrors());
 					}
-					exit();
 
 					//copy all inventory
 					$inventories = Inventory::model()->findAll('company_id='. $currentCompany->id);
