@@ -836,9 +836,9 @@ class AdminController extends Controller {
     $this->_buildShortcuts();
 
     $company_id = Yii::app()->user->company_id;
-    $model = Config::model()->find('name="tax_by_company" and company_id='. $company_id);
+    $model = Config::model()->find('name="tax_by_company_'. $company_id. '" and company_id='. $company_id);
 	$model = empty($model) ? new Config() : $model;
-	$model->name = 'tax_by_company';
+	$model->name = 'tax_by_company_'. $company_id;
 	$model->value  = unserialize($model->value);
 
     if ($_POST) {
