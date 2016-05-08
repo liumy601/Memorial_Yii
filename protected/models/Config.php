@@ -31,6 +31,8 @@ class Config extends CActiveRecord
   
   public static function loadTaxByCompany($company_id) {
 	$config = Config::model()->find('name="tax_by_company_'. $company_id. '" and company_id='. $company_id);
+	if(empty($config))
+		return 0;
 	$taxRate = unserialize($config->value);
 	return $taxRate;
   }
