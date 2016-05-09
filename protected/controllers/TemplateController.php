@@ -124,9 +124,18 @@ class TemplateController extends Controller
       Yii::app()->params['print'] = true;
     }
     $this->_buildShortcuts();
-    
+    $model = $this->loadModel($id);
+
+	//get logo
+	if (strpos($model->templates, '%Logo%') !== false) {
+		$company = Company::model()->findByPk(Yii::app()->user->company_id);
+		if(!empty($company)) {
+			$model->templates = str_replace('%Logo%', '<img border="0" src="'. $company->logo .'" />', $model->templates);
+		}
+	}
+
     $this->render('view',array(
-        'model'=>$this->loadModel($id),
+        'model'=>$model,
     ));
   }
   
