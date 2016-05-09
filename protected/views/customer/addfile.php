@@ -60,7 +60,6 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
   <?php endif; ?>
 
-
 </div>
 
 <script type="text/javascript">

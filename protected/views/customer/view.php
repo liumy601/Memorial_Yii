@@ -849,11 +849,19 @@ if($documents){
 <?php } ?>
 </div>
 </td>
-<td class="tableData"> <?php echo CHtml::link($row['name'], '/template/'.$row['template_id']); ?> </td>
+<?php if(empty($row['template_id'])): ?>
+	<td class="tableData"> <?php echo $row['name']; ?> </td>
+<?php else: ?>
+	<td class="tableData"> <?php echo CHtml::link($row['name'], '/template/'.$row['template_id']); ?> </td>
+<?php endif; ?>
 <td class="tableData"> <span class="doc_email"><?php echo $row['email_address_alt'] ? $row['email_address_alt'] : $row['email_address'] ?></span> (<a href="#" class="noajax" onclick="documentChangeEmailAddr(<?php echo $row['id'] ?>, this);return false;">Edit</a>) </td>
 <td class="tableData"> 
-  <a href="/customer/documentdownload/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download PDF</a> | 
-  <a href="/customer/documentdownloadword/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download Word</a>
+	<?php if(empty($row['template_id'])): ?>
+		<a href="/customer/docdownload/<?php echo $row['id']; ?>" class="noajax"">Download</a>
+	<?php else: ?>
+		<a href="/customer/documentdownload/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download PDF</a> | 
+		<a href="/customer/documentdownloadword/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download Word</a>
+	<?php endif; ?>
 </td>
 <td class="tableData"> <a href="#" class="noajax" onclick="documentSendEmail(<?php echo $row['id'] ?>);return false">Send email</a></td>
 </tr>
@@ -865,7 +873,9 @@ if($documents){
 </tbody></table>
 </td></tr>
 <tr class="rellistbL"><td align="left"><div id="ra">
-<a href="/customer/adddocument/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add document</a></div></td> 
+<a href="/customer/adddocument/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add document</a>
+<a href="/customer/addFile/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add File</a>
+</div></td>
 <td align="right"><div align="right" class="listNav">  &nbsp;</div>
 </td></tr> <!-- Field Data goes here --></tbody></table>
 </div>

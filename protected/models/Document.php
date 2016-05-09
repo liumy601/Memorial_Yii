@@ -12,6 +12,9 @@
  */
 class Document extends CActiveRecord
 {
+	public $file;
+	public $document_name;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Document the static model class
@@ -41,6 +44,7 @@ class Document extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, template_id, customer_id, product_id, email_address_alt', 'safe', 'on'=>'search'),
+			array('file, document_name', 'safe'),
 		);
 	}
 
