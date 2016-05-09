@@ -130,7 +130,7 @@ class TemplateController extends Controller
 	if (strpos($model->templates, '%Logo%') !== false) {
 		$company = Company::model()->findByPk(Yii::app()->user->company_id);
 		if(!empty($company)) {
-			$model->templates = str_replace('%Logo%', '<img border="0" src="'. $company->logo .'" />', $model->templates);
+			$model->templates = str_replace('%Logo%', '<img border="0" src="/'. $company->logo .'" />', $model->templates);
 		}
 	}
 

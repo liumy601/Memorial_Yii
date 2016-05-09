@@ -1374,7 +1374,7 @@ class CustomerController extends Controller
    //get logo
 	if (strpos($template->templates, '%Logo%') !== false) {
 		$company = Company::model()->findByPk($customer->company_id);
-		$logo = !empty($company) ? '<img border="0" src="'. $company->logo .'" />' : '';
+		$logo = !empty($company) ? '<img border="0" src="/'. $company->logo .'" />' : '';
 	} 
     //get Summary of Payments
 //    if (strpos($template->templates, '%Summary_of_payments%') !== false) {
@@ -1590,7 +1590,15 @@ class CustomerController extends Controller
     $mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
     $mail->AddAddress($toEmailAddress);
     $mail->Subject = 'Funeral Document';
-    $mail->Body = $_POST['email_text'];
+	$body = $_POST['email_text'];
+	//get logo
+	if (strpos($body, '%Logo%') !== false) {
+		$company = Company::model()->findByPk(Yii::app()->user->company_id);
+		if(!empty($company)) {
+			$body = str_replace('%Logo%', '<img border="0" src="/'. $company->logo .'" />', $body);
+		}
+	}
+    $mail->Body = $body;
     
     $mail->AddAttachment($fileName, basename($fileName));
      
