@@ -3643,7 +3643,7 @@ private function _compareMinValue($value, $dataArray){
 	  $document = Document::model()->findByPk($id);
 	  $content = file_get_contents($document['file']);
 	  if(!empty($content))
-		  Yii::app()->request()->sendFile(basename($document['file']), $content);
+		  Yii::app()->request->sendFile(basename($document['file']), $content);
   }
 
 }
