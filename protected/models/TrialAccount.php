@@ -32,6 +32,7 @@ class TrialAccount extends CFormModel
 			array('phone', 'length', 'max'=>20),
 			array('username', 'checkDuplicateUsername'),
 			array('email', 'checkDuplicateEmail'),
+			array('username', 'match', 'pattern'=>'/^\w+$/i', 'message'=>'Username can only contain characters,numbers,underscores.'),
 			array('username, yourname, company_name, email, phone', 'safe', 'on'=>'search'),
 		);
 	}

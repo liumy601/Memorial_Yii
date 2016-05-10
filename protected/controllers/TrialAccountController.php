@@ -29,6 +29,7 @@ class TrialAccountController extends Controller
 				//create new company
 				$newCompany = new Company();
 				$newCompany->name = !empty($yourCompany) ? $yourCompany : $yourName;
+				$newCompany->phone = $yourPhone;
 				$newCompany->save(false);
 				$company_id = $newCompany->id;
 

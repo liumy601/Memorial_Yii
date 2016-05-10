@@ -15,7 +15,7 @@ class Company extends CActiveRecord
 	public function rules()
 	{
 		return array(
-			array('id, name, logo, address, city, state, zip', 'safe'),
+			array('id, name, logo, address, city, state, zip, phone', 'safe'),
 			array('name', 'required'),
 //			array('name', 'unique'),//for company may create from appapp, the company name maybe same.
 		);

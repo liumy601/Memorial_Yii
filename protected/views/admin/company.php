@@ -9,7 +9,7 @@ echo CHtml::link('Create new company', '/admin/company/op/create');
 
 $company = new Company();
 //$fields = array('id'=>'50%', 'name'=>'50%');
-$fields = array('id'=>'10%', 'name'=>'18%', 'address'=>'18%', 'city'=>'18%', 'state'=>'18%', 'zip'=>'18%');
+$fields = array('id'=>'10%', 'name'=>'15%', 'address'=>'15%', 'city'=>'15%', 'state'=>'15%', 'zip'=>'15%', 'phone'=>'15%');
 ?>
 <br/><br/>
 
