@@ -314,7 +314,7 @@ class DecedentController extends Controller
     $command6=$connection->createCommand("select d.id, d.product_id, d.email_address_alt,
           t.id as template_id, t.name,t.email_address
       from template t
-      left join document d on (d.template_id=t.id and d.customer_id=:customer_id)
+      join document d on (d.template_id=t.id and d.customer_id=:customer_id)
       where default_check=1 and deleted=0 and company_id=:company_id order by t.name");
     $command6->bindParam(':customer_id',$id);  
     $command6->bindParam(':company_id',Yii::app()->user->company_id);  
@@ -322,12 +322,13 @@ class DecedentController extends Controller
     $documents = array();
     while ($row = $documentDataProvider->read()) {
       $documents[$row['template_id']] = $row;
-      
+      /* remove this logic as required
       //check if this exists in {document}
       $existsInDocument = $connection->createCommand("select count(*) from document where template_id=".$row['template_id']." and customer_id=".$id)->queryScalar();
       if (!$existsInDocument) {
         $connection->createCommand("insert into document (template_id, customer_id) values (".$row['template_id'].", $id)")->execute();
       }
+	  */
     }
     //now find from products related templates
 //    $command7 = $connection->createCommand("SELECT t.id as template_id, i.name as product_name, t.name, t.email_address
