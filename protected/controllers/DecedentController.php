@@ -1385,7 +1385,11 @@ class DecedentController extends Controller
       } 
       $notes .='</table>';
     }
-    
+    //get logo
+	if (strpos($template->templates, '%Logo%') !== false) {
+		$company = Company::model()->findByPk($customer->company_id);
+		$logo = !empty($company) ? '<img border="0" src="/'. $company->logo .'" />' : '';
+	} 
     //get Summary of Payments
 //    if (strpos($template->templates, '%Summary_of_payments%') !== false) {
 //      $sql1 = "select date, payer, amount from payment where customer_id = :customer_id order by date";
@@ -1531,6 +1535,7 @@ class DecedentController extends Controller
         '%Statement Date%' => date('m/d/Y', time()),
         '%Notes%' => $notes,
 //        '%Summary_of_payments%' => $payments,
+		'%Logo%'=>$logo,
     );
     
     $document = str_replace(array_keys($placeHolds), array_values($placeHolds), $template->templates);
