@@ -3617,7 +3617,7 @@ private function _compareMinValue($value, $dataArray){
 		  }
 
       if($document->save()) {
-		$this->redirect('/customer/view/'.$id.'#documentslist');
+		$this->redirect('/decedent/view/'.$id.'#documentslist');
 	  }
     }
 

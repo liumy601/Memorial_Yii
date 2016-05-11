@@ -83,7 +83,7 @@ class ContactController extends Controller
       Yii::app()->user->setFlash('', 'Contact is saved.');
       
       if ($model->customerid) {
-        $this->redirect('/customer/view/'.$model->customerid.'#contactlist');
+        $this->redirect('/decedent/view/'.$model->customerid.'#contactlist');
       } else {
         $this->redirect(array('view','id'=>$model->id));
       }
@@ -115,7 +115,7 @@ class ContactController extends Controller
         
         if($model->save()){
           if ($model->customerid) {
-            $this->redirect('/customer/view/'.$model->customerid.'#contactlist');
+            $this->redirect('/decedent/view/'.$model->customerid.'#contactlist');
           } else {
             $this->redirect(array('view','id'=>$model->id));
           }
@@ -137,7 +137,7 @@ class ContactController extends Controller
       echo 'Done';
       exit;
     } else {//from contact detail view
-      $this->redirect(array('/customer/' . $model->customerid . '?ajaxRequest=1'));
+      $this->redirect(array('/decedent//' . $model->customerid . '?ajaxRequest=1'));
     }
   }
   
