@@ -1388,7 +1388,7 @@ class CustomerController extends Controller
    //get logo
 	if (strpos($template->templates, '%Logo%') !== false) {
 		$company = Company::model()->findByPk($customer->company_id);
-		$logo = !empty($company) ? '<img border="0" src="/'. $company->logo .'" />' : '';
+		$logo = !empty($company) ? '<img border="0" src="'. Yii::app()->params['siteURL'] . '/' .$company->logo .'" />' : '';
 	} 
     //get Summary of Payments
 //    if (strpos($template->templates, '%Summary_of_payments%') !== false) {
