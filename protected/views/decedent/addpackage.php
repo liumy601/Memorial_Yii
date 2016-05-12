@@ -21,14 +21,14 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   <td height="30" class="title hline" style="padding-left:10px"> <?php echo $title; ?> </td></tr></tbody></table>
   <p></p>
   
-<form method="post" action="/customer/addpackage/<?php echo $customer->id; ?>">
+<form method="post" action="/decedent/addpackage/<?php echo $customer->id; ?>">
    
   
   <div class="bodyText mandatory"><div style="float:right;" class="bodyText mandatory">* Required Field(s)</div></div>
 
   <table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center">
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
 
   <div id="Information">
@@ -47,7 +47,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 	<table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center"></div>
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
   
   

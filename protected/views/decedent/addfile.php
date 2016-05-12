@@ -64,6 +64,6 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 <script type="text/javascript">
   function backToCustomer(){
-    document.location.href='/customer/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
+    document.location.href='/decedent/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
   }
 </script>

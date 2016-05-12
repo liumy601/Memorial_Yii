@@ -6,7 +6,7 @@
 
 
 <?php
-$this->pageTitle = Yii::app()->name . ' - ' . $title;
+$this->pageTitle = Yii::app()->name . ' - ' . $title;2016/5/12
 ?>
 
 <?php if(Yii::app()->user->hasFlash('msg')): ?>
@@ -24,14 +24,14 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 <?php
 if ($products) {
 ?>
-<form method="post" action="/customer/addproduct/<?php echo $customer->id; ?>">
+<form method="post" action="/decedent/addproduct/<?php echo $customer->id; ?>">
    
   
   <div class="bodyText mandatory"><div style="float:right;" class="bodyText mandatory">* Required Field(s)</div></div>
 
   <table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center">
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
 
   <div id="Information">
@@ -78,7 +78,7 @@ if ($products) {
 
 	<table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center"></div>
     <input title="Save" class="button" onclick="" type="submit" name="button" value="Save"/>
-    <input title="Cancel" class="button buttonurl" url="/customer/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/view/<?php echo $customer->id; ?>" pageTitle="Package" type="button" name="button" value="Cancel"/>
   </td></tr></tbody></table>
   
   

@@ -35,7 +35,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 <?php
 if ($documents) {
 ?>
-<form method="post" action="/customer/adddocument/<?php echo $customer->id; ?>" class="noajax">
+<form method="post" action="/decedent/adddocument/<?php echo $customer->id; ?>" class="noajax">
    
   
   <div class="bodyText mandatory"><div style="float:right;" class="bodyText mandatory">* Required Field(s)</div></div>
@@ -76,6 +76,6 @@ if ($documents) {
 
 <script type="text/javascript">
   function backToCustomer(){
-    document.location.href='/customer/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
+    document.location.href='/decedent/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
   }
 </script>
