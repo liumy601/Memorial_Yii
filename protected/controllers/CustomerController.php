@@ -175,7 +175,7 @@ class CustomerController extends Controller
     $model = new Customer();
 
 	//autopopulate case_number
-	$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer order by case_number_seq");
+	$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer where company_id=". Yii::app()->user->company_id ."  order by case_number_seq");
     $records = $command->queryAll();
 	//search next available case_number starting from 1000
 	$case_number_seq_list = array();
