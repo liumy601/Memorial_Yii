@@ -35,19 +35,6 @@ class TrialAccountController extends Controller
 
 				//copy all records to the new company
 				if(!empty($currentCompany)) {
-					//copy all templates
-					$templates = Template::model()->findAll('company_id='. $currentCompany->id);
-					foreach($templates as $tpl) {
-						$newTpl = new Template();
-						foreach($tpl->metaData->columns as $col) {
-							$colName = $col->name;
-							if(!in_array($colName, array('id','company_id')))
-								$newTpl->{$colName} = $tpl->{$colName};
-						}
-						$newTpl->company_id = $company_id;
-						$newTpl->save(false);
-					}
-
 					//copy all decedents
 					$customers = Customer::model()->findAll('company_id='. $currentCompany->id);
 					foreach($customers as $cust) {
@@ -60,22 +47,108 @@ class TrialAccountController extends Controller
 						$newCust->company_id = $company_id;
 
 						//autopopulate case_number
-						$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer order by case_number_seq");
+						$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer where company_id=". $company_id ."  order by case_number_seq");
 						$records = $command->queryAll();
 						//search next available case_number starting from 1000
 						$case_number_seq_list = array();
-						foreach($records as $record) {
-							$case_number_seq_list[] = $record['case_number_seq'];
+						if(!empty($records)) {
+							foreach($records as $record) {
+								$case_number_seq_list[] = $record['case_number_seq'];
+							}
+							$case_number_seq_list = array_unique($case_number_seq_list);
 						}
-						$case_number_seq_list = array_unique($case_number_seq_list);
 						$next_case_num = 1000;
 						while(in_array($next_case_num, $case_number_seq_list)) {
 							$next_case_num++;
 						}
 						$newCust->case_number = $next_case_num;
 						$newCust->case_number_seq = $next_case_num;
-
 						$newCust->save(false);
+						
+						$newCustId = $newCust->id;
+						
+						//copy products
+						$products = Product::model()->findAll('company_id='. $currentCompany->id .' and customer_id='. $cust->id);
+						foreach($products as $prod) {
+							$newProd = new Product();
+							foreach($prod->metaData->columns as $col) {
+								$colName = $col->name;
+								if(!in_array($colName, array('id','customer_id','company_id')))
+										$newProd->{$colName} = $prod->{$colName};
+							}
+							$newProd->customer_id = $newCustId;
+							$newProd->company_id = $company_id;
+							$newProd->save(false);
+						}
+
+						//copy payments
+						$payments = Payment::model()->findAll('customer_id='. $cust->id);
+						foreach($payments as $pmt) {
+							$newPmt = new Payment();
+							foreach($pmt->metaData->columns as $col) {
+								$colName = $col->name;
+								if(!in_array($colName, array('id','customer_id')))
+										$newPmt->{$colName} = $pmt->{$colName};
+							}
+							$newPmt->customer_id = $newCustId;
+							$newPmt->save(false);
+						}
+						
+						//copy documents
+						$documents = Document::model()->findAll('customer_id='. $cust->id);
+						foreach($documents as $doc) {
+							$newDoc = new Document();
+							foreach($doc->metaData->columns as $col) {
+								$colName = $col->name;
+								if(!in_array($colName, array('id','customer_id')))
+										$newDoc->{$colName} = $doc->{$colName};
+							}
+							$newDoc->customer_id = $newCustId;
+							$newDoc->save(false);
+						}
+
+						//copy contacts
+						$contacts = Contact::model()->findAll('company_id='. $currentCompany->id .' and customerid='. $cust->id);
+						foreach($contacts as $cnt) {
+							$newCnt = new Contact();
+							foreach($cnt->metaData->columns as $col) {
+								$colName = $col->name;
+								if(!in_array($colName, array('id','customerid','company_id')))
+										$newCnt->{$colName} = $cnt->{$colName};
+							}
+							$newCnt->customerid = $newCustId;
+							$newCnt->company_id = $company_id;
+							$newCnt->save(false);
+						}
+
+						//copy notes
+						$notes = Notes::model()->findAll('parent_type="customer" and parent_id='. $cust->id);
+						foreach($notes as $note) {
+							$newNotes = new Notes();
+							foreach($note->metaData->columns as $col) {
+								$colName = $col->name;
+								if(!in_array($colName, array('id')))
+										$newNotes->{$colName} = $note->{$colName};
+							}
+							$newNotes->parent_id = $newCustId;
+							$newNotes->save(false);
+						}
+					}
+
+					//copy all templates
+					$templates = Template::model()->findAll('company_id='. $currentCompany->id);
+					foreach($templates as $tpl) {
+						$newTpl = new Template();
+						foreach($tpl->metaData->columns as $col) {
+							$colName = $col->name;
+							if(!in_array($colName, array('id','company_id')))
+								$newTpl->{$colName} = $tpl->{$colName};
+						}
+						$newTpl->company_id = $company_id;
+						$newTpl->save(false);
+						
+						//update template_id in templates
+						Document::model()->updateAll(array('template_id'=>$newTpl->id), 'template_id='. $tpl->id);
 					}
 
 					//copy all inventory
@@ -89,6 +162,9 @@ class TrialAccountController extends Controller
 						}
 						$newInvt->company_id = $company_id;
 						$newInvt->save(false);
+
+						//update inventory_id in products
+						Product::model()->updateAll(array('inventory_id'=>$newInvt->id), 'inventory_id='. $invt->id .' and company_id=' .$company_id);
 					}
 
 					//copy all packages
