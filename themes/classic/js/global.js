@@ -1813,7 +1813,7 @@ function confirmSubmitForm(status){
 
 
 function customers_export(customer_id){
-  document.location.href = '/customer/customersexport/customer_id/'+customer_id;
+  document.location.href = '/decedent/customersexport/'+customer_id;
 }
 
 function dialogReceipt(customer_id, payment_id, type){
