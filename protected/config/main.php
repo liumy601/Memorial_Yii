@@ -54,8 +54,8 @@ return array(
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=funeralb_db',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '',
+			'username' => 'funeralb_dbuser',
+			'password' => 'Amazon26#',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
