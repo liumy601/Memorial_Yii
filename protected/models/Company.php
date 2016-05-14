@@ -31,6 +31,7 @@ class Company extends CActiveRecord
       'city' => 'Company city',
       'state' => 'Company state',
       'zip' => 'Company zip',
+	  'phone' => 'Company phone',
 		);
 	}
   

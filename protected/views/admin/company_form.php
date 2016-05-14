@@ -69,6 +69,11 @@ if ($model->id > 0) {
       <td class="label"><?php echo $form->labelEx($model,'zip'); ?></td>
       <td class="element"><?php echo $form->textField($model,'zip'); ?></td>
     </tr>
+
+	<tr>
+      <td class="label"><?php echo $form->labelEx($model,'phone'); ?></td>
+      <td class="element"><?php echo $form->textField($model,'phone'); ?></td>
+    </tr>
     
     <tr>
       <td class="label"> </td>
