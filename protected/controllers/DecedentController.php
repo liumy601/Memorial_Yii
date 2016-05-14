@@ -212,9 +212,7 @@ class DecedentController extends Controller
         $this->redirect(array('view','id'=>$model->id));
       }
     }
-var_dump($this->layout);
-echo $this->getLayoutFile(null);
-	$this->layout = 'main_normal_zoho';
+
     $this->render('_form', array('model'=>$model, 'optionFields'=>$optionFields));
 	}
   

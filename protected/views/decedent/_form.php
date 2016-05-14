@@ -765,6 +765,8 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   }
   
   function check_form_customer(){
+	  $('#EditView').attr('action', $('#EditView').attr('action').replace('?ajaxRequest=1',''));
+
       if(document.getElementById('Customer_full_legal_name').value == ''){
         $('.warning').show();
         $('#Customer_full_legal_name').css('background-color', '#f00');
