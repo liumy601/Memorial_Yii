@@ -571,6 +571,7 @@ class Customer extends CActiveRecord
 	}
 	if($count > 0) {
 		$this->addError('case_number', 'Case number "'. $this->case_number .'" has already been taken');
+		return false;
 	}
 
     return parent::save();
