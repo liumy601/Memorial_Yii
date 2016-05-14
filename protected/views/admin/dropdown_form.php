@@ -36,7 +36,7 @@ if ($dropDownDefault) {
 <!--<h1>Define dropdown: <?php // echo ucfirst($module) . ' ' . ($dropdownname!=skfhfuneralhome ? ucfirst($dropdownname) : 'Location') ; ?></h1>-->
 <h1>Define dropdown: <?php echo ucfirst($module) . ' ' . str_replace('####', '/', urldecode($label)) ; ?></h1>
 
-<?php $form=$this->beginWidget('CActiveForm', array('htmlOptions' => array('name'=>'EditView', 'id'=>'EditView'))); ?>
+<?php $form=$this->beginWidget('CActiveForm', array('htmlOptions' => array('name'=>'EditView', 'id'=>'EditView', 'pagetitle'=>str_replace('####', '/', urldecode($label))))); ?>
 
 <?php
   echo CHtml::textArea('newdropdown', $dropDownContent, array('rows'=>8, 'cols'=>50));
