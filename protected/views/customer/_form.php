@@ -25,7 +25,8 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 <?php $form=$this->beginWidget('CActiveForm', array('htmlOptions' => 
     array('name'=>'EditView', 'id'=>'EditView', 
-        'enctype'=>'multipart/form-data',
+        'class'=>'noajax',
+		'enctype'=>'multipart/form-data',
         'onsubmit'=>'return check_form_customer();'
     ))); ?>
 

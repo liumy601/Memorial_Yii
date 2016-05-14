@@ -305,7 +305,7 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
       <div id="createsubmenu" class="ddMenus">
         <div class="menuDiv">
           <table cellspacing="5" class="menuTable"><tr><td valign="top"> 
-            <a id="submenu_Customers" onclick="tabClicked(document.getElementById('tab_customers'));" href="/customer/create" class="subMenuLink">New Customer</a>
+            <a id="submenu_Customers" onclick="tabClicked(document.getElementById('tab_customers'));" href="/decedent/create" class="subMenuLink">New Customer</a>
             <a id="submenu_Task" onclick="tabClicked(document.getElementById('tab_tasks'));" href="/task/create" class="subMenuLink">New Task</a>
             <a id="submenu_Template" onclick="tabClicked(document.getElementById('tab_templates'));" href="/template/create" class="subMenuLink">New Template</a>
             </td>
