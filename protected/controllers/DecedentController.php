@@ -1575,8 +1575,8 @@ class DecedentController extends Controller
 //    $toEmailAddress = $document->email_address_alt ? $document->email_address_alt : $template->email_address;
     $toEmailAddress =  $_POST['email_addr'];
     
-    if(!empty($document)) {
-		$fileName = $document->file;
+    if(!empty($document->file)) {
+		$fileName = $_SERVER['DOCUMENT_ROOT'] .'/'. $document->file;
 	} else {
 		$fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
     }
