@@ -57,7 +57,7 @@ text-decoration:none;
 <link rel="stylesheet" type="text/css" href="//fast.appcues.com/appcues.min.css">
 <script src="//fast.appcues.com/17271.js"></script>
 <script>
-    Appcues.identify('1', {
+    Appcues.identify('<?php echo Yii::app()->user->uid; ?>', {
         email: '<?php echo Yii::app()->user->email; ?>',
         name: '<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>',
         // Additional user properties
