@@ -36,7 +36,6 @@ text-decoration:none;
 <script type="text/javascript" src="/assets/jquery/jui/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/jquery/jui/jquery.corner.js"></script>
 <script type="text/javascript" src="/assets/jquery/picup.2.js"></script>
-<script type="text/javascript" src="/themes/classic/js/global.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <!--[if lt IE 9]><script src="/assets/jquery/signature/build/flashcanvas.js<?php echo $GLOBALS['query_string']; ?>"></script><![endif]-->
 <script type="text/javascript" src="/assets/jquery/signature/build/jquery.signaturepad.min.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <script type="text/javascript" src="/assets/jquery/signature/build/json2.min.js<?php echo $GLOBALS['query_string']; ?>"></script>
@@ -77,7 +76,7 @@ if ($flashMsg = Yii::app()->user->getFlash('')) {
    </script>';
 }
 ?>
-
+<script type="text/javascript" src="/themes/classic/js/global.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <?php
 echo '<script language="javascript">
   var siteUser = \''. Yii::app()->user->name .'\';

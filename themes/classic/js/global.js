@@ -309,6 +309,7 @@ function ajaxNew(url){
 function tabClicked(tab){
   $(tab).parent().find('a').removeClass('sel');
   $(tab).addClass('sel');
+  Appcues.start();
 }
   
 function showInLine(_f71){
