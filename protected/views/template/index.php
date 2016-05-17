@@ -59,9 +59,6 @@
       <td scope="col" width="<?php echo $width; ?>" class="listViewThS1" nowrap="">
         <div style="white-space: nowrap;" width="100%" align="left">Email Address</div>
       </td>
-      <td scope="col" width="<?php echo $width; ?>" class="listViewThS1" nowrap="">
-        <div style="white-space: nowrap;" width="100%" align="left">Default for all customer</div>
-      </td>
 	  <?php if (Yii::app()->user->type == 'super admin'): ?>
 		<td scope="col" width="<?php echo $width; ?>" class="listViewThS1" nowrap="">
 			<div style="white-space: nowrap;" width="100%" align="left">Active</div>
@@ -90,9 +87,6 @@
       </td>
       <td scope="row" align="left" valign="top" class="<?php echo ($i % 2) ? 'oddListRowS1' : 'evenListRowS1'; ?>" bgcolor="#ffffff">
         <?php echo CHtml::encode($data->email_address); ?>
-      </td>
-      <td scope="row" align="left" valign="top" class="<?php echo ($i % 2) ? 'oddListRowS1' : 'evenListRowS1'; ?>" bgcolor="#ffffff">
-        <?php echo CHtml::encode($data->default_check ? 'Yes' : 'No'); ?>
       </td>
 	  <?php if (Yii::app()->user->type == 'super admin'): ?>
 		<td scope="row" align="left" valign="top" class="<?php echo ($i % 2) ? 'oddListRowS1' : 'evenListRowS1'; ?>" bgcolor="#ffffff">
