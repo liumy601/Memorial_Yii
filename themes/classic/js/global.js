@@ -115,10 +115,9 @@ $(document).ready(
             document.title = $(this).html();
           }
         }
-		
-		Appcues.start();
 
 		setPageUrl($(this).attr('href'));
+		Appcues.start();
 
         $.ajax({
           async:true,
