@@ -115,8 +115,9 @@ $(document).ready(
             document.title = $(this).html();
           }
         }
-		
+
 		setPageUrl($(this).attr('href'));
+		Appcues.start();
 
         $.ajax({
           async:true,
@@ -309,7 +310,6 @@ function ajaxNew(url){
 function tabClicked(tab){
   $(tab).parent().find('a').removeClass('sel');
   $(tab).addClass('sel');
-  Appcues.start();
 }
   
 function showInLine(_f71){
