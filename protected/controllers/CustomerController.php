@@ -15,7 +15,7 @@ class CustomerController extends Controller
 				'actions'=>array('index', 'create', 'update', 'view', 'delete', 'lookup', 'createnewcustomer', 'updatenewcustomer', 'viewnewcustomer', 'deletenewcustomer',
     			'addproduct', 'deleteproduct', 'addpayment', 'addcredit', 'deletepayment', 'editpayment', 'addpackage','viewpackage', 'adddocument','editproduct', 'deletedocument', 
          'documentdownload', 'documentdownloadword', 'documentchangeemailaddr', 'documentsendemail', 'documentsendemailconfirm', 'editretail', 'redirectToBaidu','customersexport',
-         'getpayment', 'printreceipt', 'refreshProductList'),
+         'getpayment', 'printreceipt', 'refreshProductList', 'addfile', 'docdownload'),
        'roles'=>array('admin', 'staff'),
 			),
 			array('deny',
@@ -170,8 +170,26 @@ class CustomerController extends Controller
 	{
     $this->_buildShortcuts();
     $this->_checkAllowCreateNew();
-    
+    $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model = new Customer();
+
+	//autopopulate case_number
+	$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer where company_id=". Yii::app()->user->company_id ."  order by case_number_seq");
+    $records = $command->queryAll();
+	//search next available case_number starting from 1000
+	$case_number_seq_list = array();
+	foreach($records as $record) {
+		$case_number_seq_list[] = $record['case_number_seq'];
+	}
+	$case_number_seq_list = array_unique($case_number_seq_list);
+	$next_case_num = 1000;
+	while(in_array($next_case_num, $case_number_seq_list)) {
+		$next_case_num++;
+	}
+	$model->case_number = $next_case_num;
+	$model->case_number_seq = $next_case_num;
+
     if (isset($_POST['Customer'])) {
       $model->attributes = $_POST['Customer'];
       $model->form_type = 'old';
@@ -194,14 +212,15 @@ class CustomerController extends Controller
         $this->redirect(array('view','id'=>$model->id));
       }
     }
-    
-    $this->render('_form', array('model'=>$model));
+
+    $this->render('_form', array('model'=>$model, 'optionFields'=>$optionFields));
 	}
   
   public function actionUpdate($id)
   {
     $this->_buildShortcuts();
-    
+	$optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model=$this->loadModel($id);
 
     if(isset($_POST['Customer']))
@@ -221,6 +240,12 @@ class CustomerController extends Controller
           }
         }  
         
+		//update case_number_seq to be used for create
+		if(preg_match('/\d{4,}/i', $model->case_number))
+			$model->case_number_seq = $model->case_number;
+		else
+			$model->case_number_seq = NULL;
+
         if($model->save()){
           $this->redirect(array('view','id'=>$model->id));
         }
@@ -229,6 +254,7 @@ class CustomerController extends Controller
     
     $this->render('_form',array(
         'model'=>$model,
+		'optionFields'=>$optionFields,
     ));
   }
   
@@ -244,7 +270,9 @@ class CustomerController extends Controller
       Yii::app()->params['print'] = true;
     }
     $this->_buildShortcuts();
-    
+    $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
+	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
+
     $connection = Yii::app()->db;
     
     //contacts
@@ -286,7 +314,7 @@ class CustomerController extends Controller
     $command6=$connection->createCommand("select d.id, d.product_id, d.email_address_alt,
           t.id as template_id, t.name,t.email_address
       from template t
-      left join document d on (d.template_id=t.id and d.customer_id=:customer_id)
+      join document d on (d.template_id=t.id and d.customer_id=:customer_id)
       where default_check=1 and deleted=0 and company_id=:company_id order by t.name");
     $command6->bindParam(':customer_id',$id);  
     $command6->bindParam(':company_id',Yii::app()->user->company_id);  
@@ -294,12 +322,13 @@ class CustomerController extends Controller
     $documents = array();
     while ($row = $documentDataProvider->read()) {
       $documents[$row['template_id']] = $row;
-      
+      /* remove this logic as required
       //check if this exists in {document}
       $existsInDocument = $connection->createCommand("select count(*) from document where template_id=".$row['template_id']." and customer_id=".$id)->queryScalar();
       if (!$existsInDocument) {
         $connection->createCommand("insert into document (template_id, customer_id) values (".$row['template_id'].", $id)")->execute();
       }
+	  */
     }
     //now find from products related templates
 //    $command7 = $connection->createCommand("SELECT t.id as template_id, i.name as product_name, t.name, t.email_address
@@ -320,11 +349,26 @@ class CustomerController extends Controller
       }
     }
 
+	//find file attach type documents
+	$file_documents = Document::model()->findAll('customer_id='. $id .' and file is not null');
+	foreach($file_documents as $doc) {
+		$documents[] = array(
+			'id'=>$doc->id,
+			'template_id'=>'',
+			'product_name'=>'',
+			'name'=>$doc->document_name,
+			'email_address'=>'',
+			'file'=>$doc->file,
+		);
+	}
+
     //discounts
     $sql = "select sum(amount) from payment where customer_id= :customer_id and type='credit'";
     $command8 = $connection->createCommand($sql);
     $command8->bindParam(':customer_id', $id);
     $discount = $command8->queryScalar();
+
+	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
     
     $this->render('view',array(
         'model'=>$this->loadModel($id),
@@ -336,6 +380,8 @@ class CustomerController extends Controller
 //        'productRetail'=>$productRetail,
         'paymentDataProvider'=>$paymentDataProvider,
         'documents'=>$documents,
+		'optionFields'=>$optionFields,
+		'taxRate'=>$taxRate,
     ));
   }
   
@@ -1262,10 +1308,10 @@ class CustomerController extends Controller
     
     //$sales_tax
 //     if (strpos($template->templates, '%Sales Tax%') !== false) {
-        $taxConfig = Config::load('tax');
-        $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxConfig->value .") from product p, inventory i
+        $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+        $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
                  where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
-        $command = $connection->createCommand($sql);
+		$command = $connection->createCommand($sql);
         $command->bindParam(':customer_id', $customer_id);
         $command->bindParam(':company_id', Yii::app()->user->company_id);
         $sales_tax = $command->queryScalar();
@@ -1339,7 +1385,11 @@ class CustomerController extends Controller
       } 
       $notes .='</table>';
     }
-    
+   //get logo
+	if (strpos($template->templates, '%Logo%') !== false) {
+		$company = Company::model()->findByPk($customer->company_id);
+		$logo = !empty($company) ? '<img border="0" src="'. Yii::app()->params['siteURL'] . '/' .$company->logo .'" />' : '';
+	} 
     //get Summary of Payments
 //    if (strpos($template->templates, '%Summary_of_payments%') !== false) {
 //      $sql1 = "select date, payer, amount from payment where customer_id = :customer_id order by date";
@@ -1485,6 +1535,7 @@ class CustomerController extends Controller
         '%Statement Date%' => date('m/d/Y', time()),
         '%Notes%' => $notes,
 //        '%Summary_of_payments%' => $payments,
+        '%Logo%'=>$logo,
     );
     
     $document = str_replace(array_keys($placeHolds), array_values($placeHolds), $template->templates);
@@ -1524,7 +1575,11 @@ class CustomerController extends Controller
 //    $toEmailAddress = $document->email_address_alt ? $document->email_address_alt : $template->email_address;
     $toEmailAddress =  $_POST['email_addr'];
     
-    $fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
+    if(!empty($document->file)) {
+		$fileName = $_SERVER['DOCUMENT_ROOT'] .'/'. $document->file;
+	} else {
+		$fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
+    }
     
     $company_id = Yii::app()->user->company_id;
     $emailConfig = EmailConfig::load($company_id);
@@ -1553,7 +1608,15 @@ class CustomerController extends Controller
     $mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
     $mail->AddAddress($toEmailAddress);
     $mail->Subject = 'Funeral Document';
-    $mail->Body = $_POST['email_text'];
+	$body = $_POST['email_text'];
+	//get logo
+	if (strpos($body, '%Logo%') !== false) {
+		$company = Company::model()->findByPk(Yii::app()->user->company_id);
+		if(!empty($company)) {
+			$body = str_replace('%Logo%', '<img border="0" src="/'. $company->logo .'" />', $body);
+		}
+	}
+    $mail->Body = $body;
     
     $mail->AddAttachment($fileName, basename($fileName));
      
@@ -1593,7 +1656,7 @@ class CustomerController extends Controller
       $totalPrice += $row['retail'];
       if($row['taxable'] == 1){
         $totalTax += $row['retail'];
-        $taxRate = Config::load('tax')->value;
+        $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
         $tax = $totalTax * $taxRate;
       }
     }
@@ -2640,153 +2703,153 @@ class CustomerController extends Controller
     
     
     
-//    //GROUP1
-//    $fieldTypeLen['A'] = 'Text / 255';
-//    $fieldTypeLen['B'] = 'Text / 255';
-//    $fieldTypeLen['C'] = 'Date/Time / 8';
-//    $fieldTypeLen['D'] = 'Date/Time / 8';
-//    $fieldTypeLen['E'] = 'Text / 255';
-//    $fieldTypeLen['F'] = 'Date/Time / 8';
-//    $fieldTypeLen['G'] = 'Text / 255';
-//    $fieldTypeLen['H'] = 'Text / 255';
-//    $fieldTypeLen['I'] = 'Text / 255';
-//    $fieldTypeLen['J'] = 'Text / 255';
-//    
-//    $fieldTypeLen['K'] = 'Text / 255';
-//    $fieldTypeLen['L'] = 'Text / 255';
-//    $fieldTypeLen['M'] = '';
-//    $fieldTypeLen['N'] = '';
-//    $fieldTypeLen['O'] = '';
-//    $fieldTypeLen['P'] = 'Text / 255';
-//    $fieldTypeLen['Q'] = '';
-//    $fieldTypeLen['R'] = '';
-//    $fieldTypeLen['S'] = '';
-//    $fieldTypeLen['T'] = '';
-//    
-//    $fieldTypeLen['U'] = '';
-//    $fieldTypeLen['V'] = 'Text / 255';
-//    $fieldTypeLen['W'] = 'Text / 255';
-//    $fieldTypeLen['X'] = 'Text / 255';
-//    $fieldTypeLen['Y'] = '';
-//    $fieldTypeLen['Z'] = '';
-//    
-//    
-//    //GROUP2
-//    $fieldTypeLen['AA'] = '';
-//    $fieldTypeLen['AB'] = '';
-//    $fieldTypeLen['AC'] = '';
-//    $fieldTypeLen['AD'] = '';
-//    $fieldTypeLen['AE'] = 'Text / 255';
-//    $fieldTypeLen['AF'] = 'Text / 255';
-//    $fieldTypeLen['AG'] = 'Text / 255';
-//    $fieldTypeLen['AH'] = 'Text / 255';
-//    $fieldTypeLen['AI'] = 'Text / 255';
-//    $fieldTypeLen['AJ'] = '';
-//    
-//    $fieldTypeLen['AK'] = '';
-//    $fieldTypeLen['AL'] = '';
-//    $fieldTypeLen['AM'] = '';
-//    $fieldTypeLen['AN'] = '';
-//    $fieldTypeLen['AO'] = '';
-//    $fieldTypeLen['AP'] = 'Text / 255';
-//    $fieldTypeLen['AQ'] = 'Text / 255';
-//    $fieldTypeLen['AR'] = 'Text / 255';
-//    $fieldTypeLen['AS'] = 'Text / 255';
-//    $fieldTypeLen['AT'] = 'Text / 255';
-//    
-//    $fieldTypeLen['AU'] = 'Text / 255';
-//    $fieldTypeLen['AV'] = 'Text / 255';
-//    $fieldTypeLen['AW'] = 'Text / 255';
-//    $fieldTypeLen['AX'] = '';
-//    $fieldTypeLen['AY'] = '';
-//    $fieldTypeLen['AZ'] = '';
-//    
-//    //GROUP3
-//    $fieldTypeLen['BA'] = '';
-//    $fieldTypeLen['BB'] = '';
-//    $fieldTypeLen['BC'] = '';
-//    $fieldTypeLen['BD'] = '';
-//    $fieldTypeLen['BE'] = '';
-//    $fieldTypeLen['BF'] = 'Text / 255';
-//    $fieldTypeLen['BG'] = 'Text / 255';
-//    $fieldTypeLen['BH'] = 'Text / 255';
-//    $fieldTypeLen['BI'] = 'Text / 255';
-//    $fieldTypeLen['BJ'] = 'Text / 255';
-//    
-//    $fieldTypeLen['BK'] = '';
-//    $fieldTypeLen['BL'] = '';
-//    $fieldTypeLen['BM'] = '';
-//    $fieldTypeLen['BN'] = '';
-//    $fieldTypeLen['BO'] = '';
-//    $fieldTypeLen['BP'] = '';
-//    $fieldTypeLen['BQ'] = '';
-//    $fieldTypeLen['BR'] = '';
-//    $fieldTypeLen['BS'] = '';
-//    $fieldTypeLen['BT'] = '';
-//    
-//    $fieldTypeLen['BU'] = '';
-//    $fieldTypeLen['BV'] = '';
-//    $fieldTypeLen['BW'] = '';
-//    $fieldTypeLen['BX'] = '';
-//    $fieldTypeLen['BY'] = '';
-//    $fieldTypeLen['BZ'] = '';
-//    
-//    //GROUP4
-//    $fieldTypeLen['CA'] = '';
-//    $fieldTypeLen['CB'] = '';
-//    $fieldTypeLen['CC'] = '';
-//    $fieldTypeLen['CD'] = '';
-//    $fieldTypeLen['CE'] = '';
-//    $fieldTypeLen['CF'] = '';
-//    $fieldTypeLen['CG'] = '';
-//    $fieldTypeLen['CH'] = '';
-//    $fieldTypeLen['CI'] = '';
-//    $fieldTypeLen['CJ'] = '';
-//    
-//    $fieldTypeLen['CK'] = '';
-//    $fieldTypeLen['CL'] = '';
-//    $fieldTypeLen['CM'] = '';
-//    $fieldTypeLen['CN'] = '';
-//    $fieldTypeLen['CO'] = '';
-//    $fieldTypeLen['CP'] = '';
-//    $fieldTypeLen['CQ'] = '';
-//    $fieldTypeLen['CR'] = '';
-//    $fieldTypeLen['CS'] = '';
-//    $fieldTypeLen['CT'] = '';
-//    
-//    $fieldTypeLen['CU'] = '';
-//    $fieldTypeLen['CV'] = '';
-//    $fieldTypeLen['CW'] = '';
-//    $fieldTypeLen['CX'] = '';
-//    $fieldTypeLen['CY'] = '';
-//    $fieldTypeLen['CZ'] = '';
-//    
-//    //GROUP5
-//    $fieldTypeLen['DA'] = '';
-//    $fieldTypeLen['DB'] = '';
-//    $fieldTypeLen['DC'] = '';
-//    $fieldTypeLen['DD'] = '';
-//    $fieldTypeLen['DE'] = '';
-//    $fieldTypeLen['DF'] = '';
-//    $fieldTypeLen['DG'] = '';
-//    $fieldTypeLen['DH'] = '';
-//    $fieldTypeLen['DI'] = '';
-//    $fieldTypeLen['DJ'] = '';
-//    
-//    $fieldTypeLen['DK'] = '';
-//    $fieldTypeLen['DL'] = 'Memo / No Limit';
-//    $fieldTypeLen['DM'] = '';
-//    $fieldTypeLen['DN'] = '';
-//    $fieldTypeLen['DO'] = '';
-//    $fieldTypeLen['DP'] = '';
-//    $fieldTypeLen['DQ'] = '';
-//    $fieldTypeLen['DR'] = '';
-//    $fieldTypeLen['DS'] = '';
-//    $fieldTypeLen['DT'] = '';
-//    
-//    $fieldTypeLen['DU'] = '';
-//    $fieldTypeLen['DV'] = '';
-//    $excelData[0][] = $fieldTypeLen;
+    //GROUP1
+    $fieldTypeLen['A'] = 'Text / 255';
+    $fieldTypeLen['B'] = 'Text / 255';
+    $fieldTypeLen['C'] = 'Date/Time / 8';
+    $fieldTypeLen['D'] = 'Date/Time / 8';
+    $fieldTypeLen['E'] = 'Text / 255';
+    $fieldTypeLen['F'] = 'Date/Time / 8';
+    $fieldTypeLen['G'] = 'Text / 255';
+    $fieldTypeLen['H'] = 'Text / 255';
+    $fieldTypeLen['I'] = 'Text / 255';
+    $fieldTypeLen['J'] = 'Text / 255';
+    
+    $fieldTypeLen['K'] = 'Text / 255';
+    $fieldTypeLen['L'] = 'Text / 255';
+    $fieldTypeLen['M'] = '';
+    $fieldTypeLen['N'] = '';
+    $fieldTypeLen['O'] = '';
+    $fieldTypeLen['P'] = 'Text / 255';
+    $fieldTypeLen['Q'] = '';
+    $fieldTypeLen['R'] = '';
+    $fieldTypeLen['S'] = '';
+    $fieldTypeLen['T'] = '';
+    
+    $fieldTypeLen['U'] = '';
+    $fieldTypeLen['V'] = 'Text / 255';
+    $fieldTypeLen['W'] = 'Text / 255';
+    $fieldTypeLen['X'] = 'Text / 255';
+    $fieldTypeLen['Y'] = '';
+    $fieldTypeLen['Z'] = '';
+    
+    
+    //GROUP2
+    $fieldTypeLen['AA'] = '';
+    $fieldTypeLen['AB'] = '';
+    $fieldTypeLen['AC'] = '';
+    $fieldTypeLen['AD'] = '';
+    $fieldTypeLen['AE'] = 'Text / 255';
+    $fieldTypeLen['AF'] = 'Text / 255';
+    $fieldTypeLen['AG'] = 'Text / 255';
+    $fieldTypeLen['AH'] = 'Text / 255';
+    $fieldTypeLen['AI'] = 'Text / 255';
+    $fieldTypeLen['AJ'] = '';
+    
+    $fieldTypeLen['AK'] = '';
+    $fieldTypeLen['AL'] = '';
+    $fieldTypeLen['AM'] = '';
+    $fieldTypeLen['AN'] = '';
+    $fieldTypeLen['AO'] = '';
+    $fieldTypeLen['AP'] = 'Text / 255';
+    $fieldTypeLen['AQ'] = 'Text / 255';
+    $fieldTypeLen['AR'] = 'Text / 255';
+    $fieldTypeLen['AS'] = 'Text / 255';
+    $fieldTypeLen['AT'] = 'Text / 255';
+    
+    $fieldTypeLen['AU'] = 'Text / 255';
+    $fieldTypeLen['AV'] = 'Text / 255';
+    $fieldTypeLen['AW'] = 'Text / 255';
+    $fieldTypeLen['AX'] = '';
+    $fieldTypeLen['AY'] = '';
+    $fieldTypeLen['AZ'] = '';
+    
+    //GROUP3
+    $fieldTypeLen['BA'] = '';
+    $fieldTypeLen['BB'] = '';
+    $fieldTypeLen['BC'] = '';
+    $fieldTypeLen['BD'] = '';
+    $fieldTypeLen['BE'] = '';
+    $fieldTypeLen['BF'] = 'Text / 255';
+    $fieldTypeLen['BG'] = 'Text / 255';
+    $fieldTypeLen['BH'] = 'Text / 255';
+    $fieldTypeLen['BI'] = 'Text / 255';
+    $fieldTypeLen['BJ'] = 'Text / 255';
+    
+    $fieldTypeLen['BK'] = '';
+    $fieldTypeLen['BL'] = '';
+    $fieldTypeLen['BM'] = '';
+    $fieldTypeLen['BN'] = '';
+    $fieldTypeLen['BO'] = '';
+    $fieldTypeLen['BP'] = '';
+    $fieldTypeLen['BQ'] = '';
+    $fieldTypeLen['BR'] = '';
+    $fieldTypeLen['BS'] = '';
+    $fieldTypeLen['BT'] = '';
+    
+    $fieldTypeLen['BU'] = '';
+    $fieldTypeLen['BV'] = '';
+    $fieldTypeLen['BW'] = '';
+    $fieldTypeLen['BX'] = '';
+    $fieldTypeLen['BY'] = '';
+    $fieldTypeLen['BZ'] = '';
+    
+    //GROUP4
+    $fieldTypeLen['CA'] = '';
+    $fieldTypeLen['CB'] = '';
+    $fieldTypeLen['CC'] = '';
+    $fieldTypeLen['CD'] = '';
+    $fieldTypeLen['CE'] = '';
+    $fieldTypeLen['CF'] = '';
+    $fieldTypeLen['CG'] = '';
+    $fieldTypeLen['CH'] = '';
+    $fieldTypeLen['CI'] = '';
+    $fieldTypeLen['CJ'] = '';
+    
+    $fieldTypeLen['CK'] = '';
+    $fieldTypeLen['CL'] = '';
+    $fieldTypeLen['CM'] = '';
+    $fieldTypeLen['CN'] = '';
+    $fieldTypeLen['CO'] = '';
+    $fieldTypeLen['CP'] = '';
+    $fieldTypeLen['CQ'] = '';
+    $fieldTypeLen['CR'] = '';
+    $fieldTypeLen['CS'] = '';
+    $fieldTypeLen['CT'] = '';
+    
+    $fieldTypeLen['CU'] = '';
+    $fieldTypeLen['CV'] = '';
+    $fieldTypeLen['CW'] = '';
+    $fieldTypeLen['CX'] = '';
+    $fieldTypeLen['CY'] = '';
+    $fieldTypeLen['CZ'] = '';
+    
+    //GROUP5
+    $fieldTypeLen['DA'] = '';
+    $fieldTypeLen['DB'] = '';
+    $fieldTypeLen['DC'] = '';
+    $fieldTypeLen['DD'] = '';
+    $fieldTypeLen['DE'] = '';
+    $fieldTypeLen['DF'] = '';
+    $fieldTypeLen['DG'] = '';
+    $fieldTypeLen['DH'] = '';
+    $fieldTypeLen['DI'] = '';
+    $fieldTypeLen['DJ'] = '';
+    
+    $fieldTypeLen['DK'] = '';
+    $fieldTypeLen['DL'] = 'Memo / No Limit';
+    $fieldTypeLen['DM'] = '';
+    $fieldTypeLen['DN'] = '';
+    $fieldTypeLen['DO'] = '';
+    $fieldTypeLen['DP'] = '';
+    $fieldTypeLen['DQ'] = '';
+    $fieldTypeLen['DR'] = '';
+    $fieldTypeLen['DS'] = '';
+    $fieldTypeLen['DT'] = '';
+    
+    $fieldTypeLen['DU'] = '';
+    $fieldTypeLen['DV'] = '';
+    $excelData[0][] = $fieldTypeLen;
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select * from customer where id = :id");
@@ -3050,8 +3113,8 @@ class CustomerController extends Controller
     $total_cash_advances = $command4->queryScalar();
         
     //get sales_tax
-    $taxConfig = Config::load('tax');
-    $sql5 = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxConfig->value .") from product p, inventory i
+    $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+    $sql5 = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
              where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
     $command5 = $connection->createCommand($sql5);
     $command5->bindParam(':customer_id', $customer_id);
@@ -3549,6 +3612,41 @@ private function _compareMinValue($value, $dataArray){
         'tatal_balances'=>$tatal_balances,
     ));
   }
+
+  public function actionAddFile($id)
+  {
+    $customer = $this->loadModel($id);
+    $document = new Document();
+
+	if (isset($_FILES['Document'])) {
+		  $document->attributes = $_POST['Document'];
+		  $file = CUploadedFile::getInstance($document, 'file');
+		  if ($file) {
+			$filename = $file->getName();
+			$filepath = CommonFunc::getUploadFileSavePath($filename);
+			$file->saveAs($filepath);
+			$document->file = $filepath;
+			$document->customer_id = $id;
+		  }
+
+      if($document->save()) {
+		$this->redirect('/customer/view/'.$id.'#documentslist');
+	  }
+    }
+
+    $this->render('addfile', array(
+        'customer'=>$customer,
+		'model'=>$document,
+    ));
+  }
+
+  public function actionDocDownload($id) {
+	  $document = Document::model()->findByPk($id);
+	  $content = file_get_contents($document['file']);
+	  if(!empty($content))
+		  Yii::app()->request->sendFile(basename($document['file']), $content);
+  }
+
 }
 
 ?>

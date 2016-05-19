@@ -102,4 +102,3 @@ while ($row = $productDataProvider->read()) {
 
 </div>
 </div>
-

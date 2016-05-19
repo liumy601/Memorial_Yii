@@ -112,6 +112,8 @@ $(document).ready(
           }
         }
      
+		Appcues.start();
+
         $.ajax({
           async:true,
           cache:true,
