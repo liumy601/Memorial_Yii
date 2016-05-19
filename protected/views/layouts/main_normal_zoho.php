@@ -104,7 +104,8 @@ echo '<script language="javascript">
 
       //get logo
       $command = $connection->createCommand("select logo from company where id=:id");
-      $command->bindParam(':id', Yii::app()->user->company_id);
+	  $company_id = Yii::app()->user->company_id;
+      $command->bindParam(':id', $company_id);
       $logo = $command->queryScalar();
       
       if($logo != '' && file_exists($logo)){
