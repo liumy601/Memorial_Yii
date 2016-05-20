@@ -27,6 +27,8 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
     )
 )); ?>   
   
+  <?php echo $form->errorSummary($model); ?>
+
   <div class="bodyText mandatory"><div style="float:right;" class="bodyText mandatory">* Required Field(s)</div></div>
 
   <table width="95%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="center">
@@ -44,7 +46,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         </tr>
         <tr> 
           <td width="20%" class="label mandatory"></td>
-          <td width="30%" class="element"><?php echo $form->fileField($model,'file'); ?></td>
+          <td width="30%" class="element">(only doc, docx, xls, xlsx, pdf, txt file allowed)<br/><?php echo $form->fileField($model,'file'); ?></td>
         </tr>
       </tbody>
     </table>

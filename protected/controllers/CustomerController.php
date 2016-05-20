@@ -3621,17 +3621,27 @@ private function _compareMinValue($value, $dataArray){
 	if (isset($_FILES['Document'])) {
 		  $document->attributes = $_POST['Document'];
 		  $file = CUploadedFile::getInstance($document, 'file');
-		  if ($file) {
+
+		  if (!empty($file)) {
 			$filename = $file->getName();
+			$ext = substr($filename, strrpos($filename,'.')+1);
+			if(empty($document->document_name))
+				$document->document_name = substr($filename, 0, strrpos($filename,'.'));
+			if(!in_array($ext, array('doc','docx','xls','xlsx','pdf','txt'))) {
+				$document->addError('file', 'only doc, docx, xls, xlsx, pdf, txt file allowed');
+				$document->document_name = '';
+			}
 			$filepath = CommonFunc::getUploadFileSavePath($filename);
 			$file->saveAs($filepath);
 			$document->file = $filepath;
 			$document->customer_id = $id;
+		  } else {
+			$document->addError('file', 'please upload a file');
 		  }
 
-      if($document->save()) {
-		$this->redirect('/customer/view/'.$id.'#documentslist');
-	  }
+		  if(!$document->hasErrors() && $document->save()) {
+			$this->redirect('/customer/view/'.$id.'#documentslist');
+		  }
     }
 
     $this->render('addfile', array(
