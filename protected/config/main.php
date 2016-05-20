@@ -1,5 +1,24 @@
 <?php
 
+if(strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false){
+  $DBName = 'funeral';
+  $DBUser = 'root';
+  $DBPass = '';
+  $siteURL = 'http://127.0.0.1:100';
+} elseif(strpos($_SERVER['HTTP_HOST'], 'funeralbeta.preferati.com') !== false) {
+  $DBName = 'funeralb_db';
+  $DBUser = 'funeralb_dbuser';
+  $DBPass = 'Amazon26#';
+  $siteURL = 'http://funeralbeta.preferati.com';
+} elseif(strpos($_SERVER['HTTP_HOST'], 'app.memorialdirector.com') !== false) {
+  $DBName = 'funeralp_db';
+  $DBUser = 'funeralp_user';
+  $DBPass = 'Amazon26#';
+  $siteURL = 'http://app.memorialdirector.com';
+}
+
+
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -52,10 +71,10 @@ return array(
 //		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=funeralb_db',
+			'connectionString' => 'mysql:host=localhost;dbname='.$DBName,
 			'emulatePrepare' => true,
-			'username' => 'funeralb_dbuser',
-			'password' => 'Amazon26#',
+			'username' => $DBUser,
+			'password' => $DBPass,
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -94,7 +113,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'funeral@preferati.net',
       
-		'siteURL'=>'http://funeralbeta.preferati.com',
+		'siteURL'=>$siteURL,
 		'appappSiteURL'=>'http://appappbeta.preferati.com',
 
 		'appappToken'=>'$S$D1DcWB8SJKMA8INTGqKeJboQDWd89J/QWYapDfrzG86U5KZhD6G9',
