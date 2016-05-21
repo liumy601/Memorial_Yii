@@ -73,7 +73,6 @@ $(document).ready(
         }
         if(urlCache[num]){
           var url=urlCache[num];
-		  alert(num+' '+url);
           ajaxNew(url);
           globalId=num;
           
