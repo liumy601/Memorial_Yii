@@ -148,7 +148,7 @@ class SiteController extends Controller
       }
 		}
 		// display the login form
-    if(!empty($_REQUEST['ajaxRequest'])){
+    if($_REQUEST['ajaxRequest']){
       $this->renderPartial('login',array('model'=>$model));
     } else {
       $this->render('login',array('model'=>$model));
@@ -162,7 +162,7 @@ class SiteController extends Controller
     $command->bindParam(':email', $model->username);
     $appapp_uid = $command->queryScalar();
     
-    if (!$appapp_uid) {
+    if (!appapp_uid) {
       return;
     }
     if (!Yii::app()->params['appappToken']) {
