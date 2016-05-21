@@ -1814,7 +1814,6 @@ function confirmSubmitForm(status){
 
 
 function customers_export(customer_id){
-	alert(customer_id);
   document.location.href = '/decedent/customersexport/'+customer_id;
 }
 

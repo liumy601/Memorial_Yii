@@ -11,7 +11,7 @@
 <td width="100" class="dvmo"> </td>
 <td> </td>
 <td width="90%"> 
-  <input style="float:right;" name="download_customer" class="button" type="button" value="Guest Book Export"  onclick="customers_export(<?php echo $model->id ?>);">
+  <input style="float:right;" name="download_customer" class="button" type="button" value="Guest Book Export"  onclick="location.href = '/decedent/customersexport/<?php echo $model->id ?>';">
 </td>
 </tr></tbody></table></div>
   
