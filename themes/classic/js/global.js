@@ -73,6 +73,7 @@ $(document).ready(
         }
         if(urlCache[num]){
           var url=urlCache[num];
+		  alert(num+' '+url);
           ajaxNew(url);
           globalId=num;
           
@@ -132,7 +133,7 @@ $(document).ready(
             $('#show').html(data);
             $("#searchword").focus().blur();
             appAppAddIcon();
-			setPageUrl($(this).attr('href'));
+			setPageUrl(href);
 			Appcues.start();
           },
           error: function(data){
