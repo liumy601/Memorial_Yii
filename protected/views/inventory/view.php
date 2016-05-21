@@ -3,7 +3,7 @@
 <div id="leftPanel">
   
 <!--buttons-->
-<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; "><table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer"><tbody><tr><td align="center" nowrap="" class="pL15"> <a href="javascript:void(0);" onclick="history.back();location.href=location.href;return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td><td nowrap="" class="pL10 dvmo"> 
+<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; "><table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer"><tbody><tr><td align="center" nowrap="" class="pL15"> <a href="javascript:void(0);" onclick="history.back();return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td><td nowrap="" class="pL10 dvmo"> 
 <input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/inventory/update/<?php echo $model->id; ?>" pagetitle="Edit inventory" id="editview_student_<?php echo $model->id; ?>"/>
 <input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/inventory/delete/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
 &nbsp;

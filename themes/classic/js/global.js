@@ -116,9 +116,6 @@ $(document).ready(
           }
         }
 
-		setPageUrl($(this).attr('href'));
-		Appcues.start();
-
         $.ajax({
           async:true,
           cache:true,
@@ -135,6 +132,8 @@ $(document).ready(
             $('#show').html(data);
             $("#searchword").focus().blur();
             appAppAddIcon();
+			setPageUrl($(this).attr('href'));
+			Appcues.start();
           },
           error: function(data){
             showTip('Request failed.');
@@ -528,6 +527,7 @@ function putInHistory(id,url){
 //    }
 //    if(typeof ajaxBackButton!="undefined"){
 //      ajaxBackButton(id,url,true);
+
       ajaxBackButton(id,url,false);
 //    }
   }
