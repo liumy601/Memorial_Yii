@@ -17,10 +17,7 @@ if(strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false){
   $siteURL = 'http://app.memorialdirector.com';
 }
 
-$DBName = 'funeralb_db';
-$DBUser = 'root';
-$DBPass = '';
-$siteURL = 'http://dev.memorial.com/';
+
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
