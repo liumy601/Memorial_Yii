@@ -2546,7 +2546,7 @@ class CustomerController extends Controller
 //    exit;
 //  }
   
-  function actionCustomersExport($id){
+  public function actionCustomersExport($id){
     $head = array();
     $fieldTypeLen = array();
     $countries = CommonFunc::countries();
