@@ -2546,7 +2546,7 @@ class CustomerController extends Controller
 //    exit;
 //  }
   
-  function actionCustomersExport($customer_id){
+  function actionCustomersExport($id){
     $head = array();
     $fieldTypeLen = array();
     $countries = CommonFunc::countries();
@@ -2853,7 +2853,7 @@ class CustomerController extends Controller
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select * from customer where id = :id");
-    $command->bindParam(':id', $customer_id);
+    $command->bindParam(':id', $id);
     $dataCustomers = $command->query();
     
     $totalCount = 0;

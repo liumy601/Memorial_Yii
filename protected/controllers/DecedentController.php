@@ -2538,7 +2538,7 @@ class DecedentController extends Controller
 //    exit;
 //  }
   
-  function actionCustomersExport($customer_id){
+  public function actionCustomersExport($id){
     $head = array();
     $fieldTypeLen = array();
     $countries = CommonFunc::countries();
@@ -2845,7 +2845,7 @@ class DecedentController extends Controller
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select * from customer where id = :id");
-    $command->bindParam(':id', $customer_id);
+    $command->bindParam(':id', $id);
     $dataCustomers = $command->query();
     
     $totalCount = 0;
