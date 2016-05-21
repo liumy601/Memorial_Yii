@@ -22,8 +22,10 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 <?php $form=$this->beginWidget('CActiveForm', array(
     'htmlOptions' => array(
+		'id'=>'addFileForm',
       'class' => 'noajax',
       'enctype'=>'multipart/form-data',//can't upload by ajax
+	  'onsubmit'=>'return validateForm();'
     )
 )); ?>   
   
@@ -67,5 +69,10 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 <script type="text/javascript">
   function backToCustomer(){
     document.location.href='/customer/view/<?php echo $customer->id; ?>?tm=<?php echo time(); ?>#documentslist';
+  }
+
+  function validateForm() {
+	  $('#addFileForm').attr('action', $('#addFileForm').attr('action').replace('?ajaxRequest=1',''));
+	return true;
   }
 </script>
