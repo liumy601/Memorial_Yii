@@ -13,6 +13,12 @@ if(window.navigator.userAgent.toUpperCase().indexOf("OPERA")>=0){
   var browser_opera=true;
 }
 
+function setPageUrl(requestUri) {
+	var matches = location.href.match(/http:\/\/([^\/]+)/i);
+	var host = matches[0];
+	var url = host+requestUri;
+	history.pushState({}, document.title, url);
+}
 
 $(document).ready(
   function(){
@@ -24,9 +30,7 @@ $(document).ready(
       var top = $(this).position().top;
       $(this).next('.submenu').css({'display':'block', 'left':left+'px', 'top':top+37+'px'});
     })
-  
 
-    
     //datepicker
     $( ".datepicker" ).live('focus', function(){
       $(this).datepicker({
@@ -111,8 +115,6 @@ $(document).ready(
             document.title = $(this).html();
           }
         }
-     
-		Appcues.start();
 
         $.ajax({
           async:true,
@@ -130,6 +132,8 @@ $(document).ready(
             $('#show').html(data);
             $("#searchword").focus().blur();
             appAppAddIcon();
+			setPageUrl(href);
+			Appcues.start();
           },
           error: function(data){
             showTip('Request failed.');
@@ -190,7 +194,7 @@ $(document).ready(
       function(){
         var data = $(this).serializeArray();
         data.push({name:'ajaxRequest', value:1});
-        
+
         $.ajax({
           async:true,
           cache:true,
@@ -226,7 +230,9 @@ $(document).ready(
         
         putInHistory($(this).attr('id'), $(this).attr('url'));
         document.title = $(this).attr('pagetitle');
-        
+		
+		setPageUrl($(this).attr('url'));
+
         $.ajax({
           async:true,
           cache:true,
@@ -521,6 +527,7 @@ function putInHistory(id,url){
 //    }
 //    if(typeof ajaxBackButton!="undefined"){
 //      ajaxBackButton(id,url,true);
+
       ajaxBackButton(id,url,false);
 //    }
   }
@@ -1805,8 +1812,9 @@ function confirmSubmitForm(status){
   return true;
 }
 
+
 function customers_export(customer_id){
-  document.location.href = '/customer/customersexport/customer_id/'+customer_id;
+  document.location.href = '/decedent/customersexport/'+customer_id;
 }
 
 function dialogReceipt(customer_id, payment_id, type){
