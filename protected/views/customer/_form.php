@@ -25,8 +25,8 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 
 <?php $form=$this->beginWidget('CActiveForm', array('htmlOptions' => 
     array('name'=>'EditView', 'id'=>'EditView', 
-        'class'=>'noajax', 
-        'enctype'=>'multipart/form-data',
+        'class'=>'noajax',
+		'enctype'=>'multipart/form-data',
         'onsubmit'=>'return check_form_customer();'
     ))); ?>
 
@@ -81,6 +81,42 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
           <span class="warning" style="display: none; color: #f00;">Warning: This field must be filled in and it's not blank!!!</span>
         </td>
         </tr>
+		
+		<?php if($optionFields->full_legal_name_f) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'full_legal_name_f',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'full_legal_name_f',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->full_legal_name_m) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'full_legal_name_m',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'full_legal_name_m',array('maxlength'=>50, 'style'=>'width:270px;'));?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->full_legal_name_l) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'full_legal_name_l',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'full_legal_name_l',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->full_legal_prefix) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'full_legal_prefix',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'full_legal_prefix',array('maxlength'=>50, 'style'=>'width:270px;'));?></td>
+			</tr>
+		<?php endif; ?>
 
         <tr>
         <td width="25%" class="label"><?php echo $form->labelEx($model,'name_for_obituary',array('style'=>'width:270px;')); ?></td>
@@ -124,6 +160,24 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="25%" class="element"><?php echo $form->textField($model,'place_of_birth',array('style'=>'width:270px;','maxlength'=>50, 'onchange'=>'calAge();')); ?></td>
         </tr>
 
+		<?php if($optionFields->city_of_birth) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'city_of_birth',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'city_of_birth',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->state_of_birth) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'state_of_birth',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'state_of_birth',array('maxlength'=>50, 'style'=>'width:270px;'));?></td>
+			</tr>
+		<?php endif; ?>
+
         <tr>
         <td width="25%" class="label"><?php echo $form->labelEx($model,'date_of_death'); ?></td>
         <td width="25%" class="element">
@@ -137,8 +191,52 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="25%" class="label"><?php echo $form->labelEx($model,'place_of_death'); ?></td>
         <td width="25%" class="element"><?php echo $form->textField($model,'place_of_death',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
         </tr>
+
+		<?php if($optionFields->pod_facility_name) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'pod_facility_name',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'pod_facility_name',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->pod_facility_street) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'pod_facility_street',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'pod_facility_street',array('maxlength'=>50, 'style'=>'width:270px;'));?></td>
+			</tr>
+		<?php endif; ?>
         
-        
+		<?php if($optionFields->pod_facility_city) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'pod_facility_city',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'pod_facility_city',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->pod_facility_state) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'pod_facility_state',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'pod_facility_state',array('maxlength'=>50, 'style'=>'width:270px;'));?></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->pod_facility_zip) : ?>
+			<tr>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'pod_facility_zip',array('style'=>'width:270px;')); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'pod_facility_zip',array('maxlength'=>50, 'style'=>'width:270px;')); ?></td>
+			</tr>
+		<?php endif; ?>
+
         <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         <tr>
         <td align="center"><b style="font-size: 20px;">Funeral Services</b><hr></td>
@@ -266,6 +364,22 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="25%" class="label"> </td>
         <td width="25%" class="element"> </td>
         </tr>
+		<?php if($optionFields->interment_street) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'interment_street'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'interment_street', array('style'=>'width:270px;','class'=>'Other')); ?></td>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			</tr>
+		<?php endif; ?>
+		<?php if($optionFields->interment_zip) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'interment_zip'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'interment_zip', array('style'=>'width:270px;','class'=>'Other')); ?></td>
+			<td width="25%" class="label"> </td>
+			<td width="25%" class="element"> </td>
+			</tr>
+		<?php endif; ?>
         
         <tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
         
@@ -329,6 +443,15 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
           <?php echo $form->dropDownList($model,'full_military_rites',array(''=>'','Y'=>'Y','S'=>'S'),array('style'=>'width: 270px;')); ?>
         </td>
         </tr>
+
+		<?php if($optionFields->veteran_serial_number) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'veteran_serial_number'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'veteran_serial_number',array('style'=>'width:270px;','maxlength'=>50)); ?></td>
+			<td width="25%" class="label"></td>
+			<td width="25%" class="element"></td>
+			</tr>
+		<?php endif; ?>
        
         <tr>
         <td width="25%" class="label"><?php echo $form->labelEx($model,'spouse_f'); ?></td>
@@ -486,6 +609,42 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         </td>
         </tr>
 
+		<?php if($optionFields->doctor_street) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'doctor_street'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'doctor_street',array('style'=>'width:270px;','maxlength'=>50)); ?></td>
+			<td width="25%" class="label"></td>
+			<td width="25%" class="element"></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->doctor_city) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'doctor_city'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'doctor_city',array('style'=>'width:270px;','maxlength'=>50)); ?></td>
+			<td width="25%" class="label"></td>
+			<td width="25%" class="element"></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->doctor_state) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'doctor_state'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'doctor_state',array('style'=>'width:270px;','maxlength'=>50)); ?></td>
+			<td width="25%" class="label"></td>
+			<td width="25%" class="element"></td>
+			</tr>
+		<?php endif; ?>
+
+		<?php if($optionFields->doctor_zip) : ?>
+			<tr>
+			<td width="25%" class="label"><?php echo $form->labelEx($model,'doctor_zip'); ?></td>
+			<td width="25%" class="element"><?php echo $form->textField($model,'doctor_zip',array('style'=>'width:270px;','maxlength'=>50)); ?></td>
+			<td width="25%" class="label"></td>
+			<td width="25%" class="element"></td>
+			</tr>
+		<?php endif; ?>
+
         <tr>
         <td width="25%" class="label"><?php echo $form->labelEx($model,'informant_name_f'); ?></td>
         <td width="25%" class="element">
@@ -606,6 +765,8 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   }
   
   function check_form_customer(){
+	  $('#EditView').attr('action', $('#EditView').attr('action').replace('?ajaxRequest=1',''));
+
       if(document.getElementById('Customer_full_legal_name').value == ''){
         $('.warning').show();
         $('#Customer_full_legal_name').css('background-color', '#f00');
