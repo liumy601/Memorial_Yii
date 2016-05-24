@@ -32,14 +32,32 @@ class TemplateController extends Controller
     Yii::app()->params['subMenu'] = $subMenu;
 	}
   
+  public function __construct($id,$module=null)
+	{
+    if (Yii::app()->user->name != 'Guest' && in_array($id, array('customer', 'task', 'inventory', 'template'))) {
+      $connection = Yii::app()->db;
+      $trial = $connection->createCommand("select trial, trial_end from users where id=" . Yii::app()->user->uid)->queryRow();
+      if ($trial['trial'] == 1 && time() >= $trial['trial_end']) {
+        echo '<div style="margin:30px 0;">Your trial has Expired, can\'t perform this action.</div>';
+        exit;
+      } 
+    }
+    
+		parent::__construct($id, $module);
+	}
+  
 	public function actionIndex($hoaid=null)
 	{
     $connection = Yii::app()->db;
     $this->_buildShortcuts();
 
 //    $command = $connection->createCommand("select * from template order by name");
-    $command = $connection->createCommand("select * from template where company_id=:company_id and deleted=0 order by name");
-    $command->bindParam(':company_id', Yii::app()->user->company_id);
+	if (Yii::app()->user->type == 'super admin') {
+		$command = $connection->createCommand("select * from template where is_super_admin=1 and deleted=0 order by name");
+	} else {
+		$command = $connection->createCommand("select * from template where company_id=:company_id and deleted=0 order by name");
+		$command->bindParam(':company_id', Yii::app()->user->company_id);
+	}
     $dr = $command->query();
     
 		$this->render('index', array('dr'=>$dr));
@@ -48,7 +66,7 @@ class TemplateController extends Controller
   public function actionCreate()
 	{
     $this->_buildShortcuts();
-    
+
     if (isset($_POST['Template'])) {
       $model = new Template();
       $model->attributes = $_POST['Template'];
@@ -56,14 +74,18 @@ class TemplateController extends Controller
       $model->enteredtm = time();
       $model->company_id = Yii::app()->user->company_id;
       $model->deleted = 0;
-      $model->save();
       
+	   if (Yii::app()->user->type == 'super admin')
+			$model->is_super_admin = 1;
+
+      $model->save();
+     
       Yii::app()->user->setFlash('', 'Template is saved.');
       $this->redirect(array('view','id'=>$model->id));
     }
     
     $model = new Template();
-    $this->render('_form', array('model'=>$model));
+    $this->render('_form', array('model'=>$model, 'sample_templates'=>Template::loadSampleTemplates()));
 	}
   
   public function actionUpdate($id)
@@ -82,6 +104,7 @@ class TemplateController extends Controller
     
     $this->render('_form',array(
         'model'=>$model,
+		'sample_templates'=>Template::loadSampleTemplates(),
     ));
   }
   
@@ -101,9 +124,18 @@ class TemplateController extends Controller
       Yii::app()->params['print'] = true;
     }
     $this->_buildShortcuts();
-    
+    $model = $this->loadModel($id);
+
+	//get logo
+	if (strpos($model->templates, '%Logo%') !== false) {
+		$company = Company::model()->findByPk(Yii::app()->user->company_id);
+		if(!empty($company)) {
+			$model->templates = str_replace('%Logo%', '<img border="0" src="/'. $company->logo .'" />', $model->templates);
+		}
+	}
+
     $this->render('view',array(
-        'model'=>$this->loadModel($id),
+        'model'=>$model,
     ));
   }
   

@@ -29,6 +29,13 @@ class Config extends CActiveRecord
     }
   }
   
+  public static function loadTaxByCompany($company_id) {
+	$config = Config::model()->find('name="tax_by_company_'. $company_id. '" and company_id='. $company_id);
+	if(empty($config))
+		return 0;
+	$taxRate = unserialize($config->value);
+	return $taxRate;
+  }
   
 	/**
 	 * Returns the static model of the specified AR class.
@@ -55,7 +62,7 @@ class Config extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, value', 'safe'),
+			array('name, value, company_id', 'safe'),
 		);
 	}
   

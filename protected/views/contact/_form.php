@@ -43,7 +43,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
     <?php if($model->id){//edit ?>
     <input title="Cancel" class="button buttonurl" url="/contact/<?php echo $model->id; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
     <?php } elseif ($_GET['customerid']){//create from customer view page ?>
-    <input title="Cancel" class="button buttonurl" url="/customer/<?php echo $model->customerid; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/<?php echo $model->customerid; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
     <?php } ?>
   </td></tr></tbody></table>
 
@@ -86,7 +86,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
     <?php if($model->id){//edit ?>
     <input title="Cancel" class="button buttonurl" url="/contact/<?php echo $model->id; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
     <?php } elseif ($_GET['customerid']){//create from customer view page ?>
-    <input title="Cancel" class="button buttonurl" url="/customer/<?php echo $model->customerid; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
+    <input title="Cancel" class="button buttonurl" url="/decedent/<?php echo $model->customerid; ?>" pageTitle="Contact" type="button" name="button" value="Cancel"/>
     <?php } ?>
   </td></tr></tbody></table>
   

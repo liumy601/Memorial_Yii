@@ -1,5 +1,5 @@
 <?php
-class CustomerController extends Controller
+class DecedentController extends Controller
 {
   public function filters()
   {
@@ -27,8 +27,8 @@ class CustomerController extends Controller
   private function _buildShortcuts()
 	{
     $subMenu = array();
-    $subMenu[] = array('text'=>'New Decedent', 'url'=>'/customer/create');
-    $subMenu[] = array('text'=>'New Decedent Form', 'url'=>'/customer/createnewcustomer');
+    $subMenu[] = array('text'=>'New Decedent', 'url'=>'/decedent/create');
+    $subMenu[] = array('text'=>'New Decedent Form', 'url'=>'/decedent/createnewcustomer');
     Yii::app()->params['subMenu'] = $subMenu;
 	}
   
@@ -348,7 +348,6 @@ class CustomerController extends Controller
         $documents[$row['template_id']] = $row;
       }
     }
-
 	//find file attach type documents
 	$file_documents = Document::model()->findAll('customer_id='. $id .' and file is not null');
 	foreach($file_documents as $doc) {
@@ -361,6 +360,7 @@ class CustomerController extends Controller
 			'file'=>$doc->file,
 		);
 	}
+
 
     //discounts
     $sql = "select sum(amount) from payment where customer_id= :customer_id and type='credit'";
@@ -469,9 +469,9 @@ class CustomerController extends Controller
         
         if ($_POST['autosave']) {
           echo '<script type="text/javascript">
-                    window.parent.$("#newcustomerform").attr("action", "/customer/updatenewcustomer/'. $model->id .'?ajaxRequest=1");
-                    window.parent.$("#button_cancel1").attr("url", "/customer/deletenewcustomer/'. $model->id .'?ajaxRequest=1");
-                    window.parent.$("#button_cancel2").attr("url", "/customer/deletenewcustomer/'. $model->id .'?ajaxRequest=1");
+                    window.parent.$("#newcustomerform").attr("action", "/decedent/updatenewcustomer/'. $model->id .'?ajaxRequest=1");
+                    window.parent.$("#button_cancel1").attr("url", "/decedent/deletenewcustomer/'. $model->id .'?ajaxRequest=1");
+                    window.parent.$("#button_cancel2").attr("url", "/decedent/deletenewcustomer/'. $model->id .'?ajaxRequest=1");
                  </script>';
           exit;
         } else {
@@ -670,7 +670,7 @@ class CustomerController extends Controller
       }
       
 //      $this->redirect('/customer/view/'.$id.'?ajaxRequest=1');
-      $this->redirect('/customer/view/'.$id.'#productlist');
+      $this->redirect('/decedent/view/'.$id.'#productlist');
     }
     
     //products
@@ -717,7 +717,7 @@ class CustomerController extends Controller
       }
       
 //      $this->redirect('/customer/view/'.$id.'?ajaxRequest=1');
-      $this->redirect('/customer/view/'.$id.'#productlist');
+      $this->redirect('/decedent/view/'.$id.'#productlist');
 
     }
     $package=Package::getAll();   
@@ -767,7 +767,7 @@ class CustomerController extends Controller
       $product->invoice_notes = $_POST['invoice_notes'];
       $product->save();
 //      $this->redirect('/customer/view/' . $product->customer_id . '?ajaxRequest=1');
-      $this->redirect('/customer/view/'.$product->customer_id.'#productlist');
+      $this->redirect('/decedent/view/'.$product->customer_id.'#productlist');
     }
 
     $this->render('editproduct', array(
@@ -795,7 +795,7 @@ class CustomerController extends Controller
       echo 'Done';
       exit;
     } else {//from contact detail view
-      $this->redirect('/customer/view/'. $product->customer_id .'?ajaxRequest=1');
+      $this->redirect('/decedent/view/'. $product->customer_id .'?ajaxRequest=1');
     }
   }
   
@@ -811,7 +811,7 @@ class CustomerController extends Controller
 //      $model->date = date('m/d/Y H:i:s');
       if ($model->save()) {
 //        $this->redirect('/customer/view/'.$id.'?ajaxRequest=1');
-        $this->redirect('/customer/view/'.$id.'#paymentlist');
+        $this->redirect('/decedent/view/'.$id.'#paymentlist');
       }
     }
     
@@ -830,7 +830,7 @@ class CustomerController extends Controller
       $model->attributes = $_POST['Payment'];
       if ($model->save()) {
 //        $this->redirect('/customer/view/' . $model->customer_id . '?ajaxRequest=1');
-        $this->redirect('/customer/view/'. $model->customer_id .'#paymentlist');
+        $this->redirect('/decedent/view/'. $model->customer_id .'#paymentlist');
       }
     }
  
@@ -850,7 +850,7 @@ class CustomerController extends Controller
       echo 'Done';
       exit;
     } else {//from contact detail view
-      $this->redirect('/customer/view/'.$payment->customer_id.'?ajaxRequest=1');
+      $this->redirect('/decedent/view/'.$payment->customer_id.'?ajaxRequest=1');
     }
   }
   
@@ -881,7 +881,7 @@ class CustomerController extends Controller
       }
       
 //      $this->redirect('/customer/view/'.$id.'?ajaxRequest=1');    
-      $this->redirect('/customer/view/'.$id.'#documentslist');
+      $this->redirect('/decedent/view/'.$id.'#documentslist');
     }
     
     $this->render('adddocument', array(
@@ -910,7 +910,7 @@ class CustomerController extends Controller
       echo 'Done';
       exit;
     } else {//from contact detail view
-      $this->redirect('/customer/view/'.$customer->id.'?ajaxRequest=1');
+      $this->redirect('/decedent/view/'.$customer->id.'?ajaxRequest=1');
     }
     
   }
@@ -1311,7 +1311,7 @@ class CustomerController extends Controller
         $taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
         $sql = "select (sum(ifnull(p.product_retail, i.retail)) * ". $taxRate .") from product p, inventory i
                  where p.inventory_id=i.id and p.customer_id= :customer_id and p.company_id=i.company_id and p.company_id=:company_id and i.taxable=1";
-		$command = $connection->createCommand($sql);
+        $command = $connection->createCommand($sql);
         $command->bindParam(':customer_id', $customer_id);
         $command->bindParam(':company_id', Yii::app()->user->company_id);
         $sales_tax = $command->queryScalar();
@@ -1385,7 +1385,7 @@ class CustomerController extends Controller
       } 
       $notes .='</table>';
     }
-   //get logo
+    //get logo
 	if (strpos($template->templates, '%Logo%') !== false) {
 		$company = Company::model()->findByPk($customer->company_id);
 		$logo = !empty($company) ? '<img border="0" src="'. Yii::app()->params['siteURL'] . '/' .$company->logo .'" />' : '';
@@ -1535,7 +1535,7 @@ class CustomerController extends Controller
         '%Statement Date%' => date('m/d/Y', time()),
         '%Notes%' => $notes,
 //        '%Summary_of_payments%' => $payments,
-        '%Logo%'=>$logo,
+		'%Logo%'=>$logo,
     );
     
     $document = str_replace(array_keys($placeHolds), array_values($placeHolds), $template->templates);
@@ -1580,7 +1580,7 @@ class CustomerController extends Controller
 	} else {
 		$fileName = $this->actiondocumentdownload($document->customer_id, $document->template_id, false);
     }
-    
+
     $company_id = Yii::app()->user->company_id;
     $emailConfig = EmailConfig::load($company_id);
     
@@ -1608,15 +1608,7 @@ class CustomerController extends Controller
     $mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
     $mail->AddAddress($toEmailAddress);
     $mail->Subject = 'Funeral Document';
-	$body = $_POST['email_text'];
-	//get logo
-	if (strpos($body, '%Logo%') !== false) {
-		$company = Company::model()->findByPk(Yii::app()->user->company_id);
-		if(!empty($company)) {
-			$body = str_replace('%Logo%', '<img border="0" src="/'. $company->logo .'" />', $body);
-		}
-	}
-    $mail->Body = $body;
+    $mail->Body = $_POST['email_text'];
     
     $mail->AddAttachment($fileName, basename($fileName));
      
@@ -3613,7 +3605,7 @@ private function _compareMinValue($value, $dataArray){
     ));
   }
 
-  public function actionAddFile($id)
+   public function actionAddFile($id)
   {
     $customer = $this->loadModel($id);
     $document = new Document();
@@ -3640,7 +3632,7 @@ private function _compareMinValue($value, $dataArray){
 		  }
 
 		  if(!$document->hasErrors() && $document->save()) {
-			$this->redirect('/customer/view/'.$id.'#documentslist');
+			$this->redirect('/decedent/view/'.$id.'#documentslist');
 		  }
     }
 
