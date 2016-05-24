@@ -64,11 +64,25 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="10%" class="label"><?php echo $form->labelEx($model,'email_text'); ?></td>
         <td width="40%" class="element"><?php echo $form->textArea($model,'email_text',array('rows'=>5,'cols'=>50)); ?></td>
        </tr>
-
-       <tr>
-        <td width="10%" class="label">Default for all customer</td>
-        <td width="40%" class="element"><?php echo $form->checkBox($model,'default_check'); ?>&nbsp;(if selected, the template will be visibled for all customer.)</td>
-       </tr>
+		
+		<?php if (Yii::app()->user->type == 'super admin'): ?>
+			<tr>
+				<td width="10%" class="label">Active</td>
+				<td width="40%" class="element"><?php echo $form->checkBox($model,'active'); ?></td>
+		   </tr>
+	  <?php else: ?>
+			<tr>
+				<td width="10%" class="label">Load Sample</td>
+				<td width="40%" class="element"><?php echo CHtml::dropDownList('sample_templates', '', $sample_templates, array('onchange'=>'loadSampleTemplate(this.value)')); ?></td>
+		   </tr>
+	  <?php endif; ?>
+		
+		<?php if(0) : ?>
+		   <tr>
+			<td width="10%" class="label">Default for all customer</td>
+			<td width="40%" class="element"><?php echo $form->checkBox($model,'default_check'); ?>&nbsp;(if selected, the template will be visibled for all customer.)</td>
+		   </tr>
+	   <?php endif; ?>
        
        <tr>
         <td width="10%" class="label"><?php echo $form->labelEx($model,'templates'); ?></td>
@@ -89,6 +103,11 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
         <td width="10%" class="label"> </td>
         <td width="40%" class="element" colspan="3">
           <table border="0">
+	<tr>
+             <td width="220"><b>Logo</b></td>
+Add a comment to this line
+             <td>%Logo%</td>
+            </tr>
             <tr>
              <td width="220"><b>Case Number</b></td>
              <td>%Case Number%</td>
@@ -602,6 +621,12 @@ editor = CKEDITOR.replace( 'Template_templates', config);
     $('#Template_name').focus();
     $('#Template_name').css('backgroundColor', '#fff');
     clearTimeout();
+ }
+
+ function loadSampleTemplate(templates) {
+	 if(templates != '') {
+		CKEDITOR.instances['Template_templates'].setData(templates);
+	 }
  }
 </script>
 
