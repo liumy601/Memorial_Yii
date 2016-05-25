@@ -245,9 +245,9 @@ class Users extends CActiveRecord
   
   public function save()
   {
-    if (Yii::app()->user->type == 'admin') {//company admin
-      $this->company_id = Yii::app()->user->company_id;
-    }
+//    if (Yii::app()->user->type == 'admin') {//company admin
+//      $this->company_id = Yii::app()->user->company_id;
+//    }
     
     return parent::save();
   }
