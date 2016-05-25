@@ -1,0 +1,1 @@
+[28-Mar-2016 15:27:08] PHP Fatal error:  Call to a member function delete() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 795
