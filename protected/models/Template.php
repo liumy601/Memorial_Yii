@@ -123,7 +123,7 @@ class Template extends CActiveRecord
     
     if ($customerID) {
 //      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.') ORDER BY name';
-      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.') and deleted=0 and company_id=:company_id ORDER BY name';
+      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.' and template_id is not null) and deleted=0 and company_id=:company_id ORDER BY name';
     } else {
 //      $sql = 'SELECT * FROM template ORDER BY name';
 //      $sql = 'SELECT * FROM template where default_check=0 and deleted=0 and company_id=:company_id ORDER BY name';
