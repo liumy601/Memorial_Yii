@@ -50,7 +50,7 @@ class Template extends CActiveRecord
 			array('enteredby', 'length', 'max'=>15),
 			array('deleted', 'length', 'max'=>1),
 			array('email_address', 'length', 'max'=>100),
-			array('email_text, templates', 'safe'),
+			array('email_text, templates, is_super_admin, active', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, name, case_number, email_address, email_text, templates, default_check, company_id, deleted', 'safe', 'on'=>'search'),
@@ -123,7 +123,7 @@ class Template extends CActiveRecord
     
     if ($customerID) {
 //      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.') ORDER BY name';
-      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.') and default_check=0 and deleted=0 and company_id=:company_id ORDER BY name';
+      $sql = 'SELECT * FROM template WHERE id not in (select template_id from document where customer_id='.$customerID.') and deleted=0 and company_id=:company_id ORDER BY name';
     } else {
 //      $sql = 'SELECT * FROM template ORDER BY name';
 //      $sql = 'SELECT * FROM template where default_check=0 and deleted=0 and company_id=:company_id ORDER BY name';
@@ -162,7 +162,15 @@ class Template extends CActiveRecord
   
   public function save()
   {
-    $this->company_id = Yii::app()->user->company_id;
+    if (!$this->company_id) {
+      $this->company_id = Yii::app()->user->company_id;
+    }
     return parent::save();
+  }
+
+  public static function loadSampleTemplates() {
+	$sample_templates = Template::model()->findAll('is_super_admin=1 and active=1 and deleted=0 order by name');
+	$sample_templates = array_merge(array(''=>'---select---'), CHtml::listData($sample_templates, 'templates', 'name'));
+	return $sample_templates;
   }
 }

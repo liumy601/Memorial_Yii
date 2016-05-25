@@ -37,6 +37,7 @@ class PackageController extends Controller {
     if (isset($_POST['Package'])) {
       $model = new Package();
       $model->attributes = $_POST['Package'];
+      $model->company_id = Yii::app()->user->company_id;
       $model->save();
 
       Yii::app()->user->setFlash('', 'Package is saved.');
@@ -56,7 +57,8 @@ class PackageController extends Controller {
         $this->redirect(array('view', 'id' => $model->id));
       } else {
         $model->attributes = $_POST['Package'];
-
+        $model->company_id = Yii::app()->user->company_id;
+        
         if ($model->save())
           $this->redirect(array('view', 'id' => $model->id));
       }
@@ -80,8 +82,9 @@ class PackageController extends Controller {
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select i.* from package_product pp, inventory i
-      where pp.inventory_id=i.id and pp.package_id=:package_id order by i.name");
+      where pp.inventory_id=i.id and pp.package_id=:package_id and i.company_id=:company_id order by i.name");
     $command->bindParam(':package_id', $id);
+    $command->bindParam(':company_id', Yii::app()->user->company_id);
     $productDataProvider = $command->query();
 
     $this->render('view', array(

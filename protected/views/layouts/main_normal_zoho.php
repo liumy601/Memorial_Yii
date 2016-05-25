@@ -36,11 +36,35 @@ text-decoration:none;
 <script type="text/javascript" src="/assets/jquery/jui/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/assets/jquery/jui/jquery.corner.js"></script>
 <script type="text/javascript" src="/assets/jquery/picup.2.js"></script>
-<script type="text/javascript" src="/themes/classic/js/global.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <!--[if lt IE 9]><script src="/assets/jquery/signature/build/flashcanvas.js<?php echo $GLOBALS['query_string']; ?>"></script><![endif]-->
 <script type="text/javascript" src="/assets/jquery/signature/build/jquery.signaturepad.min.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <script type="text/javascript" src="/assets/jquery/signature/build/json2.min.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <link rel="stylesheet" href="/assets/jquery/signature/build/jquery.signaturepad.css<?php echo $GLOBALS['query_string']; ?>">
+
+<?php if(Yii::app()->user->name != 'Guest' ): ?>
+<script>
+  window.intercomSettings = {
+    app_id: "k1tws933",
+    name: "<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>", // Full name
+    email: "<?php echo Yii::app()->user->email; ?>", // Email address
+    created_at: 1312182000 // Signup date as a Unix timestamp
+  };
+</script>
+<script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/k1tws933';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+<!-- App cues -->
+<link rel="stylesheet" type="text/css" href="//fast.appcues.com/appcues.min.css">
+<script src="//fast.appcues.com/17271.js"></script>
+<script>
+    Appcues.identify('<?php echo Yii::app()->user->uid; ?>', {
+        email: '<?php echo Yii::app()->user->email; ?>',
+        name: '<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>',
+        // Additional user properties
+    });
+</script>
+<!-- App Cues -->
+<?php endif; ?>
+
 <script type="text/javascript" src="<?php echo Yii::app()->params['appappSiteURL']; ?>/misc/appapp.js?v=1.5"></script>
 <?php
 if ($flashMsg = Yii::app()->user->getFlash('')) {
@@ -52,7 +76,7 @@ if ($flashMsg = Yii::app()->user->getFlash('')) {
    </script>';
 }
 ?>
-
+<script type="text/javascript" src="/themes/classic/js/global.js<?php echo $GLOBALS['query_string']; ?>"></script>
 <?php
 echo '<script language="javascript">
   var siteUser = \''. Yii::app()->user->name .'\';
@@ -146,17 +170,20 @@ color: #FFFFFF  !important;
             }
           } else {
             //get plan
+			/*
             $current_plan = $connection->createCommand("select plan_title from user_subscription where uid=" . Yii::app()->user->uid ." order by id desc limit 1")->queryScalar();
             echo '<span style="margin-right:30px;">Current plan: <b>' . $current_plan .'</b></span>';
+			*/
           }
 //          echo '<a href="/site/appappplans">Try other plans</a> ';
           echo '<a href="/admin/user" class="topLink"><img src="/images/control_panel2.png" alt="Control panel" title="Control panel"/></a>'; 
         }
      ?>
-        
-        <?php if (Yii::app()->user->name != 'Guest' && (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff')){  ?>
-          <div style="text-align: right;margin-top:5px;"><a class="noajax" href="/site/updateprofile">Account and Billing</a></div>
-        <?php } ?>
+        <?php if(0) : ?>
+			<?php if (Yii::app()->user->name != 'Guest' && (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff')){  ?>
+			  <div style="text-align: right;margin-top:5px;"><a class="noajax" href="/site/updateprofile">Account and Billing</a></div>
+			<?php } ?>
+		<?php endif; ?>
       </td>
       
       <td valign="top" nowrap class="welcome" id="welcome">
@@ -188,12 +215,13 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
       'Company' => '/admin/company',
       'Company Admin' => '/admin/user',
       'Company Staff' => '/admin/companystaff',
+	  'Templates' => '/template',
       'Config' => '/admin/taxconfig',
     );
   } else if (Yii::app()->user->type == 'admin' || Yii::app()->user->type == 'staff'){ 
     $headMenus = array(
       'Home' => '/',
-      'Decedents' => '/customer',
+      'Decedents' => '/decedent',
       'Tasks' => '/task',
       'Inventory' => '/inventory',
       'Templates' => '/template',
@@ -276,7 +304,7 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
       <div id="createsubmenu" class="ddMenus">
         <div class="menuDiv">
           <table cellspacing="5" class="menuTable"><tr><td valign="top"> 
-            <a id="submenu_Customers" onclick="tabClicked(document.getElementById('tab_customers'));" href="/customer/create" class="subMenuLink">New Customer</a>
+            <a id="submenu_Customers" onclick="tabClicked(document.getElementById('tab_customers'));" href="/decedent/create" class="subMenuLink">New Customer</a>
             <a id="submenu_Task" onclick="tabClicked(document.getElementById('tab_tasks'));" href="/task/create" class="subMenuLink">New Task</a>
             <a id="submenu_Template" onclick="tabClicked(document.getElementById('tab_templates'));" href="/template/create" class="subMenuLink">New Template</a>
             </td>
