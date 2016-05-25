@@ -568,6 +568,8 @@ class Customer extends CActiveRecord
   }
 
   public function uniqueCaseNumByCompany() {
+    if($this->form_type=='new')
+     return;
 	if(!empty($this->id)) {
 		$count = Customer::count('company_id='. $this->company_id .' and case_number='. $this->case_number .' and id!='. $this->id);
 	} else {
