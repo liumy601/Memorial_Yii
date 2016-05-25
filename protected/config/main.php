@@ -1,5 +1,29 @@
 <?php
 
+if(strpos($_SERVER['HTTP_HOST'], '127.0.0.1') !== false){
+  $DBName = 'funeral';
+  $DBUser = 'root';
+  $DBPass = '';
+  $siteURL = 'http://127.0.0.1:100';
+  $appappToken = '$S$D1DcWB8SJKMA8INTGqKeJboQDWd89J/QWYapDfrzG86U5KZhD6G9';
+  
+} elseif(strpos($_SERVER['HTTP_HOST'], 'funeralbeta.preferati.com') !== false) {
+  $DBName = 'funeralb_db';
+  $DBUser = 'funeralb_dbuser';
+  $DBPass = 'Amazon26#';
+  $siteURL = 'http://funeralbeta.preferati.com';
+  $appappToken = '$S$D1DcWB8SJKMA8INTGqKeJboQDWd89J/QWYapDfrzG86U5KZhD6G9';
+  
+} elseif(strpos($_SERVER['HTTP_HOST'], 'app.memorialdirector.com') !== false) {
+  $DBName = 'funeralp_db';
+  $DBUser = 'funeralp_user';
+  $DBPass = 'Amazon26#';
+  $siteURL = 'http://app.memorialdirector.com';
+  $appappToken = '$S$D2mi2s35CImbRQ9uQk/3l9KOjatUE0Jjt3I79keYPI1QGlTCXBmY';
+}
+
+
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 
@@ -52,10 +76,10 @@ return array(
 //		),
 		// uncomment the following to use a MySQL database
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=funeralp_db',
+			'connectionString' => 'mysql:host=localhost;dbname='.$DBName,
 			'emulatePrepare' => true,
-			'username' => 'funeralp_user',
-			'password' => 'Amazon26#',
+			'username' => $DBUser,
+			'password' => $DBPass,
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
@@ -93,10 +117,8 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'funeral@preferati.com',
-      
-		'siteURL'=>'http://app.memorialdirector.com',
+		'siteURL'=>$siteURL,
 		'appappSiteURL'=>'http://appappbeta.preferati.com',
-
-		'appappToken'=>'$S$D2mi2s35CImbRQ9uQk/3l9KOjatUE0Jjt3I79keYPI1QGlTCXBmY',
+		'appappToken'=>$appappToken
 	),
 );
