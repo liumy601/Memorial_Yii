@@ -50,8 +50,8 @@ class Task extends CActiveRecord
   
   public function save()
   {
-    if( Yii::app()->user->hasState('company_id'))
-      $this->company_id = Yii::app()->user->company_id;
+    //set the company_id
+    $this->company_id = Yii::app()->user->company_id;
     return parent::save();
   }
   
