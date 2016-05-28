@@ -98,11 +98,7 @@
 class Customer extends CActiveRecord
 {
   public $name;
-<<<<<<< HEAD
-=======
-  public $case_number_seq;
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
-  
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Customer the static model class
@@ -127,13 +123,10 @@ class Customer extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-<<<<<<< HEAD
 		$criteria = new CDbCriteria;
 		if( Yii::app()->user->hasState('company_id'))
 			$criteria->condition = 'company_id='. Yii::app()->user->company_id;
 
-=======
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
 		return array(
 			array('full_legal_name', 'required'),
 			array('assigned_to, enteredtm, company_id', 'numerical', 'integerOnly'=>true),
@@ -158,13 +151,8 @@ class Customer extends CActiveRecord
           date_of_burial, time_of_burial_h, time_of_burial_m, time_of_burial_z,
           survived_by, preceded_in_death_by, newspaper_radio1, newspaper_radio2, newspaper_radio3, newspaper_radio4, newspaper_radio5, newspaper_radio6, newspaper_radio1_other, newspaper_radio2_other, newspaper_radio3_other, newspaper_radio4_other, newspaper_radio5_other, newspaper_radio6_other, full_legal_name, 
           music_selection1, music_selection2, music_selection3, music_selection4, music_selection5, pallbearers, pallbearer2, pallbearer3, pallbearer4, pallbearer5, pallbearer6, pallbearer7, pallbearer8, special_music, company_id, 
-<<<<<<< HEAD
-          interment_city, interment_country, interment_state, full_legal_name_f, full_legal_name_m, full_legal_name_l, full_legal_prefix, city_of_birth, state_of_birth, pod_facility_name, pod_facility_street, pod_facility_city, pod_facility_state, pod_facility_zip, interment_street, interment_zip, veteran_serial_number, doctor_street, doctor_city, doctor_state, doctor_zip',  'safe'),
-			array('case_number', 'unique', 'criteria'=>$criteria, 'on'=>'create, update'),
-=======
           interment_city, interment_country, interment_state, case_number_seq, full_legal_name_f, full_legal_name_m, full_legal_name_l, full_legal_prefix, city_of_birth, state_of_birth, pod_facility_name, pod_facility_street, pod_facility_city, pod_facility_state, pod_facility_zip, interment_street, interment_zip, veteran_serial_number, doctor_street, doctor_city, doctor_state, doctor_zip',  'safe'),
-			array('case_number', 'uniqueCaseNumByCompany'),
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
+			array('case_number', 'unique', 'criteria'=>$criteria, 'on'=>'create, update'),
 		);
 	}
   
@@ -581,21 +569,5 @@ class Customer extends CActiveRecord
     
     return parent::save();
   }
-<<<<<<< HEAD
-=======
 
-  public function uniqueCaseNumByCompany() {
-    if($this->form_type=='new')
-     return;
-	if(!empty($this->id)) {
-		$count = Customer::count('company_id='. $this->company_id .' and case_number='. $this->case_number .' and id!='. $this->id);
-	} else {
-		$count = Customer::count('company_id='. $this->company_id .' and case_number='. $this->case_number);
-	}
-	if($count > 0) {
-		$this->addError('case_number', 'Case number "'. $this->case_number .'" has already been taken');
-	}
-  }
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
-  
 }

@@ -173,8 +173,7 @@ class DecedentController extends Controller
     $optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model = new Customer();
-<<<<<<< HEAD
-	
+
 	//autopopulate case_number
 	$command = Yii::app()->db->createCommand("select distinct case_number from customer where company_id=". Yii::app()->user->company_id ."  order by case_number");
     $records = $command->queryAll();
@@ -190,24 +189,6 @@ class DecedentController extends Controller
 	}
 	$model->case_number = $next_case_num;
 	$model->setScenario('create');
-=======
-
-	//autopopulate case_number
-	$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer where company_id=". Yii::app()->user->company_id ."  order by case_number_seq");
-    $records = $command->queryAll();
-	//search next available case_number starting from 1000
-	$case_number_seq_list = array();
-	foreach($records as $record) {
-		$case_number_seq_list[] = $record['case_number_seq'];
-	}
-	$case_number_seq_list = array_unique($case_number_seq_list);
-	$next_case_num = 1000;
-	while(in_array($next_case_num, $case_number_seq_list)) {
-		$next_case_num++;
-	}
-	$model->case_number = $next_case_num;
-	$model->case_number_seq = $next_case_num;
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
 
     if (isset($_POST['Customer'])) {
       $model->attributes = $_POST['Customer'];
@@ -241,10 +222,7 @@ class DecedentController extends Controller
 	$optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model=$this->loadModel($id);
-<<<<<<< HEAD
 	$model->setScenario('update');
-=======
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
 
     if(isset($_POST['Customer']))
     {
@@ -262,15 +240,6 @@ class DecedentController extends Controller
             $model->deceased_photo = 'files/photo/'.$_FILES['Customer']['name']['deceased_photo'];
           }
         }  
-<<<<<<< HEAD
-=======
-        
-		//update case_number_seq to be used for create
-		if(preg_match('/\d{4,}/i', $model->case_number))
-			$model->case_number_seq = $model->case_number;
-		else
-			$model->case_number_seq = NULL;
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
 
         if($model->save()){
           $this->redirect(array('view','id'=>$model->id));
@@ -3677,8 +3646,4 @@ private function _compareMinValue($value, $dataArray){
 
 }
 
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53

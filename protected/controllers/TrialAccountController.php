@@ -47,7 +47,6 @@ class TrialAccountController extends Controller
 						$newCust->company_id = $company_id;
 
 						//autopopulate case_number
-<<<<<<< HEAD
 						$command = Yii::app()->db->createCommand("select distinct case_number from customer where company_id=". $company_id ."  order by case_number");
 						$records = $command->queryAll();
 						//search next available case_number starting from 1000
@@ -65,28 +64,6 @@ class TrialAccountController extends Controller
 
 						$newCustId = $newCust->id;
 
-=======
-						$command = Yii::app()->db->createCommand("select distinct case_number_seq from customer where company_id=". $company_id ."  order by case_number_seq");
-						$records = $command->queryAll();
-						//search next available case_number starting from 1000
-						$case_number_seq_list = array();
-						if(!empty($records)) {
-							foreach($records as $record) {
-								$case_number_seq_list[] = $record['case_number_seq'];
-							}
-							$case_number_seq_list = array_unique($case_number_seq_list);
-						}
-						$next_case_num = 1000;
-						while(in_array($next_case_num, $case_number_seq_list)) {
-							$next_case_num++;
-						}
-						$newCust->case_number = $next_case_num;
-						$newCust->case_number_seq = $next_case_num;
-						$newCust->save(false);
-						
-						$newCustId = $newCust->id;
-						
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
 						//copy products
 						$products = Product::model()->findAll('company_id='. $currentCompany->id .' and customer_id='. $cust->id);
 						foreach($products as $prod) {
@@ -276,8 +253,5 @@ class TrialAccountController extends Controller
 			'created'=>$created,
 		));
 	}
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 2cf9003d48eb00b61e835e5620b194cca1faad53
