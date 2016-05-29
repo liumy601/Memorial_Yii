@@ -98,8 +98,7 @@
 class Customer extends CActiveRecord
 {
   public $name;
-  public $case_number_seq;
-  
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Customer the static model class
@@ -124,6 +123,10 @@ class Customer extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
+		$criteria = new CDbCriteria;
+		if( Yii::app()->user->hasState('company_id'))
+			$criteria->condition = 'company_id='. Yii::app()->user->company_id;
+
 		return array(
 			array('full_legal_name', 'required'),
 			array('assigned_to, enteredtm, company_id', 'numerical', 'integerOnly'=>true),
@@ -149,7 +152,7 @@ class Customer extends CActiveRecord
           survived_by, preceded_in_death_by, newspaper_radio1, newspaper_radio2, newspaper_radio3, newspaper_radio4, newspaper_radio5, newspaper_radio6, newspaper_radio1_other, newspaper_radio2_other, newspaper_radio3_other, newspaper_radio4_other, newspaper_radio5_other, newspaper_radio6_other, full_legal_name, 
           music_selection1, music_selection2, music_selection3, music_selection4, music_selection5, pallbearers, pallbearer2, pallbearer3, pallbearer4, pallbearer5, pallbearer6, pallbearer7, pallbearer8, special_music, company_id, 
           interment_city, interment_country, interment_state, case_number_seq, full_legal_name_f, full_legal_name_m, full_legal_name_l, full_legal_prefix, city_of_birth, state_of_birth, pod_facility_name, pod_facility_street, pod_facility_city, pod_facility_state, pod_facility_zip, interment_street, interment_zip, veteran_serial_number, doctor_street, doctor_city, doctor_state, doctor_zip',  'safe'),
-			//array('case_number', 'uniqueCaseNumByCompany'),
+			array('case_number', 'unique', 'criteria'=>$criteria, 'on'=>'create, update'),
 		);
 	}
   
@@ -561,21 +564,9 @@ class Customer extends CActiveRecord
 
   public function save()
   {
-	  if( Yii::app()->user->hasState('company_id'))
-		$this->company_id = Yii::app()->user->company_id;
-    
-    return parent::save();
+		if(empty($this->company_id) && Yii::app()->user->hasState('company_id'))
+			$this->company_id = Yii::app()->user->company_id;
+		return parent::save();
   }
 
-  public function uniqueCaseNumByCompany() {
-	if(!empty($this->id)) {
-		$count = Customer::count('company_id='. $this->company_id .' and case_number='. $this->case_number .' and id!='. $this->id);
-	} else {
-		$count = Customer::count('company_id='. $this->company_id .' and case_number='. $this->case_number);
-	}
-	if($count > 0) {
-		$this->addError('case_number', 'Case number "'. $this->case_number .'" has already been taken');
-	}
-  }
-  
 }

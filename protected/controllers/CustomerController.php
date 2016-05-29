@@ -174,6 +174,22 @@ class CustomerController extends Controller
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model = new Customer();
 
+	//autopopulate case_number
+	$command = Yii::app()->db->createCommand("select distinct case_number from customer where company_id=". Yii::app()->user->company_id ."  order by case_number");
+    $records = $command->queryAll();
+	//search next available case_number starting from 1000
+	$case_number_list = array();
+	foreach($records as $record) {
+		$case_number_list[] = $record['case_number'];
+	}
+	$case_number_list = array_unique($case_number_list);
+	$next_case_num = 1000;
+	while(in_array($next_case_num, $case_number_list)) {
+		$next_case_num++;
+	}
+	$model->case_number = $next_case_num;
+	$model->setScenario('create');
+
     if (isset($_POST['Customer'])) {
       $model->attributes = $_POST['Customer'];
       $model->form_type = 'old';
@@ -206,6 +222,7 @@ class CustomerController extends Controller
 	$optionFields = OptionalFields::model()->find('company_id='. Yii::app()->user->company_id);
 	$optionFields = empty($optionFields) ? new OptionalFields() : $optionFields;
     $model=$this->loadModel($id);
+	$model->setScenario('update');
 
     if(isset($_POST['Customer']))
     {
