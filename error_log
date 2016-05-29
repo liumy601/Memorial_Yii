@@ -121,3 +121,10 @@
 [21-May-2016 03:39:58] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '/home/funeralb/public_html/../yii-1.1.14/framework/yii.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/funeralb/public_html/index.php on line 15
 [21-May-2016 03:40:03] PHP Warning:  require_once(/home/funeralb/public_html/../yii-1.1.14/framework/yii.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/funeralb/public_html/index.php on line 15
 [21-May-2016 03:40:03] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '/home/funeralb/public_html/../yii-1.1.14/framework/yii.php' (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/funeralb/public_html/index.php on line 15
+[28-May-2016 00:29:32] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:29:51] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:30:05] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:30:08] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:30:29] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:30:41] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[28-May-2016 00:30:50] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
