@@ -50,9 +50,9 @@ class Task extends CActiveRecord
   
   public function save()
   {
-	if(empty($this->company_id) && Yii::app()->user->hasState('company_id'))
-		$this->company_id = Yii::app()->user->company_id;
-    return parent::save();
+		if(empty($this->company_id) && Yii::app()->user->hasState('company_id'))
+			$this->company_id = Yii::app()->user->company_id;
+		return parent::save();
   }
   
   public static function renderSubpanel($parent_type, $parent_id)
