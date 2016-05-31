@@ -111,10 +111,10 @@ echo '<script language="javascript">
         echo '<img src="/'.$logo.'" height="37">';
 //        echo '<img src="/'.$logo.'" height="100">';
       }else{
-        echo '<h1>Funeral Home System</h1>';
+        echo '<img src="/files/memorial_logo.png" height="37">';
       }
   }else{
-      echo '<h1>Funeral Home System</h1>';
+      echo '<img src="/files/memorial_logo.png" height="37">';
   }
   ?>
 </div> 
@@ -230,7 +230,7 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
   }
 } else {//guest
   $headMenus = array(
-    'Home' => '/',
+    'Home' => 'http://memorialdirector.com',
   );
 }
   
