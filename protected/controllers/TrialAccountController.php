@@ -205,7 +205,13 @@ class TrialAccountController extends Controller
 				//create company admin
 				$admin = new Users();
 				$admin->username = !empty($userName) ? $userName : $yourName;
-				$admin->password = md5('changeme');
+				//generate password
+				$alphabet = 'abcdefghijklmnopqrstuvwxyz';
+				$alphabet .= strtoupper($alphabet);
+				$password = '';
+				for($i=0; $i<8; $i++)
+					$password .= $alphabet[rand(0,strlen($alphabet)-1)];
+				$admin->password = md5($password);
 				$admin->type = 'admin';
 				$admin->email = $yourEmail;
 				$admin->company_id = $company_id;
@@ -219,19 +225,32 @@ class TrialAccountController extends Controller
 
 				//send email
 				$mail = new PHPMailer();
-				$mail->IsMail(); 
+				//$mail->IsMail(); 
+				$emailConfig = EmailConfig::model()->find('company_id=0');
+				$mail->IsSMTP();
+				$mail->Port = $emailConfig->smtp_port ? $emailConfig->smtp_port : 25;
+				if ($emailConfig->smtp_ssl) {
+					$mail->SMTPSecure = 'ssl';
+				}
+				$mail->Host = $emailConfig->smtp_server;
+				if ($emailConfig->smtp_auth) {
+					$mail->SMTPAuth = true;
+					$mail->Username = $emailConfig->smtp_user; 
+					$mail->Password = $emailConfig->smtp_pass;
+				}
 				$mail->CharSet = "utf-8";
 				$mail->Encoding = "base64"; 
-				//$mail->SetFrom($emailConfig->from_address, $emailConfig->from_name);
+				$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
 				$mail->AddAddress($yourEmail);
-				$mail->Subject = 'Your login details';
+				$mail->AddBCC('ives.matthew@gmail.com');
+				$mail->Subject = 'Your Memorial Director Trial Has Begun';
 				$mail->Body = '<html><body>';
 				$mail->Body .= 'Hi '. $admin->firstname . '<br/><br/>';
-				$mail->Body .= 'Thanks for singing up!<br/><br/>';
-				$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing ". Yii::app()->params['adminEmail'] ." or when logged in by clicking the blue button in the bottom right.<br/><br/>";
-				$mail->Body .= 'Please login at http://funeral.preferati.com/ with the following credentials: <br/>';
+				$mail->Body .= 'Thanks for signing up!<br/><br/>';
+				$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing Success@memorialdirector.com or when logged in by clicking the blue button in the bottom right.<br/><br/>";
+				$mail->Body .= 'Please login at http://app.memorialdirector.com with the following credentials: <br/>';
 				$mail->Body .= 'Username: '. $admin->email .'<br/>';
-				$mail->Body .= 'Password: changeme<br/><br/>';
+				$mail->Body .= 'Password: '. $password .'<br/><br/>';
 				$mail->Body .= 'The best way to get started is by viewing our guide here: http://memorialdirector.com/introduction-to-memorial-director/<br/><br/>';
 				$mail->Body .= 'Have a great day, <br/>';
 				$mail->Body .= 'The Memorial Director App Team<br/>';
@@ -239,6 +258,23 @@ class TrialAccountController extends Controller
 				$mail->Body .= '</body></html>';
 				$mail->IsHTML(true);
 				$mail->Send();
+
+				//login and redirect
+				$loginForm = new LoginForm;
+				$loginForm->username = $admin->email;
+				$loginForm->password = $password;
+				if($loginForm->validate() && $loginForm->login()){
+					//authenticate to AppApp
+					$this->_authenticateToAppApp($loginForm);
+
+					//first time to login
+					Yii::app()->user->setFlash('', 'This is your first login, please change your passoword.');
+					$connection = Yii::app()->db;
+					$command = $connection->createCommand("update users set access=". time() ." where id=" . Yii::app()->user->uid);
+					$command->execute();
+
+					$this->redirect('/users');
+				}
 			}
 
 			if($valid) {
@@ -253,5 +289,25 @@ class TrialAccountController extends Controller
 			'created'=>$created,
 		));
 	}
+
+	private function _authenticateToAppApp($model){
+		//get appapp_uid
+		$connection = Yii::app()->db;
+		$command = $connection->createCommand("select appapp_uid from users where email=:email");
+		$command->bindParam(':email', $model->username);
+		$appapp_uid = $command->queryScalar();
+		
+		if (!appapp_uid) {
+		  return;
+		}
+		if (!Yii::app()->params['appappToken']) {
+		  return;
+		}
+		
+		setcookie('appapp_mail', $model->username, time()+86400, '/');
+		setcookie('appapp_token', Yii::app()->params['appappToken'], time()+86400, '/');
+		setcookie('appapp_authed', '', time()-86400, '/');
+		return;
+  }
 
 }
