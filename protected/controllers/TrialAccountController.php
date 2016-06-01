@@ -226,18 +226,13 @@ class TrialAccountController extends Controller
 				//send email
 				$mail = new PHPMailer();
 				//$mail->IsMail(); 
-				$emailConfig = EmailConfig::model()->find('company_id=0');
 				$mail->IsSMTP();
-				$mail->Port = $emailConfig->smtp_port ? $emailConfig->smtp_port : 25;
-				if ($emailConfig->smtp_ssl) {
-					$mail->SMTPSecure = 'ssl';
-				}
-				$mail->Host = $emailConfig->smtp_server;
-				if ($emailConfig->smtp_auth) {
-					$mail->SMTPAuth = true;
-					$mail->Username = $emailConfig->smtp_user; 
-					$mail->Password = $emailConfig->smtp_pass;
-				}
+				$mail->Port = 25;
+				$mail->SMTPSecure = 'ssl';
+				$mail->Host = 'smtp.sendgrid.net';
+				$mail->SMTPAuth = true;
+				$mail->Username = 'funeralappmail'; 
+				$mail->Password = 'memorial1@#';
 				$mail->CharSet = "utf-8";
 				$mail->Encoding = "base64"; 
 				$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
