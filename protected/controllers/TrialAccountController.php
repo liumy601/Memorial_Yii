@@ -243,10 +243,10 @@ class TrialAccountController extends Controller
 				$mail->Body .= 'Hi '. $admin->firstname . '<br/><br/>';
 				$mail->Body .= 'Thanks for signing up!<br/><br/>';
 				$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing Success@memorialdirector.com or when logged in by clicking the blue button in the bottom right.<br/><br/>";
-				$mail->Body .= 'Please login at http://app.memorialdirector.com with the following credentials: <br/>';
+				$mail->Body .= 'Please login at <a href="http://app.memorialdirector.com">http://app.memorialdirector.com</a> with the following credentials: <br/>';
 				$mail->Body .= 'Username: '. $admin->email .'<br/>';
 				$mail->Body .= 'Password: '. $password .'<br/><br/>';
-				$mail->Body .= 'The best way to get started is by viewing our guide here: http://memorialdirector.com/introduction-to-memorial-director/<br/><br/>';
+				$mail->Body .= 'The best way to get started is by viewing our guide here: <a href="http://memorialdirector.com/introduction-to-memorial-director/">http://memorialdirector.com/introduction-to-memorial-director/</a><br/><br/>';
 				$mail->Body .= 'Have a great day, <br/>';
 				$mail->Body .= 'The Memorial Director App Team<br/>';
 				$mail->Body .= '<a href="http://memorialdirector.com/">http://memorialdirector.com/</a><br/>';

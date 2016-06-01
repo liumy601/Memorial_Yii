@@ -777,7 +777,7 @@ class SiteController extends Controller
 			$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
 			$mail->AddAddress($email_addr);
 			$mail->AddBCC('ives.matthew@gmail.com');
-			$mail->Subject = '';
+			$mail->Subject = 'Reset Your Password';
 			$mail->Body = '<html><body>';
 			$mail->Body .= $user->lastname .' '. $user->firstname . ',<br/><br/>';
 			$mail->Body .= "We've received a request to change your password for app.memorialdirectory.com.<br/><br/>";
