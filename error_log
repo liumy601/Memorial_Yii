@@ -128,3 +128,4 @@
 [28-May-2016 00:30:29] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
 [28-May-2016 00:30:41] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
 [28-May-2016 00:30:50] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
+[01-Jun-2016 11:42:20] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/funeralb/public_html/protected/controllers/SiteController.php on line 801
