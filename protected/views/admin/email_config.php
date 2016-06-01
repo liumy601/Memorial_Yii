@@ -5,7 +5,7 @@
 $this->pageTitle = 'Email Configuration';
 ?>
 
-<h1><span appapptagid="34"></span> <?php echo $this->pageTitle; ?></h1>
+<h1> <?php echo $this->pageTitle; ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('email_config')): ?>
 

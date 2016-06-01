@@ -1,7 +1,7 @@
 <?php $this->renderFile('protected/views/layouts/header_subpanel.php', array('title'=>'Control Panel')); ?>
 
 <?php // echo $company_id;exit;?>
-<h1><span appapptagid="32"></span> Dropdown list</h1>
+<h1>Dropdown list</h1>
 
 <h2>Contact</h2>
 <a href="/admin/dropdown/op/update/module/contact/dropdownname/relationship/label/<?php echo urlencode('Relationship');?>">Relationship</a>

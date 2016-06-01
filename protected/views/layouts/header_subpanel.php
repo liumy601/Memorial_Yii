@@ -9,7 +9,6 @@
             <span class="pL65" id="newcreateparent">  </span>
           </td>
           <td align="right"> 
-            <span appapptagid="36"></span>
             <!--shotcut buttons-->
             <?php echo CommonRender::shotCuts(); ?>
           </td>

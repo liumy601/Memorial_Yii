@@ -3,7 +3,7 @@
 <?php if (Yii::app()->user->type == 'super admin') { ?>
 <h1>Company Admin</h1>
 <?php } else { ?>
-<h1><span appapptagid="31"></span> User</h1>
+<h1>User</h1>
 <?php } ?>
 
 <?php

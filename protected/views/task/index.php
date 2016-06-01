@@ -38,7 +38,7 @@
                       <tbody><tr><td class="pL10"> 
                       </td></tr></tbody>
                     </table>
-                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="$('#change_menu a:nth-child(2)').click();"><span appapptagid="23"></span>
+                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="$('#change_menu a:nth-child(2)').click();">
                 </td>
                 <td align="right"> <span id="placePushToDB"></span> </td>
                 <td align="right" class="printTitle"></td>   

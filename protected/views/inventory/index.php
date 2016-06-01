@@ -38,7 +38,7 @@
                       <tbody><tr><td class="pL10"> 
                       </td></tr></tbody>
                     </table>
-                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="refreshListView();"><span appapptagid="25"></span>
+                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="refreshListView();">
                 </td>
                 <td align="right"> <span id="placePushToDB"></span> </td>
                 <td align="right" class="printTitle"></td>   
@@ -175,7 +175,7 @@ $fields = array(
 </div><!--listviewBorder-->
 <br/>
 
-<h1 style="font-size: 16px;">Packages <span appapptagid="26"></span></h1>
+<h1 style="font-size: 16px;">Packages </h1>
 <div id="listViewPackage" style="background-color: white;">
 <!--Package-->
 <table border="0" width="95%" align="center" cellspacing="0" cellpadding="0" class="relCenterBg"><tbody><tr height="25">

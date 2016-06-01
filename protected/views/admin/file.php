@@ -1,7 +1,7 @@
 <?php $this->renderFile('protected/views/layouts/header_subpanel.php', array('title'=>'Control Panel')); ?>
 
 
-<h1><span appapptagid="33"></span> Files</h1>
+<h1>Files</h1>
 
 <?php
 

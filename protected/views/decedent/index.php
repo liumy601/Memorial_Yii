@@ -14,7 +14,7 @@
         </td>
         <td align="right">
           <!--shotcut buttons-->
-          <span appapptagid="13"></span> <?php echo CommonRender::shotCuts(); ?>
+           <?php echo CommonRender::shotCuts(); ?>
         </td>
       </tr>
     </tbody>
@@ -38,7 +38,7 @@
                       <tbody><tr><td class="pL10">
                       </td></tr></tbody>
                     </table>
-                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="refreshListView();"><span appapptagid="14"></span>
+                    <img src="/images/spacer.gif" id="fetchdate_title" title="" class="refbtn" onclick="refreshListView();">
                 </td>
                 <td align="right"> <span id="placePushToDB"></span> </td>
                 <!--<td align="right" class="printTitle"><button class="button" onclick="customers_export();">Guest Book Export</button></td>-->
@@ -204,7 +204,6 @@ foreach ($fields as $field => $width) {
 <!--pager-->
 <div class="listviewBorder123"><div class="listviewButtonLayer"><table width="100%"><tbody><tr><td id="lvBottomButtonTD">  </td><td> <div align="right">
 <input name="fromIndex" id="fromIndex" type="hidden" class="textfieldsmall" value="1" size="3" maxlength="3"><input name="toIndex" id="toIndex" type="hidden" class="textfieldsmall" value="1" size="3" maxlength="3"><table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td> <table height="25" border="0" cellpadding="0" cellspacing="1" align="right"><tbody><tr><td nowrap="nowrap" align="center"> <div class="bodyText"><input type="hidden" name="OnSelect" value="false" class="selectsmall">
-<span appapptagid="15"></span>
 <select name="currentOption" id="currentOption" onchange="return changePageSize(this)">
 <option value="10">10 &nbsp; Records per page</option>
 <option value="20">20 &nbsp; Records per page</option>

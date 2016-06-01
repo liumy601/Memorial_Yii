@@ -3,7 +3,7 @@
 <tbody><tr height="25">
 <td width="140" nowrap="">
 <a href="javascript:toggleRelatedList('relationship_notes_<?php echo $parent_id; ?>');" 
-   name="relationship_notes_<?php echo $parent_id; ?>" id="relationship_notes_<?php echo $parent_id; ?>" class="relListHead">Notes</a> <span appapptagid="21"></span>
+   name="relationship_notes_<?php echo $parent_id; ?>" id="relationship_notes_<?php echo $parent_id; ?>" class="relListHead">Notes</a>
 </td>
 <td align="right"> <div id="ract_<?php echo $parent_id; ?>" name="raction"> </td>
 </tr></tbody>
