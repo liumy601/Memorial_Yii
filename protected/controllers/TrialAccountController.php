@@ -227,7 +227,7 @@ class TrialAccountController extends Controller
 				$mail = new PHPMailer();
 				//$mail->IsMail(); 
 				$mail->IsSMTP();
-				$mail->Port = 25;
+				$mail->Port = 465;
 				$mail->SMTPSecure = 'ssl';
 				$mail->Host = 'smtp.sendgrid.net';
 				$mail->SMTPAuth = true;

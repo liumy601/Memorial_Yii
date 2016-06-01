@@ -33,7 +33,7 @@ class SiteController extends Controller
       array('allow',
 				'actions'=>array('index', 'error', 'contact', 'unautorized', 
             'appappCreateTrialAccount', 'appappCreateNormalAccount', 'appappCancelSubscription',
-            'cron', 'copycompanydata', 'appappCheckEmailDuplicate'),
+            'cron', 'copycompanydata', 'appappCheckEmailDuplicate','resetPassword','resetVerify'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -751,5 +751,76 @@ class SiteController extends Controller
     
 //    echo 'done';
   }
-  
+
+  public function actionResetPassword() {
+	$message = '';
+
+	if(isset($_POST['email_addr'])) {
+		//check if user exists
+		$email_addr = $_POST['email_addr'];
+		$user = Users::model()->find('email="'. $email_addr .'"');
+		
+		if(!empty($user)) {
+			//send email
+			$token = base64_encode(time());
+
+			$mail = new PHPMailer();
+			$mail->IsSMTP();
+			$mail->Port = 465;
+			$mail->SMTPSecure = 'ssl';
+			$mail->Host = 'smtp.sendgrid.net';
+			$mail->SMTPAuth = true;
+			$mail->Username = 'funeralappmail'; 
+			$mail->Password = 'memorial1@#';
+			$mail->CharSet = "utf-8";
+			$mail->Encoding = "base64"; 
+			$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
+			$mail->AddAddress($email_addr);
+			$mail->AddBCC('ives.matthew@gmail.com');
+			$mail->Subject = '';
+			$mail->Body = '<html><body>';
+			$mail->Body .= $user->lastname .' '. $user->firstname . ',<br/><br/>';
+			$mail->Body .= "We've received a request to change your password for app.memorialdirectory.com.<br/><br/>";
+			$mail->Body .= 'Please click here to reset your password: <br/>';
+			$mail->Body .= '<a href="http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'">http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'</a><br/>';
+			$mail->Body .= '</body></html>';
+			$mail->IsHTML(true);
+			$mail->Send();
+
+			$message = 'Password reset instructions will be mailed to '. $email_addr .'. You must log out to use the password reset link in the email.';
+		} else {
+			$message = 'That email address does not match our records. Please contact us for assistance.';
+		}
+	}
+	
+	$this->render('reset_password', array('message'=>$message));
+  }
+
+  public function actionResetVerify($email, $token) {
+	$illegal = ''
+	$success = '';
+
+	$user = Users::model()->find('email="'. $email .'"');
+	$time_diff = time()-base64_decode($token);
+	if(empty($user)) {
+		$illegal = 'This is a invalid user.';
+	} else if($time_diff > 24*60*60) {
+		$illegal = 'This password reset link has expired, please reset again';
+	} else {
+		$model = new ResetPassword();
+
+		if(isset($_POST['ResetPassword'])) {
+			$model->attributes = $_POST['ResetPassword'];
+
+			if($model->validate()) {
+				$user->password = md5($model->password);
+				$user->save(false);
+				$success = 'Your password is reset. <a href="http://app.memorialdirector.com/site/login">Login</a>';
+			}
+		}
+	}
+
+	$this->render('reset_verify', array('model'=>$model, 'illegal'=>$illegal, 'success'=>$success));
+  }
+
 }
