@@ -766,7 +766,7 @@ class SiteController extends Controller
 
 			$mail = new PHPMailer();
 			$mail->IsSMTP();
-			$mail->Port = 465;
+			$mail->Port = 587;
 			$mail->SMTPSecure = 'ssl';
 			$mail->Host = 'smtp.sendgrid.net';
 			$mail->SMTPAuth = true;
@@ -797,8 +797,9 @@ class SiteController extends Controller
   }
 
   public function actionResetVerify($email, $token) {
-	$illegal = ''
+	$illegal = '';
 	$success = '';
+	$model = new ResetPassword();
 
 	$user = Users::model()->find('email="'. $email .'"');
 	$time_diff = time()-base64_decode($token);
@@ -806,17 +807,15 @@ class SiteController extends Controller
 		$illegal = 'This is a invalid user.';
 	} else if($time_diff > 24*60*60) {
 		$illegal = 'This password reset link has expired, please reset again';
-	} else {
-		$model = new ResetPassword();
+	}
 
-		if(isset($_POST['ResetPassword'])) {
-			$model->attributes = $_POST['ResetPassword'];
+	if(isset($_POST['ResetPassword'])) {
+		$model->attributes = $_POST['ResetPassword'];
 
-			if($model->validate()) {
-				$user->password = md5($model->password);
-				$user->save(false);
-				$success = 'Your password is reset. <a href="http://app.memorialdirector.com/site/login">Login</a>';
-			}
+		if($model->validate()) {
+			$user->password = md5($model->password);
+			$user->save(false);
+			$success = 'Your password is reset. <a href="http://app.memorialdirector.com/site/login">Login</a>';
 		}
 	}
 

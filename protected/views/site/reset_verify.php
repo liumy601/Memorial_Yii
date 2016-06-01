@@ -5,8 +5,12 @@ $this->pageTitle=Yii::app()->name . ' - Reset Password';
 ?>
 
 <?php if(!empty($illegal) || !empty($success)): ?>
-	<?php if(!empty($illegal) echo $illegal; ?>
-	<?php if(!empty($success) echo $success; ?>
+	<?php if(!empty($illegal)): ?>
+		<div class="errorMSG"><?php echo $illegal;?></div>
+	<?php endif; ?>
+	<?php if(!empty($success)): ?>
+		<div class="errorMSG"><?php echo $success;?></div>
+	<?php endif; ?>
 <?php else: ?>
 	<div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
