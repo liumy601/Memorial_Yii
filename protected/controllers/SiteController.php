@@ -767,7 +767,7 @@ class SiteController extends Controller
 			$mail = new PHPMailer();
 			$mail->IsSMTP();
 			$mail->Port = 587;
-			$mail->SMTPSecure = 'ssl';
+			$mail->SMTPSecure = 'tls';
 			$mail->Host = 'smtp.sendgrid.net';
 			$mail->SMTPAuth = true;
 			$mail->Username = 'funeralappmail'; 

@@ -228,7 +228,7 @@ class TrialAccountController extends Controller
 				//$mail->IsMail(); 
 				$mail->IsSMTP();
 				$mail->Port = 587;
-				$mail->SMTPSecure = 'ssl';
+				$mail->SMTPSecure = 'tls';
 				$mail->Host = 'smtp.sendgrid.net';
 				$mail->SMTPAuth = true;
 				$mail->Username = 'funeralappmail'; 
