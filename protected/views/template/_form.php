@@ -32,7 +32,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   ))); ?>
   
   <table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="Leads-titleIcon">&nbsp;</td> 
-  <td height="30" class="title hline" style="padding-left:10px"> <?php echo $title; ?> <span appapptagid="29"></span></td></tr></tbody></table>
+  <td height="30" class="title hline" style="padding-left:10px"> <?php echo $title; ?> </td></tr></tbody></table>
   <p></p>
   <div class="bodyText mandatory"></div>
 

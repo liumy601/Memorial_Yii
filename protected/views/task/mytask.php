@@ -5,7 +5,7 @@
   <table border="0" width="100%" cellspacing="0" cellpadding="0" class="listview">
 <tbody>
 <tr>
-<td style="font-weight:bold;">My Tasks <?php echo $GLOBALS['itemCount'] ? '('.$GLOBALS['itemCount'].')' : '' ?><span appapptagid="12"></span></td>
+<td style="font-weight:bold;">My Tasks <?php echo $GLOBALS['itemCount'] ? '('.$GLOBALS['itemCount'].')' : '' ?></td>
 <td colspan="2" style="font-weight:bold;">
 
 <!--pager-->

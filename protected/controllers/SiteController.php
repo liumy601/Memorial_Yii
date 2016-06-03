@@ -27,11 +27,13 @@ class SiteController extends Controller
 				'users'=>array('?'),
 			),
       array('allow',
-				'actions'=>array('logout', 'downloadFiles', 'search', 'iphoneuploadfile', 'logintoappapp'),
+				'actions'=>array('logout', 'downloadFiles', 'search', 'iphoneuploadfile', 'logintoappapp', 'appappplans', 'updateprofile'),
 				'users'=>array('@'),
 			),
       array('allow',
-				'actions'=>array('index', 'error', 'contact', 'unautorized'),
+				'actions'=>array('index', 'error', 'contact', 'unautorized', 
+            'appappCreateTrialAccount', 'appappCreateNormalAccount', 'appappCancelSubscription',
+            'cron', 'copycompanydata', 'appappCheckEmailDuplicate','resetPassword','resetVerify'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -167,46 +169,10 @@ class SiteController extends Controller
       return;
     }
     
-    $newUser = array(
-      'uid' => $appapp_uid,
-      'appappToken' => Yii::app()->params['appappToken']
-    );
-    
-    
-    $gacookie = "curl-1.txt";
-    @touch($gacookie);
-    @chmod($gacookie, 0666);
-    if ($fp = tmpfile()) {
-      $ch1 = curl_init(Yii::app()->params['appappSiteURL'] . "/appapp/authenticate_user");
-      curl_setopt ($ch1, CURLOPT_STDERR, $fp);
-      curl_setopt($ch1,CURLOPT_HEADER, 1); 
-      curl_setopt ($ch1, CURLOPT_VERBOSE, 2);
-      curl_setopt ($ch1, CURLOPT_ENCODING, 0);
-      curl_setopt ($ch1, CURLOPT_USERAGENT, 'Mozilla/5.0');
-      curl_setopt ($ch1, CURLOPT_COOKIEJAR, $gacookie);
-      curl_setopt ($ch1, CURLOPT_COOKIEFILE, $gacookie);
-      curl_setopt ($ch1, CURLOPT_POSTFIELDS, http_build_query($newUser));
-      curl_setopt ($ch1, CURLOPT_POST, 1);
-      curl_setopt ($ch1, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt ($ch1, CURLOPT_FAILONERROR, 1);
-      curl_setopt ($ch1, CURLOPT_CONNECTTIMEOUT, 30);
-      $r = curl_exec ($ch1);
-        
-      if(!curl_errno($ch1) && strpos($r, 'Set-Cookie: SESS') !== false){
-        $setcookiePos = strpos($r, 'Set-Cookie');
-        $fPos = strpos($r, ';', $setcookiePos);
-        $cookie = substr($r, $setcookiePos+12, $fPos-$setcookiePos-12);
-        
-        list($sess, $sessval) = explode('=', $cookie);
-        if (substr($sess, 0, 4) == 'SESS') {
-          setcookie('appapp_sess_id', $sess, time()+86400, '/');
-          setcookie('appapp_sess_val', $sessval, time()+86400, '/');
-        }
-      }
-      curl_close($ch1);
-      
-    }
-//    @unlink($gacookie);
+    setcookie('appapp_mail', $model->username, time()+86400, '/');
+    setcookie('appapp_token', Yii::app()->params['appappToken'], time()+86400, '/');
+    setcookie('appapp_authed', '', time()-86400, '/');
+    return;
   }
 
 	/**
@@ -450,4 +416,410 @@ class SiteController extends Controller
     exit;
   }
   
+  /**
+   * $data = array(
+          'email' => $account->mail,
+          'token' => $app->token
+      );
+   */
+  public function actionAppappCheckEmailDuplicate()
+  {
+    $connection = Yii::app()->db;
+    
+    $params = serialize($_REQUEST);
+    $command = $connection->createCommand("INSERT INTO log_param (params) VALUES (:params)");
+    $command->bindParam(':params', $params);
+    $command->execute();
+    
+    
+    if ($_POST['token'] != Yii::app()->params['appappToken']) {
+      echo 'You are not allowed to access this page.';
+      exit;
+    }
+    
+    $command = $connection->createCommand("select count(*) from users where email='yaaman198066@gmail.com'");
+    $command->bindParam(':email', $_POST['email']);
+    $exists = $command->queryScalar();
+    if ($exists) {
+      echo json_encode(array('exists'=>1));
+    } else {
+      echo json_encode(array('exists'=>0));
+    }
+    
+    exit;
+  }
+  
+  public function actionAppappCreateTrialAccount()
+  {
+    $connection = Yii::app()->db;
+    
+    $params = serialize($_REQUEST);
+    $command = $connection->createCommand("INSERT INTO log_param (params) VALUES (:params)");
+    $command->bindParam(':params', $params);
+    $command->execute();
+    
+    
+    if ($_POST['token'] != Yii::app()->params['appappToken']) {
+      echo 'You are not allowed to access this page.';
+      exit;
+    }
+    
+    //create company
+    $company = new Company();
+    $company->name = $_POST['company'];
+    $company->save();
+    
+    //copy data from model company
+    $this->actionCopyCompanyData(16, $company->id);
+    
+    //create user
+    $now = time();
+    $user = new Users;
+    $user->appapp_uid = $_POST['appapp_uid'];
+    $user->username = $this->generateUsername($_POST['username']);
+    $user->password = md5($_POST['password']);
+    $user->email = $_POST['email'];
+    $user->company_id = $company->id;
+    $user->firstname = $_POST['firstname'];
+    $user->lastname = $_POST['lastname'];
+    $user->type = 'admin';
+    $user->trial = 1;
+    $user->trial_start = $now;
+    if($_POST['trial_type'] == 2){//90 days
+      $user->trial_end = $now + 86400*90;
+    } else {
+      $user->trial_end = $now + 86400*30;
+    }
+    
+    if ($user->save()) {
+      //save to pre_auth_assignment
+      $command = $connection->createCommand('INSERT INTO pre_auth_assignment (itemname, userid) VALUES (\'' . $user->type . '\', :userid)');
+      $command->bindParam(':userid', $user->username, PDO::PARAM_STR);
+      $command->execute();
+    } else {
+      //
+    }
+    
+    echo json_encode(array('uid'=>$user->id, 'username'=>$user->email));
+    exit;
+  }
+  
+  private function generateUsername($initName) {
+    define('USERNAME_MAX_LENGTH', 20);
+    
+    // Remove possible illegal characters.
+    $initName = preg_replace('/[^A-Za-z0-9_.-]/', '', $initName);
+
+    // Trim that value for spaces and length.
+    $initName = trim(substr($initName, 0, USERNAME_MAX_LENGTH - 4));
+    $name = $initName;
+    
+    // Make sure we don't hand out a duplicate username.
+    $i=1;
+    $connection = Yii::app()->db;
+    while ($connection->createCommand("select id from users where username = '". $name ."'")->queryScalar() > 0) {
+      // If the username got too long, trim it back down.
+      if (strlen($name) == USERNAME_MAX_LENGTH) {
+        $name = substr($name, 0, USERNAME_MAX_LENGTH - 4);
+      }
+
+      // Append a random integer to the name.
+//      $name .= rand(0, 9);
+      $name =  $initName . $i++;
+    }
+
+    return $name;
+  }
+  
+  public function actionAppappplans()
+  {
+    $this->render('appappplans');
+  }
+  public function actionUpdateprofile()
+  {
+    $this->render('app-account-billing');
+  }
+  
+  /**
+   * This is not need to run, because in main_normal_zoho.php, there is a calculate to the trial, if trial is expired.
+   */
+  public function actionCron()
+  {
+    //user trial for 15 days
+//    $connection = Yii::app()->db;
+//    $now = time();
+//    
+//    $connection->createCommand("update users set status=0, trial_end=". $now ."  
+//      where trial=1 and trial_end=0 and trial_start+1296000<=". $now)->execute();
+//    
+//    echo 'Done.';
+//    exit;
+  }
+  
+  /**
+   * User already have a trial account, here log the user_subscription
+   */
+  public function actionAppappCreateNormalAccount()
+  {
+    if ($_POST['token'] != Yii::app()->params['appappToken']) {
+      echo 'You are not allowed to access this page.';
+      exit;
+    }
+    
+    $connection = Yii::app()->db;
+    $now = time();
+    
+    //user_subscription
+    $command = $connection->createCommand("INSERT INTO user_subscription (uid, plan_nid, plan_title, rec_fee, first_start, period_start) 
+      VALUES (:uid, :plan_nid, :plan_title, :rec_fee, :first_start, :period_start)");
+    $command->bindParam(':uid', $_POST['uid']);
+    $command->bindParam(':plan_nid', $_POST['plan_nid']);
+    $command->bindParam(':plan_title', $_POST['plan_title']);
+    $command->bindParam(':rec_fee', $_POST['rec_fee']);
+    $command->bindParam(':first_start', $now);
+    $command->bindParam(':period_start', $now);
+    $command->execute();
+    
+    //users
+    $command = $connection->createCommand("update users set status=1, trial=0, trial_end=:trial_end where id=:id");
+    $command->bindParam(':trial_end', $now);
+    $command->bindParam(':id', $_POST['uid']);
+    $command->execute();
+    
+    echo 'Done';
+    exit;
+  }
+  
+  
+  /**
+   * User already have a trial account, here log the user_subscription
+   */
+  public function actionAppappCancelSubscription()
+  {
+    if ($_POST['token'] != Yii::app()->params['appappToken']) {
+      echo 'You are not allowed to access this page.';
+      exit;
+    }
+    
+    $connection = Yii::app()->db;
+    $now = time();
+    
+    //user_subscription
+    $command = $connection->createCommand("update user_subscription SET cancel=1, cancel_timestamp=:cancel_timestamp 
+      where uid=:uid");
+    $command->bindParam(':cancel_timestamp', $now);
+    $command->bindParam(':uid', $_POST['uid']);
+    $command->execute();
+    
+    //users
+    $command = $connection->createCommand("update users set status=0 where id=:id");
+    $command->bindParam(':id', $_POST['uid']);
+    $command->execute();
+    
+    echo 'Done';
+    exit;
+  }
+  
+  public function actionCopyCompanyData($modelCompanyID=0, $newCompanyID=0)
+  {
+    //TODO: set this to private function after golive.
+    $connection = Yii::app()->db;
+    
+    //inventory
+    $oldNewInventory= array();
+    $command = $connection->createCommand("select * from inventory where company_id=".$modelCompanyID);
+    $dr = $command->query();
+    while ($row = $dr->read()) {
+      $oldID = $row['id'];
+      unset($row['id']);
+      $row['company_id'] = $newCompanyID;
+      
+      $obj = new Inventory;
+      foreach ($row as $key=>$value) {
+        $obj->$key = $value;
+      }
+      $obj->save();
+      $oldNewInventory['old_' . $oldID] = $obj->id;
+    }
+    
+    //template
+    $oldNewTemplate = array();
+    $command = $connection->createCommand("select * from template where company_id=".$modelCompanyID);
+    $dr = $command->query();
+    while ($row = $dr->read()) {
+      $oldID = $row['id'];
+      unset($row['id']);
+      $row['company_id'] = $newCompanyID;
+      
+      $obj = new Template;
+      foreach ($row as $key=>$value) {
+        $obj->$key = $value;
+      }
+      $obj->save();
+      
+      $oldNewTemplate['old_' . $oldID] = $obj->id;
+    }
+    
+    
+    
+    //customer
+    $command = $connection->createCommand("select * from customer where company_id=".$modelCompanyID);
+    $dr = $command->query();
+    $oldNewProduct = array();
+    while ($row = $dr->read()) {
+      $customer_id = $row['id'];
+      unset($row['id']);
+      $row['company_id'] = $newCompanyID;
+      
+      $obj = new Customer;
+      foreach ($row as $key=>$value) {
+        $obj->$key = $value;
+      }
+      $obj->save();
+      
+      if ($obj->id) {
+        //product
+        $command2 = $connection->createCommand("select * from product where customer_id=".$customer_id);
+        $dr2 = $command2->query();
+        while ($row2 = $dr2->read()) {
+          $oldID = $row2['id'];
+          unset($row2['id']);
+          $row2['company_id'] = $newCompanyID;
+          $row2['customer_id'] = $obj->id;
+          $row2['inventory_id'] = $oldNewInventory['old_' . $row2['inventory_id']];
+      
+          $obj2 = new Product();
+          foreach ($row2 as $key=>$value) {
+            $obj2->$key = $value;
+          }
+          $obj2->save();
+          $oldNewProduct['old_' . $oldID] = $obj->id;
+        }
+        
+        
+        //document
+        $command2 = $connection->createCommand("select * from document where customer_id=".$customer_id);
+        $dr2 = $command2->query();
+        while ($row2 = $dr2->read()) {
+          unset($row2['id']);
+          $row2['customer_id'] = $obj->id;
+          $row2['template_id'] = $oldNewTemplate['old_' . $row2['template_id']];
+          $row2['product_id'] = $oldNewProduct['old_' . $row2['product_id']];
+      
+          $obj2 = new Document();
+          foreach ($row2 as $key=>$value) {
+            $obj2->$key = $value;
+          }
+          $obj2->save();
+        }
+        
+        //payment
+        $command2 = $connection->createCommand("select * from payment where customer_id=".$customer_id);
+        $dr2 = $command2->query();
+        while ($row2 = $dr2->read()) {
+          unset($row2['id']);
+          $row2['customer_id'] = $obj->id;
+      
+          $obj2 = new Payment();
+          foreach ($row2 as $key=>$value) {
+            $obj2->$key = $value;
+          }
+          $obj2->save();
+        }
+      }
+    }
+    
+    //task
+    $command = $connection->createCommand("select * from task where company_id=".$modelCompanyID);
+    $dr = $command->query();
+    while ($row = $dr->read()) {
+      unset($row['id']);
+      $row['company_id'] = $newCompanyID;
+      
+      $obj = new Task;
+      foreach ($row as $key=>$value) {
+        $obj->$key = $value;
+      }
+      $obj->save();
+    }
+    
+    
+    
+    //no contacts
+    
+    //no notes
+    
+//    echo 'done';
+  }
+
+  public function actionResetPassword() {
+	$message = '';
+
+	if(isset($_POST['email_addr'])) {
+		//check if user exists
+		$email_addr = $_POST['email_addr'];
+		$user = Users::model()->find('email="'. $email_addr .'"');
+		
+		if(!empty($user)) {
+			//send email
+			$token = base64_encode(time());
+
+			$mail = new PHPMailer();
+			$mail->IsSMTP();
+			$mail->Port = 587;
+			$mail->SMTPSecure = 'tls';
+			$mail->Host = 'smtp.sendgrid.net';
+			$mail->SMTPAuth = true;
+			$mail->Username = 'funeralappmail'; 
+			$mail->Password = 'memorial1@#';
+			$mail->CharSet = "utf-8";
+			$mail->Encoding = "base64"; 
+			$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
+			$mail->AddAddress($email_addr);
+			$mail->AddBCC('ives.matthew@gmail.com');
+			$mail->Subject = 'Reset Your Password';
+			$mail->Body = '<html><body>';
+			$mail->Body .= $user->lastname .' '. $user->firstname . ',<br/><br/>';
+			$mail->Body .= "We've received a request to change your password for app.memorialdirectory.com.<br/><br/>";
+			$mail->Body .= 'Please click here to reset your password: <br/>';
+			$mail->Body .= '<a href="http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'">http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'</a><br/>';
+			$mail->Body .= '</body></html>';
+			$mail->IsHTML(true);
+			$mail->Send();
+
+			$message = 'Password reset instructions will be mailed to '. $email_addr .'. You must log out to use the password reset link in the email.';
+		} else {
+			$message = 'That email address does not match our records. Please contact us for assistance.';
+		}
+	}
+	
+	$this->render('reset_password', array('message'=>$message));
+  }
+
+  public function actionResetVerify($email, $token) {
+	$illegal = '';
+	$success = '';
+	$model = new ResetPassword();
+
+	$user = Users::model()->find('email="'. $email .'"');
+	$time_diff = time()-base64_decode($token);
+	if(empty($user)) {
+		$illegal = 'This is a invalid user.';
+	} else if($time_diff > 24*60*60) {
+		$illegal = 'This password reset link has expired, please reset again';
+	}
+
+	if(isset($_POST['ResetPassword'])) {
+		$model->attributes = $_POST['ResetPassword'];
+
+		if($model->validate()) {
+			$user->password = md5($model->password);
+			$user->save(false);
+			$success = 'Your password is reset. <a href="http://app.memorialdirector.com/site/login">Login</a>';
+		}
+	}
+
+	$this->render('reset_verify', array('model'=>$model, 'illegal'=>$illegal, 'success'=>$success));
+  }
+
 }

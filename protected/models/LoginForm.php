@@ -37,6 +37,7 @@ class LoginForm extends CFormModel
 	{
 		return array(
 			'rememberMe'=>'Remember me next time',
+			'username'=>'Email',
 		);
 	}
 
@@ -52,6 +53,13 @@ class LoginForm extends CFormModel
 			if(!$this->_identity->authenticate()){
 				$this->addError('password','Incorrect username or password.');
       }
+      
+      if($this->_identity->getState('status') == 0){
+        $this->addError('username','Your account is inactive.');
+      }
+//      if($this->_identity->getState('trial') == 1 && time() >= $this->_identity->getState('trial_end')){
+//        $this->addError('username','Your trial has expired.');
+//      }
 		}
 	}
 

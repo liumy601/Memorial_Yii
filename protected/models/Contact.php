@@ -17,6 +17,7 @@
  * @property integer $customerid
  */
 class Contact extends CActiveRecord
+//class Contact extends CModel
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -112,7 +113,8 @@ class Contact extends CActiveRecord
   
   public function save()
   {
-    $this->company_id = Yii::app()->user->company_id;
+    if(empty($this->company_id) && Yii::app()->user->hasState('company_id'))
+			$this->company_id = Yii::app()->user->company_id;
     $ret = parent::save();
     
     return $ret;

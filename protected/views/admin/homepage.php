@@ -1,7 +1,7 @@
 <?php $this->renderFile('protected/views/layouts/header_subpanel.php', array('title'=>'Control Panel')); ?>
 
 
-<h1><span appapptagid="30"></span> Homepage</h1>
+<h1>Homepage</h1>
 <br/>
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
