@@ -43,7 +43,7 @@ $passwordError = $form->error($model,'password');
 
 	<tr>
 		<td class="label"> </td>
-    <td class="element"><?php echo CHtml::link('Reset Password', 'site/resetPassword', array('class'=>'noajax'));?><br/><?php echo $form->checkBox($model,'rememberMe') . $form->label($model,'rememberMe') . $form->error($model,'rememberMe'); ?></td>
+    <td class="element"><?php echo CHtml::link('Reset Password', '/site/resetPassword', array('class'=>'noajax'));?><br/><?php echo $form->checkBox($model,'rememberMe') . $form->label($model,'rememberMe') . $form->error($model,'rememberMe'); ?></td>
 	</tr>
 
 	<tr>
