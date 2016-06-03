@@ -3,7 +3,7 @@
 <div id="leftPanel">
   
 <!--buttons-->
-<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; "><table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer"><tbody><tr><td align="center" nowrap="" class="pL15"><span appapptagid="16"></span> <a href="javascript:void(0);" onclick="ajaxNew('/decedent');setPageUrl('/decedent');return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td><td nowrap="" class="pL10 dvmo"> 
+<div id="detailViewButtonLayerDiv" class="detailViewButtonLayerDiv" style="z-index: 19; width: 1240px; box-shadow: none; "><table cellpadding="5" cellspacing="0" width="100%" class="dvbtnlayer"><tbody><tr><td align="center" nowrap="" class="pL15"> <a href="javascript:void(0);" onclick="ajaxNew('/decedent');setPageUrl('/decedent');return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td><td nowrap="" class="pL10 dvmo"> 
 <input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/decedent/update/<?php echo $model->id; ?>" pagetitle="Edit contact" id="editview_student_<?php echo $model->id; ?>"/>
 <input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/decedent/delete/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
 &nbsp;
@@ -671,7 +671,7 @@
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_product_<?php echo $model->id; ?>');" 
    name="relationship_product_<?php echo $model->id; ?>" id="relationship_product_<?php echo $model->id; ?>" class="relListHead">
-Products</a> <span appapptagid="17"></span>
+Products</a> 
 </td>
 <td align="right"> <div id="ract_<?php echo $model->id; ?>" name="raction"> </td>
 </tr></tbody>
@@ -757,7 +757,7 @@ while ($row = $productDataProvider->read()) {
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_payment_<?php echo $model->id; ?>');" 
    name="relationship_payment_<?php echo $model->id; ?>" id="relationship_payment_<?php echo $model->id; ?>" class="relListHead">
-Payments</a> <span appapptagid="18"></span>
+Payments</a> 
 </td>
 <td align="right"> <div id="ract_<?php echo $model->id; ?>" name="raction"> </td>
 </tr></tbody>
@@ -821,7 +821,7 @@ while ($row = $paymentDataProvider->read()) {
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_document_<?php echo $model->id; ?>');" 
    name="relationship_document_<?php echo $model->id; ?>" id="relationship_document_<?php echo $model->id; ?>" class="relListHead">
-Documents</a> <span appapptagid="19"></span>
+Documents</a> 
 </td>
 <td align="right"> <div id="ract_<?php echo $model->id; ?>" name="raction"> </td>
 </tr></tbody>
@@ -884,7 +884,7 @@ if($documents){
 <td width="140" nowrap=""> 
 <a href="javascript:toggleRelatedList('relationship_contact_<?php echo $model->id; ?>');" 
    name="relationship_contact_<?php echo $model->id; ?>" id="relationship_contact_<?php echo $model->id; ?>" class="relListHead">
-Contacts</a> <span appapptagid="20"></span>
+Contacts</a> 
 </td>
 <td align="right"> <div id="ract_<?php echo $model->id; ?>" name="raction"> </td>
 </tr></tbody>

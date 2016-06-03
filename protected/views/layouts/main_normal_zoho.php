@@ -42,12 +42,17 @@ text-decoration:none;
 <link rel="stylesheet" href="/assets/jquery/signature/build/jquery.signaturepad.css<?php echo $GLOBALS['query_string']; ?>">
 
 <?php if(Yii::app()->user->name != 'Guest' ): ?>
+<?php
+$company = Company::model()->findByPk(Yii::app()->user->company_id);
+$company_name = !empty($company) ? $company->name : '';
+?>
 <script>
   window.intercomSettings = {
     app_id: "k1tws933",
     name: "<?php echo Yii::app()->user->firstname.' '.Yii::app()->user->lastname; ?>", // Full name
     email: "<?php echo Yii::app()->user->email; ?>", // Email address
-    created_at: 1312182000 // Signup date as a Unix timestamp
+    created_at: 1312182000, // Signup date as a Unix timestamp
+	company: "<?php echo $company_name; ?>"
   };
 </script>
 <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/k1tws933';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
@@ -111,10 +116,10 @@ echo '<script language="javascript">
         echo '<img src="/'.$logo.'" height="37">';
 //        echo '<img src="/'.$logo.'" height="100">';
       }else{
-        echo '<h1>Funeral Home System</h1>';
+        echo '<img src="/files/memorial_logo.png" height="37">';
       }
   }else{
-      echo '<h1>Funeral Home System</h1>';
+      echo '<img src="/files/memorial_logo.png" height="37">';
   }
   ?>
 </div> 
@@ -230,7 +235,7 @@ if(Yii::app()->user->name != 'Guest' && !$trialExpire){
   }
 } else {//guest
   $headMenus = array(
-    'Home' => '/',
+    'Home' => 'http://memorialdirector.com',
   );
 }
   

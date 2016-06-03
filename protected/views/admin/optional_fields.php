@@ -1,6 +1,6 @@
 <?php $this->renderFile('protected/views/layouts/header_subpanel.php', array('title'=>'Control Panel')); ?>
 
-<h1><span appapptagid="34"></span>Optional Fields</h1>
+<h1>Optional Fields</h1>
 
 <div class="form">
 

@@ -6,7 +6,7 @@
   <tr>
     <!--<td valign="top">Home page</td>-->
     <td valign="top">
-      <div style="float:right;"><span appapptagid="35"></span></div>
+      <div style="float:right;"></div>
       <?php echo $model->homepage; ?>
     </td>
     <td valign="top" style="width:290px;">

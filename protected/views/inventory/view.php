@@ -29,7 +29,6 @@
 <div style="float:right">
   <a href="javascript:void window.open('/inventory/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink"><img src="/themes/Sugar/images/print.gif" width="13" height="13" alt="Print" border="0" align="absmiddle"></a>
   <a href="javascript:void window.open('/inventory/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink">Print</a>
-  <span appapptagid="1"></span>
 </div>
 <?php
  }
