@@ -5,7 +5,7 @@
 $this->pageTitle=Yii::app()->name . ' - logo';
 ?>
 
-<h1><span appapptagid="37"></span>Logo</h1>
+<h1>Logo</h1>
 
 <?php if(Yii::app()->user->hasFlash('createlogo')): ?>
 
