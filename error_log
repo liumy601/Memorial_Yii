@@ -1,1 +1,8 @@
 [28-Mar-2016 15:27:08] PHP Fatal error:  Call to a member function delete() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 795
+[04-Jun-2016 06:34:46] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 386
+[04-Jun-2016 06:35:28] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 386
+[04-Jun-2016 06:35:51] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 386
+[04-Jun-2016 06:35:57] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 386
+[04-Jun-2016 06:36:01] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 386
+[04-Jun-2016 06:47:09] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 386
+[04-Jun-2016 06:47:14] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 386
