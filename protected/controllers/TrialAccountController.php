@@ -263,7 +263,7 @@ class TrialAccountController extends Controller
 					$this->_authenticateToAppApp($loginForm);
 
 					//first time to login
-					Yii::app()->user->setFlash('', 'This is your first login, please change your passoword.');
+					Yii::app()->user->setFlash('', 'This is your first login, please change your password.');
 					$connection = Yii::app()->db;
 					$command = $connection->createCommand("update users set access=". time() ." where id=" . Yii::app()->user->uid);
 					$command->execute();
