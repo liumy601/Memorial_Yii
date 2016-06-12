@@ -123,7 +123,7 @@ $(document).ready(
           type: 'GET',
           data: {ajaxRequest:1},
           dataType: 'html',
-          timeout:15000,
+          timeout:40000,
           beforeSend:function(){
             showTip('Loading...');
           },
@@ -169,7 +169,7 @@ $(document).ready(
           type: $(this).attr('method'),
           data: data,
           dataType: 'html',
-          timeout:15000,
+          timeout:40000,
           beforeSend:function(){
             showTip('Loading...');
           },
@@ -202,7 +202,7 @@ $(document).ready(
           type: $(this).attr('method'),
           data: data,
           dataType: 'html',
-          timeout:15000,
+          timeout:40000,
           beforeSend:function(){
             showTip('Loading...');
           },
@@ -240,7 +240,7 @@ $(document).ready(
           type: 'GET',
           data: {ajaxRequest:1},
           dataType: 'html',
-          timeout:15000,
+          timeout:40000,
           beforeSend:function(){
             showTip('Loading...');
           },
@@ -270,7 +270,7 @@ function ajaxRequest(obj){
     type: 'GET',
     data: {ajaxRequest:1},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
     },
     success: function(data){
@@ -292,7 +292,7 @@ function ajaxNew(url){
     type: 'GET',
     data: {ajaxRequest:1},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
     },
     success: function(data){
@@ -1050,7 +1050,7 @@ function dialogCreateContact(){
     type: 'GET',
     data: {from:'dialog', ajaxRequest : 1},//this will let the form use dialogCreateContactSubmit() to submit.
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1090,7 +1090,7 @@ function dialogCreateTask(parent_type, parent_id){
     type: 'GET',
     data: {from:'diaglog', parent_type:parent_type, parent_id:parent_id},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1126,7 +1126,7 @@ function dialogCreateTaskSubmit(form, parent_type, parent_id){
     type: $(form).attr('method'),
     data: data,
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1155,7 +1155,7 @@ function dialogUpdateTask(parent_type, parent_id, task_id){
     type: 'GET',
     data: {from:'diaglog', parent_type:parent_type, parent_id:parent_id},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1181,7 +1181,7 @@ function refreshTaskList(parent_type, parent_id){
     type: 'GET',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading task list...');
     },
@@ -1205,7 +1205,7 @@ function dialogCreateNotes(parent_type, parent_id){
     type: 'GET',
     data: {from:'diaglog', parent_type:parent_type, parent_id:parent_id},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1242,7 +1242,7 @@ function dialogCreateNotesSubmit(form, parent_type, parent_id){
     type: $(form).attr('method'),
     data: data,
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1271,7 +1271,7 @@ function dialogUpdateNotes(parent_type, parent_id, note_id){
     type: 'GET',
     data: {from:'diaglog', parent_type:parent_type, parent_id:parent_id},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1297,7 +1297,7 @@ function refreshNotesList(parent_type, parent_id){
     type: 'GET',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading notes list...');
     },
@@ -1316,7 +1316,7 @@ function deleteProduct(lnk, product_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1334,7 +1334,7 @@ function deletePayment(lnk, payment_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1352,7 +1352,7 @@ function deleteDocument(lnk, doc_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1369,7 +1369,7 @@ function deleteContact(lnk, contact_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1386,7 +1386,7 @@ function deleteNote(lnk, note_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1403,7 +1403,7 @@ function deleteTask(lnk, task_id){
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(){
@@ -1427,7 +1427,7 @@ function roomAssignmentFilterStudents(){
     type: 'POST',
     data: data,
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1470,7 +1470,7 @@ function roomAssignmentFilterRooms(){
     type: 'POST',
     data: data,
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1522,7 +1522,7 @@ function checkoutInventory(id){
     type: 'POST',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1547,7 +1547,7 @@ function checkinInventory(id){
     type: 'POST',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1572,7 +1572,7 @@ function refreshCheckoutList(inventory_id){
     type: 'GET',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1593,7 +1593,7 @@ function lookup(module, srcInput){
     type: 'GET',
     data: {},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
       $('#lookup-dialog').attr('srcInput', srcInput);
@@ -1630,7 +1630,7 @@ function dashletMyTaskChangePage(page, dashlet){
     type: 'GET',
     data: {page:page},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1649,7 +1649,7 @@ function dashletMyFilesChangePage(page, dashlet){
     type: 'GET',
     data: {page:page},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1668,7 +1668,7 @@ function dashletMyActionChangePage(page, dashlet){
     type: 'GET',
     data: {page:page},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1689,7 +1689,7 @@ function roleAddUser(rid){
     type: 'GET',
     data: {rid:rid},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1722,7 +1722,7 @@ function roleAddUserSelectItem(selLink){
     type: 'GET',
     data: {rid:rid,uid:uid},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1752,7 +1752,7 @@ function closeTask(taskID){
     type: 'GET',
     data: {ajaxRequest:1},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
     },
@@ -1775,7 +1775,7 @@ function viewCheckoutComments(checkoutLogID){
     type: 'GET',
     data: {ajaxRequest:1},
     dataType: 'html',
-    timeout:15000,
+    timeout:40000,
     beforeSend:function(){
       showTip('Loading...');
       $('#viewcheckoutcomments-dialog').html('Loading...');
@@ -1825,7 +1825,7 @@ function dialogReceipt(customer_id, payment_id, type){
     type: 'POST',
     data: {},
     dataType: 'json',
-    timeout: 15000,
+    timeout: 40000,
     beforeSend:function(){
     },
     success: function(paymentData){
