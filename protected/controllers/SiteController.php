@@ -853,6 +853,7 @@ class SiteController extends Controller
 			$newCompany->save(false);
 			$company_id = $newCompany->id;
 			
+			$password = $model->password;
 			$model->password = md5($model->password);
 			$model->company_id = $company_id;
 			$model->save(false);
@@ -1025,10 +1026,47 @@ class SiteController extends Controller
 					$newTask->save(false);
 				}
 			}
+
+			//login and redirect
+			$loginForm = new LoginForm;
+			$loginForm->username = $model->email;
+			$loginForm->password = $password;
+			if($loginForm->validate() && $loginForm->login()){
+				//authenticate to AppApp
+				$this->_authenticateToAppApp($loginForm);
+
+				//first time to login
+				Yii::app()->user->setFlash('', 'This is your first login, please change your passoword.');
+				$connection = Yii::app()->db;
+				$command = $connection->createCommand("update users set access=". time() ." where id=" . Yii::app()->user->uid);
+				$command->execute();
+
+				$this->redirect('site/index');
+			}
 		}
 	}
 
 	$this->render('set_pwd', array('model'=>$model, 'illegal'=>$illegal, 'success'=>$success));
+  }
+
+  private function _authenticateToAppApp($model){
+		//get appapp_uid
+		$connection = Yii::app()->db;
+		$command = $connection->createCommand("select appapp_uid from users where email=:email");
+		$command->bindParam(':email', $model->username);
+		$appapp_uid = $command->queryScalar();
+		
+		if (!appapp_uid) {
+		  return;
+		}
+		if (!Yii::app()->params['appappToken']) {
+		  return;
+		}
+		
+		setcookie('appapp_mail', $model->username, time()+86400, '/');
+		setcookie('appapp_token', Yii::app()->params['appappToken'], time()+86400, '/');
+		setcookie('appapp_authed', '', time()-86400, '/');
+		return;
   }
 
 }
