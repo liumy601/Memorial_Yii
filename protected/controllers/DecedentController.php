@@ -364,7 +364,7 @@ class DecedentController extends Controller
     $discount = $command8->queryScalar();
 
 	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
-    
+
     $this->render('view',array(
         'model'=>$this->loadModel($id),
         'contactDataProvider'=>$contactDataProvider,

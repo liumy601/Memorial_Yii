@@ -21,7 +21,7 @@ input {
 )); ?>
 	
 	<?php if($created) : ?>
-		<p class="note" style="text-align:center">Your account has been created!</p>
+		<p class="note" style="text-align:center">Thank you for signing up! Please check your email for new login information.</p>
 	<?php endif; ?>
 	<p class="note" style="text-align:center">Fields with <span class="required">*</span> are required.</p>
 
