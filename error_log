@@ -129,3 +129,17 @@
 [28-May-2016 00:30:41] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
 [28-May-2016 00:30:50] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralb/public_html/protected/controllers/DecedentController.php on line 386
 [01-Jun-2016 11:42:20] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/funeralb/public_html/protected/controllers/SiteController.php on line 801
+[15-Jun-2016 12:41:54] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:41:55] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:42:22] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:42:28] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:42:29] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:42:45] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:15] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:17] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:21] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:22] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:37] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:43:48] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:45:12] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
+[15-Jun-2016 12:45:22] PHP Fatal error:  Cannot redeclare SiteController::_authenticateToAppApp() in /home/funeralb/public_html/protected/controllers/SiteController.php on line 1052
