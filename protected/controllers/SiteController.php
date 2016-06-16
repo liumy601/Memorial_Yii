@@ -1027,7 +1027,7 @@ class SiteController extends Controller
 				}
 			}
 
-			//login and redirect
+			//login and redirect   
 			$loginForm = new LoginForm;
 			$loginForm->username = $model->email;
 			$loginForm->password = $password;
