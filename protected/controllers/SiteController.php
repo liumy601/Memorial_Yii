@@ -1027,7 +1027,7 @@ class SiteController extends Controller
 				}
 			}
 
-			//login and redirect   
+			//login and redirect
 			$loginForm = new LoginForm;
 			$loginForm->username = $model->email;
 			$loginForm->password = $password;
@@ -1041,7 +1041,7 @@ class SiteController extends Controller
 				$command = $connection->createCommand("update users set access=". time() ." where id=" . Yii::app()->user->uid);
 				$command->execute();
 
-				$this->redirect('site/index');
+				$this->redirect('/site/index');
 			}
 		}
 	}
