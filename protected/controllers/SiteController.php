@@ -1049,24 +1049,4 @@ class SiteController extends Controller
 	$this->render('set_pwd', array('model'=>$model, 'illegal'=>$illegal, 'success'=>$success));
   }
 
-  private function _authenticateToAppApp($model){
-		//get appapp_uid
-		$connection = Yii::app()->db;
-		$command = $connection->createCommand("select appapp_uid from users where email=:email");
-		$command->bindParam(':email', $model->username);
-		$appapp_uid = $command->queryScalar();
-		
-		if (!appapp_uid) {
-		  return;
-		}
-		if (!Yii::app()->params['appappToken']) {
-		  return;
-		}
-		
-		setcookie('appapp_mail', $model->username, time()+86400, '/');
-		setcookie('appapp_token', Yii::app()->params['appappToken'], time()+86400, '/');
-		setcookie('appapp_authed', '', time()-86400, '/');
-		return;
-  }
-
 }
