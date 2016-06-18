@@ -4,7 +4,7 @@ Unknown macro: {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){ (i[r].q=i[r]
 )(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 ga('create', 'UA-46600175-2', 'auto');
 ga('send', 'pageview');
-</script>
+</script> 
 <?php $this->renderFile('protected/views/layouts/header.php'); ?>
 
 
