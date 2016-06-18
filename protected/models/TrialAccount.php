@@ -27,7 +27,7 @@ class TrialAccount extends CFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname, lastname, email', 'required'),
+			array('username, firstname, lastname, email', 'required'),
 			array('username, company_name, email', 'length', 'max'=>50),
 			array('phone', 'length', 'max'=>20),
 			array('username', 'checkDuplicateUsername'),

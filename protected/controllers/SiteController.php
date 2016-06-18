@@ -1036,7 +1036,7 @@ class SiteController extends Controller
 				$this->_authenticateToAppApp($loginForm);
 
 				//first time to login
-				Yii::app()->user->setFlash('', 'This is your first login, please change your passoword.');
+				Yii::app()->user->setFlash('', 'Welcome to Memorial Director.');
 				$connection = Yii::app()->db;
 				$command = $connection->createCommand("update users set access=". time() ." where id=" . Yii::app()->user->uid);
 				$command->execute();
@@ -1045,7 +1045,8 @@ class SiteController extends Controller
 			}
 		}
 	}
-
+	
+	Yii::app()->user->setFlash('', 'This is your first login, please change your password.');
 	$this->render('set_pwd', array('model'=>$model, 'illegal'=>$illegal, 'success'=>$success));
   }
 
