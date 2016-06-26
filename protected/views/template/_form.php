@@ -77,12 +77,10 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 		   </tr>
 	  <?php endif; ?>
 		
-		<?php if(0) : ?>
-		   <tr>
-			<td width="10%" class="label">Default for all customer</td>
+	   <tr>
+			<td width="10%" class="label">Add to Every Decedent</td>
 			<td width="40%" class="element"><?php echo $form->checkBox($model,'default_check'); ?>&nbsp;(if selected, the template will be visibled for all customer.)</td>
-		   </tr>
-	   <?php endif; ?>
+	   </tr>
        
        <tr>
         <td width="10%" class="label"><?php echo $form->labelEx($model,'templates'); ?></td>
