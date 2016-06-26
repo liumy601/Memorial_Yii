@@ -56,13 +56,12 @@ class TrialAccountController extends Controller
 					$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
 					$mail->AddAddress($yourEmail);
 					$mail->AddBCC('ives.matthew@gmail.com');
-					$mail->Subject = 'Your Memorial Director Trial Has Begun';
+					$mail->Subject = 'Your Memorial Director Trial';
 					$mail->Body = '<html><body>';
 					$mail->Body .= 'Hi '. $admin->firstname . '<br/><br/>';
 					$mail->Body .= 'Thanks for signing up!<br/><br/>';
-					$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing Success@memorialdirector.com or when logged in by clicking the blue button in the bottom right.<br/><br/>";
-					$mail->Body .= 'Please login at <a href="http://app.memorialdirector.com">http://app.memorialdirector.com</a> with the following credentials: <br/>';
-					$mail->Body .= 'Username: '. $admin->email .'<br/>';
+					$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing Success@memorialdirector.com or by clicking the blue button in the bottom right when logged in.<br/><br/>";
+					$mail->Body .= 'Your username is: '. $admin->username .'<br/>';
 					$params = array();
 					$params[] = $userName;
 					$params[] = $yourName;
@@ -72,8 +71,9 @@ class TrialAccountController extends Controller
 					$params[] = $admin->id;
 					$token = base64_encode(json_encode($params));
 					$setPwdLink = 'http://app.memorialdirector.com/site/setpwd/token/'. $token;
-					$mail->Body .= 'Click <a href="'. $setPwdLink .'">'. $setPwdLink .'</a> to set your password.<br/><br/>';
-					$mail->Body .= 'The best way to get started is by viewing our guide here: <a href="http://memorialdirector.com/introduction-to-memorial-director/">http://memorialdirector.com/introduction-to-memorial-director/</a><br/><br/>';
+					$mail->Body .= 'To complete your Memorial Director Trial setup, please click <a href="'.$setPwdLink.'">here</a> to set your password and login.<br/>';
+					$mail->Body .= 'After setting your password, you can login from anywhere with an internet connection by going to: <a href="http://app.memorialdirector.com">http://app.memorialdirector.com</a><br/>';
+					$mail->Body .= "After you've set your password, the best way to get started is by viewing our guide here: <a href='http://memorialdirector.com/introduction-to-memorial-director/'>http://memorialdirector.com/introduction-to-memorial-director/</a><br/>";
 					$mail->Body .= 'Have a great day, <br/>';
 					$mail->Body .= 'The Memorial Director App Team<br/>';
 					$mail->Body .= '<a href="http://memorialdirector.com/">http://memorialdirector.com/</a><br/>';
