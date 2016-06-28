@@ -208,6 +208,14 @@ class DecedentController extends Controller
       } 
 
       if($model->save()){
+		 //create document using default template
+		$templates = Template::model()->findAll('default_check=1 and company_id='. Yii::app()->user->company_id);
+		foreach($templates as $tpl) {
+			$document = new Document();
+			$document->customer_id = $model->id;
+			$document->template_id = $tpl->id;
+			$document->save();
+		}
         Yii::app()->user->setFlash('', 'Customer is saved.');
         $this->redirect(array('view','id'=>$model->id));
       }
