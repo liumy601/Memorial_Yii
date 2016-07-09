@@ -761,33 +761,37 @@ class SiteController extends Controller
 		$user = Users::model()->find('email="'. $email_addr .'"');
 		
 		if(!empty($user)) {
-			//send email
-			$token = base64_encode(time());
+			if(empty($user->access)) {
+				$message = "Your account hasn't been activated, please activate firstly.";
+			} else {
+				//send email
+				$token = base64_encode(time());
 
-			$mail = new PHPMailer();
-			$mail->IsSMTP();
-			$mail->Port = 587;
-			$mail->SMTPSecure = 'tls';
-			$mail->Host = 'smtp.sendgrid.net';
-			$mail->SMTPAuth = true;
-			$mail->Username = 'funeralappmail'; 
-			$mail->Password = 'memorial1@#';
-			$mail->CharSet = "utf-8";
-			$mail->Encoding = "base64"; 
-			$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
-			$mail->AddAddress($email_addr);
-			$mail->AddBCC('ives.matthew@gmail.com');
-			$mail->Subject = 'Reset Your Password';
-			$mail->Body = '<html><body>';
-			$mail->Body .= $user->lastname .' '. $user->firstname . ',<br/><br/>';
-			$mail->Body .= "We've received a request to change your password for app.memorialdirectory.com.<br/><br/>";
-			$mail->Body .= 'Please click here to reset your password: <br/>';
-			$mail->Body .= '<a href="http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'">http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'</a><br/>';
-			$mail->Body .= '</body></html>';
-			$mail->IsHTML(true);
-			$mail->Send();
+				$mail = new PHPMailer();
+				$mail->IsSMTP();
+				$mail->Port = 587;
+				$mail->SMTPSecure = 'tls';
+				$mail->Host = 'smtp.sendgrid.net';
+				$mail->SMTPAuth = true;
+				$mail->Username = 'funeralappmail'; 
+				$mail->Password = 'memorial1@#';
+				$mail->CharSet = "utf-8";
+				$mail->Encoding = "base64"; 
+				$mail->SetFrom('Success@memorialdirector.com', 'Memorial Director');
+				$mail->AddAddress($email_addr);
+				$mail->AddBCC('ives.matthew@gmail.com');
+				$mail->Subject = 'Reset Your Password';
+				$mail->Body = '<html><body>';
+				$mail->Body .= $user->lastname .' '. $user->firstname . ',<br/><br/>';
+				$mail->Body .= "We've received a request to change your password for app.memorialdirectory.com.<br/><br/>";
+				$mail->Body .= 'Please click here to reset your password: <br/>';
+				$mail->Body .= '<a href="http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'">http://app.memorialdirector.com/site/resetVerify/email/'. $email_addr .'/token/'. $token .'</a><br/>';
+				$mail->Body .= '</body></html>';
+				$mail->IsHTML(true);
+				$mail->Send();
 
-			$message = 'Password reset instructions will be mailed to '. $email_addr .'. You must log out to use the password reset link in the email.';
+				$message = 'Password reset instructions will be mailed to '. $email_addr .'. You must log out to use the password reset link in the email.';
+			}
 		} else {
 			$message = 'That email address does not match our records. Please contact us for assistance.';
 		}
@@ -829,7 +833,7 @@ class SiteController extends Controller
 		$model = new Users;
 	} else {
 		$illegal = false;
-		$model = Users::model()->findByPk($params[5]);
+		$model = Users::model()->findByPk($params[4]);
 	}
 	
 	$model->password = '';
@@ -838,11 +842,10 @@ class SiteController extends Controller
 		$model->attributes = $_POST['Users'];
 
 		if($model->validate()) {
-			$userName = $params[0];
-			$yourName = $params[1];
-			$yourCompany = $params[2];
-			$yourEmail = $params[3];
-			$yourPhone = $params[4];
+			$yourName = $params[0];
+			$yourCompany = $params[1];
+			$yourEmail = $params[2];
+			$yourPhone = $params[3];
 			
 			$currentCompany = Company::model()->find('name="Your Funeral Home"');
 

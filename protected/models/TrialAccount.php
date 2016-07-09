@@ -4,7 +4,6 @@
  * This is the model class for table "trial_account".
  *
  * The followings are the available columns in table 'trial_account':
- * @property string $username
  * @property string $yourname
  * @property string $company_name
  * @property string $email
@@ -12,7 +11,6 @@
  */
 class TrialAccount extends CFormModel
 {
-	public $username;
 	public $firstname;
 	public $lastname;
 	public $company_name;
@@ -27,13 +25,11 @@ class TrialAccount extends CFormModel
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, firstname, lastname, email', 'required'),
-			array('username, company_name, email', 'length', 'max'=>50),
+			array('firstname, lastname, email', 'required'),
+			array('company_name, email', 'length', 'max'=>50),
 			array('phone', 'length', 'max'=>20),
-			array('username', 'checkDuplicateUsername'),
 			array('email', 'checkDuplicateEmail'),
-			array('username', 'match', 'pattern'=>'/^\w+$/i', 'message'=>'Username can only contain characters,numbers,underscores.'),
-			array('username, yourname, company_name, email, phone', 'safe', 'on'=>'search'),
+			array('yourname, company_name, email, phone', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +50,6 @@ class TrialAccount extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'username' => 'User Name',
 			'firstname' => 'First Name',
 			'lastname' => 'Last Name',
 			'company_name' => 'Company Name',
@@ -81,7 +76,6 @@ class TrialAccount extends CFormModel
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('username',$this->username,true);
 		$criteria->compare('yourname',$this->yourname,true);
 		$criteria->compare('company_name',$this->company_name,true);
 		$criteria->compare('email',$this->email,true);
@@ -101,17 +95,6 @@ class TrialAccount extends CFormModel
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function checkDuplicateUsername() {
-		$users = Users::model()->findAll();
-		$usernames = array();
-		foreach($users as $user) {
-			$usernames[] = $user->username;
-		}
-
-		if(in_array($this->username, $usernames))
-			$this->addError('username', 'Username "'. $this->username .'" has already been taken');
 	}
 
 	public function checkDuplicateEmail() {

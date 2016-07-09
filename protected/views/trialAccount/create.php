@@ -26,12 +26,6 @@ input {
 	<p class="note" style="text-align:center">Fields with <span class="required">*</span> are required.</p>
 
 	<p style="text-align:center">
-		<?php echo $form->labelEx($model,'username'); ?><br/>
-		<?php echo $form->textField($model,'username',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'username'); ?>
-	</p>
-
-	<p style="text-align:center">
 		<?php echo $form->labelEx($model,'firstname'); ?><br/>
 		<?php echo $form->textField($model,'firstname',array('size'=>50,'maxlength'=>50)); ?>
 		<?php echo $form->error($model,'firstname'); ?>

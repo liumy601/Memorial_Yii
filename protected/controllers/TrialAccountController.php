@@ -19,15 +19,15 @@ class TrialAccountController extends Controller
 			$userCreated = false;
 
 			if($valid) {
-				$userName = $model->username;
 				$yourName = $model->firstname. ' ' . $model->lastname;
+				$userName = $yourName;
 				$yourCompany = $model->company_name;
 				$yourEmail = $model->email;
 				$yourPhone = $model->phone;
 
 				//create company admin
 				$admin = new Users();
-				$admin->username = !empty($userName) ? $userName : $yourName;
+				$admin->username = $model->firstname. '_' . $model->lastname;
 				$admin->password = md5('changeme');
 				$admin->type = 'admin';
 				$admin->email = $yourEmail;
@@ -63,7 +63,6 @@ class TrialAccountController extends Controller
 					$mail->Body .= "We're thrilled that you've decided to give Memorial Director a try and want to let you know that you can contact us anytime by emailing Success@memorialdirector.com or by clicking the blue button in the bottom right when logged in.<br/><br/>";
 					$mail->Body .= 'Your username is: '. $admin->username .'<br/>';
 					$params = array();
-					$params[] = $userName;
 					$params[] = $yourName;
 					$params[] = $yourCompany;
 					$params[] = $yourEmail;
