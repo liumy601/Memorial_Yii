@@ -828,7 +828,7 @@ class SiteController extends Controller
 
   public function actionSetpwd($token) {
 	$params = json_decode(base64_decode($token), true);
-	if(count($params)<6) {
+	if(count($params)<5) {
 		$illegal = true;
 		$model = new Users;
 	} else {
