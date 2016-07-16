@@ -61,8 +61,8 @@
      </tr>-->
     
         <tr>
-        <td width="20%" class="dvgrayTxt"><?php // echo CHtml::encode($model->getAttributeLabel('case_number')); ?></td>
-        <td width="30%" class="dvValueTxt"><?php // echo CHtml::encode($model->case_number); ?></td>
+        <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('case_number')); ?></td>
+        <td width="30%" class="dvValueTxt"><?php echo CHtml::encode($model->case_number); ?></td>
         <td width="20%" class="dvgrayTxt"><?php echo CHtml::encode($model->getAttributeLabel('status')); ?></td>
         <td width="30%" class="dvValueTxt"><?php echo $model->status; ?></td>
         </tr>

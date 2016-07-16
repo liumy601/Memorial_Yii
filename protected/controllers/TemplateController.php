@@ -78,10 +78,20 @@ class TemplateController extends Controller
 	   if (Yii::app()->user->type == 'super admin')
 			$model->is_super_admin = 1;
 
-      $model->save();
-     
-      Yii::app()->user->setFlash('', 'Template is saved.');
-      $this->redirect(array('view','id'=>$model->id));
+	  if($model->save()) {
+		  if($model->default_check) {
+			  $customers = Customer::model()->findAll('company_id='. Yii::app()->user->company_id);
+			  foreach($customers as $customer) {
+					$document = new Document();
+					$document->customer_id = $customer->id;
+					$document->template_id = $model->id;
+					$document->save();
+			  }
+		  }
+
+		  Yii::app()->user->setFlash('', 'Template is saved.');
+		  $this->redirect(array('view','id'=>$model->id));
+	  }
     }
     
     $model = new Template();
@@ -98,8 +108,22 @@ class TemplateController extends Controller
       $model->attributes = $_POST['Template'];
       $model->company_id = Yii::app()->user->company_id;
       $model->deleted = 0;
-      if($model->save())
+      if($model->save()) {
+		  if($model->default_check) {
+			  $customers = Customer::model()->findAll('company_id='. Yii::app()->user->company_id);
+			  foreach($customers as $customer) {
+					$existing = Document::model()->count('customer_id='. $customer->id .' and template_id='. $id);
+					if($existing == 0) {
+						$document = new Document();
+						$document->customer_id = $customer->id;
+						$document->template_id = $id;
+						$document->save();
+					}
+			  }
+		  }
+
         $this->redirect(array('view','id'=>$model->id));
+	  }
     }
     
     $this->render('_form',array(

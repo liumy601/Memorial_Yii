@@ -208,6 +208,14 @@ class DecedentController extends Controller
       } 
 
       if($model->save()){
+		 //create document using default template
+		$templates = Template::model()->findAll('default_check=1 and company_id='. Yii::app()->user->company_id);
+		foreach($templates as $tpl) {
+			$document = new Document();
+			$document->customer_id = $model->id;
+			$document->template_id = $tpl->id;
+			$document->save();
+		}
         Yii::app()->user->setFlash('', 'Customer is saved.');
         $this->redirect(array('view','id'=>$model->id));
       }
@@ -364,7 +372,7 @@ class DecedentController extends Controller
     $discount = $command8->queryScalar();
 
 	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
-    
+
     $this->render('view',array(
         'model'=>$this->loadModel($id),
         'contactDataProvider'=>$contactDataProvider,
@@ -452,10 +460,25 @@ class DecedentController extends Controller
     $this->_buildShortcuts();
     $model = new Customer();
     $this->_checkAllowCreateNew();
+	//autopopulate case_number
+	$command = Yii::app()->db->createCommand("select distinct case_number from customer where company_id=". Yii::app()->user->company_id ."  order by case_number");
+	$records = $command->queryAll();
+	//search next available case_number starting from 1000
+	$case_number_list = array();
+	foreach($records as $record) {
+		$case_number_list[] = $record['case_number'];
+	}
+	$case_number_list = array_unique($case_number_list);
+	$next_case_num = 1000;
+	while(in_array($next_case_num, $case_number_list)) {
+		$next_case_num++;
+	}
+	$model->case_number = $next_case_num;
+	$model->setScenario('create');
 
     if(isset($_POST['Customer'])){
       $model->attributes = $_POST['Customer'];
-      
+
       if($model->validate()){
         $model->form_type = 'new';
         $model->enteredby = Yii::app()->user->id;
