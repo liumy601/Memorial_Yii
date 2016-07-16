@@ -819,7 +819,7 @@ class SiteController extends Controller
 		if($model->validate()) {
 			$user->password = md5($model->password);
 			$user->save(false);
-			$success = 'Your password is reset. <a href="http://app.memorialdirector.com/site/login">Login</a>';
+			$success = 'Your password is reset. <a href="/site/login" class="noajax">Login</a>';
 		}
 	}
 
