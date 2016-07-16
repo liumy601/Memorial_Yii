@@ -32,7 +32,7 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
   ))); ?>
   
   <table width="100%" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td class="Leads-titleIcon">&nbsp;</td> 
-  <td height="30" class="title hline" style="padding-left:10px"> <?php echo $title; ?> <span appapptagid="29"></span></td></tr></tbody></table>
+  <td height="30" class="title hline" style="padding-left:10px"> <?php echo $title; ?> </td></tr></tbody></table>
   <p></p>
   <div class="bodyText mandatory"></div>
 
@@ -77,12 +77,10 @@ $this->pageTitle = Yii::app()->name . ' - ' . $title;
 		   </tr>
 	  <?php endif; ?>
 		
-		<?php if(0) : ?>
-		   <tr>
-			<td width="10%" class="label">Default for all customer</td>
+	   <tr>
+			<td width="10%" class="label">Add to Every Decedent</td>
 			<td width="40%" class="element"><?php echo $form->checkBox($model,'default_check'); ?>&nbsp;(if selected, the template will be visibled for all customer.)</td>
-		   </tr>
-	   <?php endif; ?>
+	   </tr>
        
        <tr>
         <td width="10%" class="label"><?php echo $form->labelEx($model,'templates'); ?></td>
