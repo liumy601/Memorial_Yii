@@ -133,7 +133,7 @@ $(document).ready(
             $("#searchword").focus().blur();
             appAppAddIcon();
 			setPageUrl(href);
-			Appcues.start();
+			//Appcues.start();
           },
           error: function(data){
             showTip('Request failed.');
