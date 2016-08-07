@@ -7,3 +7,4 @@
 [04-Jun-2016 06:47:09] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 386
 [04-Jun-2016 06:47:14] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/CustomerController.php on line 386
 [16-Jul-2016 09:54:07] PHP Fatal error:  Call to a member function loadAddon() on a non-object in /home/funeralp/public_html/protected/controllers/DecedentController.php on line 394
+[06-Aug-2016 23:25:48] PHP Parse error:  syntax error, unexpected '}' in /home/funeralp/public_html/protected/views/layouts/header.php on line 19
