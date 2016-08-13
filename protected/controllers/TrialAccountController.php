@@ -27,13 +27,14 @@ class TrialAccountController extends Controller
 
 				//create company admin
 				$admin = new Users();
-				$admin->username = $model->firstname. '_' . $model->lastname;
+				$username = $model->firstname. '_' . $model->lastname;
+				$admin->username = strlen($username)>15 ? substr($username,0,15): $username;
 				$admin->password = md5('changeme');
 				$admin->type = 'admin';
 				$admin->email = $yourEmail;
 				$admin->firstname = $model->firstname;
 				$admin->lastname = $model->lastname;
-				$userCreated = $admin->save(false);
+				$userCreated = $admin->save(false);var_dump($admin->getErrors());
 
 				if($userCreated) {
 					//assign admin role
