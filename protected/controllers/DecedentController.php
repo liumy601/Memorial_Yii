@@ -2836,7 +2836,7 @@ class DecedentController extends Controller
     
     $fieldTypeLen['DU'] = '';
     $fieldTypeLen['DV'] = '';
-    $excelData[0][] = $fieldTypeLen;
+    //$excelData[0][] = $fieldTypeLen;
     
     $connection = Yii::app()->db;
     $command = $connection->createCommand("select * from customer where id = :id");
