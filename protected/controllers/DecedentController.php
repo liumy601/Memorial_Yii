@@ -3614,12 +3614,15 @@ private function _compareMinValue($value, $dataArray){
     $tatal_balances = $command4->queryScalar();
     $total_balances = $total_balances != '' ||  $total_balances != null ? $total_balances : '0';
     
+	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+
     $this->renderPartial('product_list', array(
         'model'=>$model,
         'productDataProvider'=>$productDataProvider,
         'total_payments'=>$total_payments,
         'discount'=>$discount,
         'tatal_balances'=>$tatal_balances,
+		'taxRate'=>$taxRate,
     ));
   }
 
