@@ -1312,7 +1312,7 @@ function deleteProduct(lnk, product_id){
   $.ajax({
     async:false,
     cache:false,
-    url: '/customer/deleteproduct/'+product_id,
+    url: '/decedent/deleteproduct/'+product_id,
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
@@ -1330,7 +1330,7 @@ function deletePayment(lnk, payment_id){
   $.ajax({
     async:false,
     cache:false,
-    url: '/customer/deletepayment/'+payment_id,
+    url: '/decedent/deletepayment/'+payment_id,
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
@@ -1348,7 +1348,7 @@ function deleteDocument(lnk, doc_id){
   $.ajax({
     async:false,
     cache:false,
-    url: '/customer/deletedocument/'+doc_id,
+    url: '/decedent/deletedocument/'+doc_id,
     type: 'POST',
     data: {'from':'customer'},
     dataType: 'text',
