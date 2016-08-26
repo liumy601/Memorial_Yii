@@ -9,8 +9,8 @@
   <tr>
     <td align="center" nowrap="" class="pL15"><span appapptagid="16"></span> <a href="javascript:void(0);" onclick="history.back();return false;"><img src="/images/spacer.gif" class="backtoIcon" border="0"></a> </td>
     <td nowrap="" class="pL10 dvmo">
-      <input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/customer/updatenewcustomer/<?php echo $model->id; ?>" pagetitle="Edit contact" id="editview_student_<?php echo $model->id; ?>"/>
-      <input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/customer/deletenewcustomer/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
+      <input class="dveditBtn dvcbtn buttonurl" type="button" value="Edit" name="Edit" url="/decedent/updatenewcustomer/<?php echo $model->id; ?>" pagetitle="Edit contact" id="editview_student_<?php echo $model->id; ?>"/>
+      <input name="Delete2" class="dvdelBtn dvcbtn" type="button" value="Delete" url="/decedent/deletenewcustomer/<?php echo $model->id ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); }">
      </td>
 <td width="100" class="dvmo"> </td>
 <td> </td>
@@ -40,8 +40,8 @@
  if (!Yii::app()->params['print']) {
 ?>
 <div style="float:right">
-  <a href="javascript:void window.open('/customer/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink"><img src="/themes/Sugar/images/print.gif" width="13" height="13" alt="Print" border="0" align="absmiddle"></a>
-  <a href="javascript:void window.open('/customer/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink">Print</a>
+  <a href="javascript:void window.open('/decedent/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink"><img src="/themes/Sugar/images/print.gif" width="13" height="13" alt="Print" border="0" align="absmiddle"></a>
+  <a href="javascript:void window.open('/decedent/view/id/<?php echo $model->id ?>/print/true','printwin','menubar=1,status=0,resizable=1,scrollbars=1,toolbar=0,location=1')" class="utilsLink">Print</a>
   <span appapptagid="1"></span>
 </div>
 <?php
@@ -477,9 +477,9 @@ while ($row = $productDataProvider->read()) {
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
-  <a class="sl" href="/customer/editproduct/<?php echo $row['product_id']; ?>?from=customer">Edit</a>
+  <a class="sl" href="/decedent/editproduct/<?php echo $row['product_id']; ?>?from=customer">Edit</a>
   <span class="sep">|</span> 
-  <a href="#" class="listViewTdToolsS1" url="/customer/deleteproduct/<?php echo $row['product_id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/decedent/deleteproduct/<?php echo $row['product_id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
 </div>
 </td>
 <td class="tableData"> <?php echo $row['name'] ?> </td>
@@ -554,9 +554,9 @@ while ($row = $paymentDataProvider->read()) {
 ?>
 <tr>
 <td nowrap="" width="12%" class="tableData"> <div align="left">&nbsp;
-  <a class="sl" href="/customer/editpayment/<?php echo $row['id']; ?>?from=customer">Edit</a>
+  <a class="sl" href="/decedent/editpayment/<?php echo $row['id']; ?>?from=customer">Edit</a>
   <span class="sep">|</span> 
-  <a href="#" class="listViewTdToolsS1" url="/customer/deletepayment/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/decedent/deletepayment/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this); } return false;">Remove</a>
 </div>
 </td>
 <td class="tableData"> <?php echo $row['type']=='credit' ? 'discount' : $row['type']; ?></td>
@@ -578,8 +578,8 @@ while ($row = $paymentDataProvider->read()) {
 <tr class="rellistbL">
  <td align="left">
   <div id="ra">
-   <a href="/customer/addpayment/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add payment</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <a href="/customer/addcredit/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add discount</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="/decedent/addpayment/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add payment</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <a href="/decedent/addcredit/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add discount</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
  </td> 
 </tr>
@@ -624,7 +624,7 @@ if($documents){
 //  echo $row['product_id'].'111<br/>'; echo $row['id'];exit;
   ?>
   <!--<a href="#" class="listViewTdToolsS1" url="/customer/deletedocument/<?php // echo $row['id'] ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this);} return false;">Remove</a>-->
-  <a href="#" class="listViewTdToolsS1" url="/customer/deletedocument/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this);} return false;">Remove</a>
+  <a href="#" class="listViewTdToolsS1" url="/decedent/deletedocument/<?php echo $row['id']; ?>" onclick="if(confirm('Are you sure delete this record?')){ ajaxRequest(this);} return false;">Remove</a>
 <?php } else { ?>
   <span class="gray">Relate to product</span> <?php // echo $row['product_name'] ?>
 <?php } ?>
@@ -633,8 +633,8 @@ if($documents){
 <td class="tableData"> <?php echo CHtml::link($row['name'], '/template/'.$row['template_id']); ?> </td>
 <td class="tableData"> <span class="doc_email"><?php echo $row['email_address_alt'] ? $row['email_address_alt'] : $row['email_address'] ?></span> (<a href="#" class="noajax" onclick="documentChangeEmailAddr(<?php echo $row['id'] ?>, this);return false;">Edit</a>) </td>
 <td class="tableData"> 
-  <a href="/customer/documentdownload/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download PDF</a> | 
-  <a href="/customer/documentdownloadword/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download Word</a>
+  <a href="/decedent/documentdownload/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download PDF</a> | 
+  <a href="/decedent/documentdownloadword/customer_id/<?php echo $model->id; ?>/template_id/<?php echo $template_id; ?>" class="noajax"">Download Word</a>
 </td>
 <td class="tableData"> <a href="#" class="noajax" onclick="documentSendEmail(<?php echo $row['id'] ?>);return false">Send email</a></td>
 </tr>
@@ -646,7 +646,7 @@ if($documents){
 </tbody></table>
 </td></tr>
 <tr class="rellistbL"><td align="left"><div id="ra">
-<a href="/customer/adddocument/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add document</a></div></td> 
+<a href="/decedent/adddocument/<?php echo $model->id; ?>" class="rellistNew" class="noajax">Add document</a></div></td> 
 <td align="right"><div align="right" class="listNav">  &nbsp;</div>
 </td></tr> <!-- Field Data goes here --></tbody></table>
 </div>
@@ -745,7 +745,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
 
 <!--Begin: send email-->
 <div id="document-send-emailaddr" style="display: none;"><br/>
-  <form method="post" action="/customer/documentsendemailconfirm" id="documentsendemailconfirm-form" enctype="multipart/form-data">
+  <form method="post" action="/decedent/documentsendemailconfirm" id="documentsendemailconfirm-form" enctype="multipart/form-data">
   <input type="hidden" name="document_id" id="sendmail_document_id" value=""/>
   <b>Email address: </b><br/>
   <input type="text" name="email_addr" id="email_addr" value=""/><br/>
@@ -783,7 +783,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
     $.ajax({
       async:false,
       cache:false,
-      url: '/customer/documentchangeemailaddr/'+document_id,
+      url: '/decedent/documentchangeemailaddr/'+document_id,
       type: 'POST',
       data: {email_address_alt:new_doc_email},
       dataType: 'html',
@@ -807,7 +807,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
     $.ajax({
       async:false,
       cache:false,
-      url: '/customer/documentsendemail/'+document_id,
+      url: '/decedent/documentsendemail/'+document_id,
       type: 'GET',
       data: {},
       dataType: 'json',
@@ -834,7 +834,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
     $.ajax({
       async:false,
       cache:false,
-      url: '/customer/documentsendemailconfirm/'+document_id, 
+      url: '/decedent/documentsendemailconfirm/'+document_id, 
       type: 'POST',
       data: email_data,
       dataType: 'html',
@@ -880,7 +880,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
       $.ajax({
         async:false,
         cache:false,
-        url: '/customer/editretail/product_id/'+product_id+'/customer_id/'+customer_id,
+        url: '/decedent/editretail/product_id/'+product_id+'/customer_id/'+customer_id,
         type: 'POST',
         data: {data:$('#product_retail2_'+product_id).val()},
         dataType: 'json',
@@ -933,7 +933,7 @@ echo $taskController->actionAjaxlist('customer', $model->id, 1);
 
 <!--Begin: add product-->
 <div id="add_product" style="display: none;">
-  <form method="post" action="/customer/addproduct/<?php echo $model->id;?>" id="addproduct-form" class="noajax">
+  <form method="post" action="/decedent/addproduct/<?php echo $model->id;?>" id="addproduct-form" class="noajax">
     <?php 
      $i=10001;
 
@@ -1010,7 +1010,7 @@ $(document).ready(function(){
 
 <!--Begin: add package-->
 <div id="add_package" style="display: none;"><br/>
-  <form method="post" action="/customer/addpackage/<?php echo $model->id;?>" id="addpackage-form">
+  <form method="post" action="/decedent/addpackage/<?php echo $model->id;?>" id="addpackage-form">
     <b>Select package: </b><br/>
   <?php 
    echo CHtml::checkBoxList('package[]', array(), Package::getAll());
@@ -1037,7 +1037,7 @@ $(document).ready(function(){
     $.ajax({
       async:false,
       cache:false,
-      url: '/customer/getpayment/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type,
+      url: '/decedent/getpayment/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type,
       type: 'POST',
       data: {},
       dataType: 'json',
@@ -1137,7 +1137,7 @@ $(document).ready(function(){
   }
   
    function print_receipt(customer_id, payment_id, type){
-    document.location.href='/customer/printreceipt/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type;
+    document.location.href='/decedent/printreceipt/customer_id/'+customer_id+'/payment_id/'+payment_id+'/type/'+type;
   }
   
 </script>
