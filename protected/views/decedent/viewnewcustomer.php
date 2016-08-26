@@ -472,7 +472,6 @@ while ($row = $productDataProvider->read()) {
   $totalPrice += $row['retail'];
   if($row['taxable'] == 1){
     $totalTax += $row['retail'];
-    $taxRate = Config::load('tax')->value;
     $tax = $totalTax * $taxRate;
   }
 ?>

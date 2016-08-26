@@ -641,6 +641,8 @@ class DecedentController extends Controller
     $command8->bindParam(':customer_id', $id);
     $discount = $command8->queryScalar();
     
+	$taxRate = Config::loadTaxByCompany(Yii::app()->user->company_id);
+
     $this->render('viewnewcustomer',array(
         'model'=>$this->loadModel($id),
         'contactDataProvider'=>$contactDataProvider,
@@ -651,6 +653,7 @@ class DecedentController extends Controller
 //        'productRetail'=>$productRetail,
         'paymentDataProvider'=>$paymentDataProvider,
         'documents'=>$documents,
+		'taxRate'=>$taxRate,
     ));
   }
   
